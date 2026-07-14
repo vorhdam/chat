@@ -1,9 +1,11 @@
 import redis from "@repo/redis";
 
-const cacheDuration = 1000 * 60 * 10;
+const defaultCacheDuration = 1000 * 60 * 10;
+const defaultLockTimeout = 5000;
+const defaultPollInterval = 100;
 
 function safeParse<T>(value: string | null): T | null {
-  if (!value) return null;
+  if (value === null) return null;
 
   try {
     return JSON.parse(value) as T;
@@ -22,19 +24,34 @@ function safeStringify(value: unknown): string | null {
   }
 }
 
-async function acquireLock(key: string, ttl: number): Promise<boolean> {
-  const lockKey = `${key}:lock`;
-  const result = await redis.set(lockKey, "1", "NX", "PX", ttl.toString());
-  return result === "OK";
+/** Acquire a lock, returning a token if we got it, or null if someone else holds it. */
+async function acquireLock(key: string, ttl: number): Promise<string | null> {
+  const token = crypto.randomUUID();
+  const result = await redis.set(
+    `${key}:lock`,
+    token,
+    "NX",
+    "PX",
+    ttl.toString(),
+  );
+  return result === "OK" ? token : null;
 }
 
-async function releaseLock(key: string): Promise<void> {
-  await redis.del(`${key}:lock`);
+/** Release the lock only if we still own it (avoids deleting someone else's lock). */
+async function releaseLock(key: string, token: string): Promise<void> {
+  const lockKey = `${key}:lock`;
+  const current = await redis.get(lockKey);
+  if (current === token) await redis.del(lockKey);
+}
+
+function sleep(ms: number) {
+  return new Promise((r) => setTimeout(r, ms));
 }
 
 /**
  * ### Get Cache
- * @description Get the stored cache associated to a key.
+ * @description Get the stored cache associated to a key. Returns null on a
+ * miss, a parse error, or a Redis error — all of these just mean "compute it".
  */
 export async function getCache<T>(key: string): Promise<T | null> {
   try {
@@ -53,10 +70,9 @@ export async function getCache<T>(key: string): Promise<T | null> {
 export async function setCache(
   key: string,
   value: unknown,
-  ttl = cacheDuration,
+  ttl = defaultCacheDuration,
 ): Promise<void> {
   const json = safeStringify(value);
-
   if (json === null) return; // do not store invalid JSON
 
   try {
@@ -68,7 +84,7 @@ export async function setCache(
 
 /**
  * ### Clear Cache
- * @description Clear a key form the cache.
+ * @description Clear a key from the cache.
  */
 export async function clearCache(key: string): Promise<void> {
   try {
@@ -80,37 +96,48 @@ export async function clearCache(key: string): Promise<void> {
 
 /**
  * ### Cache
- * @description Wrap around a function or value to cache its result.
+ * @description Cache-aside helper.
+ * - Pass a plain value (or resolved Promise) to just cache that value directly — no locking needed.
+ * - Pass a function to compute-and-cache it, with stampede protection: only the first
+ *   concurrent caller for a given key runs `compute`, the rest poll the cache and
+ *   receive the result once it's written. If the computing caller doesn't finish
+ *   within `lockTimeout` (e.g. it crashed), waiters give up and compute it themselves
+ *   instead of waiting forever.
  */
 export async function cache<TReturn>(
   key: string,
   compute: (() => Promise<TReturn>) | Promise<TReturn> | TReturn,
-  options: { ttl?: number; lockTimeout?: number } = {},
+  options: { ttl?: number; lockTimeout?: number; pollIntervalMs?: number } = {},
 ): Promise<TReturn> {
-  const ttl = options.ttl ?? cacheDuration;
-  const lockTimeoutMs = options.lockTimeout ?? 5000;
+  const ttl = options.ttl ?? defaultCacheDuration;
+  const lockTimeoutMs = options.lockTimeout ?? defaultLockTimeout;
+  const pollIntervalMs = options.pollIntervalMs ?? defaultPollInterval;
 
-  const namespaced = key;
+  const cached = await getCache<TReturn>(key);
+  if (cached !== null) return cached;
 
-  const initial = await getCache<TReturn>(key);
-  if (initial !== null) return initial;
+  if (typeof compute !== "function") {
+    const result = await Promise.resolve(compute);
+    await setCache(key, result, ttl);
+    return result;
+  }
 
-  const hasLock = await acquireLock(namespaced, lockTimeoutMs);
-  if (!hasLock) {
-    await new Promise((r) => setTimeout(r, 50));
+  const token = await acquireLock(key, lockTimeoutMs);
 
-    const retry = await getCache<TReturn>(key);
-    if (retry !== null) return retry;
+  if (!token) {
+    const deadline = Date.now() + lockTimeoutMs;
+    while (Date.now() < deadline) {
+      await sleep(pollIntervalMs);
+      const retry = await getCache<TReturn>(key);
+      if (retry !== null) return retry;
+    }
   }
 
   try {
-    const result = await (typeof compute === "function"
-      ? (compute as () => Promise<TReturn>)()
-      : Promise.resolve(compute));
-
+    const result = await (compute as () => Promise<TReturn>)();
     await setCache(key, result, ttl);
     return result;
   } finally {
-    if (hasLock) await releaseLock(namespaced);
+    if (token) await releaseLock(key, token);
   }
 }
