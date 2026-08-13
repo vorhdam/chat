@@ -1,6 +1,16 @@
+const locales = ["en", "hu"] as const;
+
+export type Locale = (typeof locales)[number];
+
 type Config = Readonly<{
   /** The branding name of the main application*/
   name: string;
+  i18n: {
+    /** An array of all available locales in the application.*/
+    locales: readonly Locale[];
+    /** The default locale of the application.*/
+    defaultLocale: Locale;
+  };
   cache: {
     /** The time the cache lives by default in seconds.*/
     duration: number;
@@ -19,6 +29,10 @@ type Config = Readonly<{
 
 const config: Config = {
   name: "Nordaun",
+  i18n: {
+    locales,
+    defaultLocale: "en",
+  },
   cache: {
     duration: 600,
     lockTimeout: 3000,
