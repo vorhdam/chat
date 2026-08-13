@@ -1,3 +1,5 @@
+import "server-only";
+
 import redis from "@repo/redis";
 
 const defaultCacheDuration = 1000 * 60 * 10;

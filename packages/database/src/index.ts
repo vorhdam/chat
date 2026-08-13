@@ -9,6 +9,10 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
 
+/**
+ * ### Prisma Client
+ * @description The Prisma Client that is used for accessing the Postgres database.
+ */
 const prisma =
   globalForPrisma.prisma ||
   new PrismaClient({

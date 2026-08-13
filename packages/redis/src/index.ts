@@ -1,3 +1,5 @@
+import "server-only";
+
 import { redis, RedisClient } from "bun";
 
 const redisClientSingleton = () => {
@@ -9,8 +11,8 @@ declare const globalThis: {
   } & typeof global;
 
 /**
- * ## Redis Client
- * @description The Redis Client that is used for caching and ratelimiting
+ * ### Redis Client
+ * @description The Redis Client that is used for caching and ratelimiting.
  */
 const client = globalThis.redisGlobal ?? redisClientSingleton();
 
