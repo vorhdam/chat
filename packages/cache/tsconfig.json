@@ -2,7 +2,7 @@
   "extends": "@repo/typescript/next.json",
   "compilerOptions": {
     "outDir": "dist",
-    "types": ["bun", "node"]
+    "types": ["node"]
   },
   "include": ["src"],
   "exclude": ["node_modules", "dist"]

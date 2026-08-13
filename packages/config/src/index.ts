@@ -1,4 +1,6 @@
 type Config = Readonly<{
+  /** The branding name of the main application*/
+  name: string;
   cache: {
     /** The time the cache lives by default in seconds.*/
     duration: number;
@@ -16,6 +18,7 @@ type Config = Readonly<{
 }>;
 
 const config: Config = {
+  name: "Nordaun",
   cache: {
     duration: 600,
     lockTimeout: 3000,
