@@ -14,13 +14,14 @@ export default async function middleware(request: NextRequest) {
   ).replace("::1", "127.0.0.1");
 
   const result = await rateLimit(ip);
-  const limit = settings.ratelimit.limit;
+  const limit = settings.ratelimit.clientLimit;
 
   if (!result.allowed) {
     return NextResponse.json(
       {
         error: "Too many concurrent requests. Try again later...",
         retryAfter: result.ttl,
+        limitedBy: result.limitedBy,
       },
       {
         status: 429,

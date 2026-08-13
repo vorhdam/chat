@@ -20,10 +20,14 @@ type Config = Readonly<{
     pollInterval: number;
   };
   ratelimit: {
-    /** The time window in which the requests are checked in seconds.*/
-    duration: number;
-    /** The maximum amount of request that are allowed in that window above.*/
-    limit: number;
+    /** The time window in which the requests are checked in seconds for a user.*/
+    clientDuration: number;
+    /** The maximum amount of request that are allowed in that window above for a user.*/
+    clientLimit: number;
+    /** The time window in which the requests are checked in seconds globally.*/
+    globalDuration: number;
+    /** The maximum amount of request that are allowed in that window above globally.*/
+    globalLimit: number;
   };
 }>;
 
@@ -39,8 +43,10 @@ const config: Config = {
     pollInterval: 100,
   },
   ratelimit: {
-    duration: 60,
-    limit: 300,
+    clientDuration: 60,
+    clientLimit: 300,
+    globalDuration: 60,
+    globalLimit: 300,
   },
 };
 

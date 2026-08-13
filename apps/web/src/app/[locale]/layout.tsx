@@ -59,7 +59,7 @@ export default async function RootLayout({
   return (
     <html lang={typedLocale}>
       <body
-        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden bg-zinc-950 text-white`}
+        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden dark`}
       >
         <NextIntlClientProvider messages={messages}>
           {children}
