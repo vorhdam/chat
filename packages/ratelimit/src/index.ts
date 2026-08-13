@@ -1,9 +1,7 @@
 import "server-only";
 
+import config from "@repo/config";
 import redis from "@repo/redis";
-
-const defaultDuration = 60;
-const defaultLimit = 300;
 
 export type RateLimitResult = {
   allowed: boolean;
@@ -26,7 +24,7 @@ export default async function rateLimit(ip: string): Promise<RateLimitResult> {
       key,
       "1",
       "EX",
-      defaultDuration.toString(),
+      config.ratelimit.duration.toString(),
       "NX",
     );
 
@@ -35,15 +33,15 @@ export default async function rateLimit(ip: string): Promise<RateLimitResult> {
 
     if (created === "OK") {
       current = 1;
-      ttl = defaultDuration;
+      ttl = config.ratelimit.duration;
     } else {
       current = await redis.incr(key);
       const ttlRaw = await redis.ttl(key);
-      ttl = ttlRaw < 0 ? defaultDuration : ttlRaw;
+      ttl = ttlRaw < 0 ? config.ratelimit.duration : ttlRaw;
     }
 
-    const allowed = current <= defaultLimit;
-    const remaining = Math.max(0, defaultLimit - current);
+    const allowed = current <= config.ratelimit.limit;
+    const remaining = Math.max(0, config.ratelimit.limit - current);
 
     return {
       allowed,
@@ -55,9 +53,11 @@ export default async function rateLimit(ip: string): Promise<RateLimitResult> {
     console.error("Ratelimit: Redis error", err);
     return {
       allowed: true,
-      remaining: defaultLimit,
-      reset: new Date(Date.now() + defaultDuration * 1000).toISOString(),
-      ttl: defaultDuration,
+      remaining: config.ratelimit.limit,
+      reset: new Date(
+        Date.now() + config.ratelimit.duration * 1000,
+      ).toISOString(),
+      ttl: config.ratelimit.duration,
     };
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "@repo/cache",
+  "name": "@repo/config",
   "version": "0.0.0",
   "type": "module",
   "private": true,
@@ -11,13 +11,10 @@
     "check-types": "tsc --noEmit"
   },
   "devDependencies": {
-    "@repo/config": "*",
     "@repo/eslint": "*",
-    "@repo/redis": "*",
     "@repo/typescript": "*",
     "@types/node": "^20",
     "eslint": "^9.39.1",
-    "server-only": "^0.0.1",
     "typescript": "^5.9.2"
   }
 }

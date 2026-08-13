@@ -36,12 +36,24 @@
       "name": "@repo/cache",
       "version": "0.0.0",
       "devDependencies": {
+        "@repo/config": "*",
         "@repo/eslint": "*",
         "@repo/redis": "*",
         "@repo/typescript": "*",
         "@types/node": "^20",
         "eslint": "^9.39.1",
         "server-only": "^0.0.1",
+        "typescript": "^5.9.2",
+      },
+    },
+    "packages/config": {
+      "name": "@repo/config",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@repo/eslint": "*",
+        "@repo/typescript": "*",
+        "@types/node": "^20",
+        "eslint": "^9.39.1",
         "typescript": "^5.9.2",
       },
     },
@@ -86,6 +98,7 @@
       "name": "@repo/ratelimit",
       "version": "0.0.0",
       "devDependencies": {
+        "@repo/config": "*",
         "@repo/eslint": "*",
         "@repo/redis": "*",
         "@repo/typescript": "*",
@@ -331,6 +344,8 @@
     "@radix-ui/react-use-layout-effect": ["@radix-ui/react-use-layout-effect@1.1.1", "", { "peerDependencies": { "@types/react": "*", "react": "^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc" }, "optionalPeers": ["@types/react"] }, "sha512-RbJRS4UWQFkzHTTwVymMTUv8EqYhOp8dOOviLj2ugtTiXRaRQS7GLGxZTLL1jWhMeoSCf5zmcZkqTl9IiYfXcQ=="],
 
     "@repo/cache": ["@repo/cache@workspace:packages/cache"],
+
+    "@repo/config": ["@repo/config@workspace:packages/config"],
 
     "@repo/database": ["@repo/database@workspace:packages/database"],
 

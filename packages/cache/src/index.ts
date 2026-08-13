@@ -1,10 +1,7 @@
 import "server-only";
 
+import config from "@repo/config";
 import redis from "@repo/redis";
-
-const defaultCacheDuration = 1000 * 60 * 10;
-const defaultLockTimeout = 5000;
-const defaultPollInterval = 100;
 
 function safeParse<T>(value: string | null): T | null {
   if (value === null) return null;
@@ -72,7 +69,7 @@ export async function getCache<T>(key: string): Promise<T | null> {
 export async function setCache(
   key: string,
   value: unknown,
-  ttl = defaultCacheDuration,
+  ttl = config.cache.duration * 1000,
 ): Promise<void> {
   const json = safeStringify(value);
   if (json === null) return; // do not store invalid JSON
@@ -111,9 +108,9 @@ export async function cache<TReturn>(
   compute: (() => Promise<TReturn>) | Promise<TReturn> | TReturn,
   options: { ttl?: number; lockTimeout?: number; pollIntervalMs?: number } = {},
 ): Promise<TReturn> {
-  const ttl = options.ttl ?? defaultCacheDuration;
-  const lockTimeoutMs = options.lockTimeout ?? defaultLockTimeout;
-  const pollIntervalMs = options.pollIntervalMs ?? defaultPollInterval;
+  const ttl = options.ttl ?? config.cache.duration * 1000;
+  const lockTimeoutMs = options.lockTimeout ?? config.cache.lockTimeout;
+  const pollIntervalMs = options.pollIntervalMs ?? config.cache.pollInterval;
 
   const cached = await getCache<TReturn>(key);
   if (cached !== null) return cached;
