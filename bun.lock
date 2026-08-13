@@ -82,6 +82,19 @@
         "typescript-eslint": "^8.50.0",
       },
     },
+    "packages/ratelimit": {
+      "name": "@repo/ratelimit",
+      "version": "0.0.0",
+      "devDependencies": {
+        "@repo/eslint": "*",
+        "@repo/redis": "*",
+        "@repo/typescript": "*",
+        "@types/node": "^20",
+        "eslint": "^9.39.1",
+        "server-only": "^0.0.1",
+        "typescript": "^5.9.2",
+      },
+    },
     "packages/redis": {
       "name": "@repo/redis",
       "version": "0.0.0",
@@ -322,6 +335,8 @@
     "@repo/database": ["@repo/database@workspace:packages/database"],
 
     "@repo/eslint": ["@repo/eslint@workspace:packages/eslint"],
+
+    "@repo/ratelimit": ["@repo/ratelimit@workspace:packages/ratelimit"],
 
     "@repo/redis": ["@repo/redis@workspace:packages/redis"],
 

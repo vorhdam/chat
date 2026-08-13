@@ -12,7 +12,7 @@ function safeParse<T>(value: string | null): T | null {
   try {
     return JSON.parse(value) as T;
   } catch (err) {
-    console.warn("Failed to parse cached JSON:", err);
+    console.warn("Cache: Failed to parse cached JSON:", err);
     return null;
   }
 }
@@ -21,7 +21,7 @@ function safeStringify(value: unknown): string | null {
   try {
     return JSON.stringify(value);
   } catch (err) {
-    console.warn("Failed to serialize cache value:", err);
+    console.warn("Cache: Failed to serialize cache value:", err);
     return null;
   }
 }
@@ -60,7 +60,7 @@ export async function getCache<T>(key: string): Promise<T | null> {
     const raw = await redis.get(key);
     return safeParse<T>(raw);
   } catch (err) {
-    console.error("Redis GET failed:", err);
+    console.error("Cache: Redis GET failed:", err);
     return null;
   }
 }
@@ -80,7 +80,7 @@ export async function setCache(
   try {
     await redis.setex(key, ttl, json);
   } catch (err) {
-    console.error("Redis SET failed:", err);
+    console.error("Cache: Redis SET failed:", err);
   }
 }
 
@@ -92,7 +92,7 @@ export async function clearCache(key: string): Promise<void> {
   try {
     await redis.del(key);
   } catch (err) {
-    console.error("Redis DEL failed:", err);
+    console.error("Cache: Redis DEL failed:", err);
   }
 }
 

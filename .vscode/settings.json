@@ -12,5 +12,7 @@
   "editor.formatOnSave": true,
   "editor.formatOnPaste": true,
   "material-icon-theme.activeIconPack": "react",
-  "material-icon-theme.folders.associations": {}
+  "material-icon-theme.folders.associations": {
+    "ratelimit": "update"
+  }
 }
