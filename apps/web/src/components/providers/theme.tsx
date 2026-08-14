@@ -163,11 +163,9 @@ function ThemeProvider({
     [resolved, available, setTheme, loading],
   );
 
-  if (loading) return null;
-
   return (
     <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
   );
 }
 
-export { ThemeProvider, useTheme };
+export { ThemeProvider, useTheme, type Theme };

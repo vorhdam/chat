@@ -1,11 +1,15 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
+import { ReactNode, Suspense } from "react";
 
 import Providers from "@/components/providers";
 import { routing } from "@/i18n/routing";
 import config, { Locale } from "@repo/config";
-import "./globals.css";
+
+import "../globals.css";
+import Loading from "./loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -48,19 +52,23 @@ export default async function RootLayout({
   children,
   params,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
   const typedLocale = locale as Locale;
   if (!routing.locales.includes(typedLocale)) notFound();
 
+  const theme: string = (await cookies()).get("NEXT_THEME")?.value || "";
+
   return (
-    <html lang={typedLocale}>
+    <html lang={typedLocale} className={theme}>
       <body
         className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <Providers>{children}</Providers>
+        <Suspense fallback={<Loading />}>
+          <Providers>{children}</Providers>
+        </Suspense>
       </body>
     </html>
   );

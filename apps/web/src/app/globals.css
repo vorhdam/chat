@@ -788,3 +788,28 @@ html.color-pink.dark {
   --typeset-leading: 1.75;
   --typeset-flow: 1.25em;
 }
+
+.animated-background {
+  background: linear-gradient(
+    -45deg,
+    var(--chart-1),
+    var(--chart-2),
+    var(--chart-3),
+    var(--chart-4),
+    var(--chart-5)
+  );
+  background-size: 600%;
+  animation: animatedBackground 10s linear infinite;
+}
+
+@keyframes animatedBackground {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
