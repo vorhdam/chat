@@ -13,6 +13,7 @@
   "editor.formatOnPaste": true,
   "material-icon-theme.activeIconPack": "react",
   "material-icon-theme.folders.associations": {
-    "ratelimit": "update"
+    "ratelimit": "update",
+    "[locale]": "global"
   }
 }

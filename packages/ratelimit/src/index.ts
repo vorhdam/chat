@@ -20,18 +20,16 @@ async function checkLimit(
   limitedBy: LimitedBy,
 ): Promise<RateLimitResult> {
   try {
-    const created = await redis.set(key, "1", "EX", duration.toString(), "NX");
+    const [current, ttlRaw] = await Promise.all([
+      redis.incr(key),
+      redis.ttl(key),
+    ]);
 
-    let current: number;
-    let ttl: number;
+    let ttl = ttlRaw;
 
-    if (created === "OK") {
-      current = 1;
+    if (current === 1 || ttlRaw < 0) {
+      await redis.expire(key, duration);
       ttl = duration;
-    } else {
-      current = await redis.incr(key);
-      const ttlRaw = await redis.ttl(key);
-      ttl = ttlRaw < 0 ? duration : ttlRaw;
     }
 
     const allowed = current <= limit;

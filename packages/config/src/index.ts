@@ -1,10 +1,29 @@
+const colors = [
+  "red",
+  "orange",
+  "yellow",
+  "green",
+  "emerald",
+  "aqua",
+  "blue",
+  "purple",
+  "pink",
+  "white",
+] as const;
 const locales = ["en", "hu"] as const;
 
+export type Color = (typeof colors)[number];
 export type Locale = (typeof locales)[number];
 
 type Config = Readonly<{
   /** The branding name of the main application*/
   name: string;
+  color: {
+    /** An array of all available colors in the application.*/
+    colors: readonly Color[];
+    /** The default color of the application.*/
+    defaultColor: Color;
+  };
   i18n: {
     /** An array of all available locales in the application.*/
     locales: readonly Locale[];
@@ -33,6 +52,10 @@ type Config = Readonly<{
 
 const config: Config = {
   name: "Nordaun",
+  color: {
+    colors,
+    defaultColor: "white",
+  },
   i18n: {
     locales,
     defaultLocale: "en",

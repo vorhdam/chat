@@ -1,10 +1,10 @@
-import { routing } from "@/i18n/routing";
-import config, { Locale } from "@repo/config";
 import type { Metadata } from "next";
-import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
 import { Geist, Geist_Mono } from "next/font/google";
 import { notFound } from "next/navigation";
+
+import Providers from "@/components/providers";
+import { routing } from "@/i18n/routing";
+import config, { Locale } from "@repo/config";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -54,16 +54,13 @@ export default async function RootLayout({
   const { locale } = await params;
   const typedLocale = locale as Locale;
   if (!routing.locales.includes(typedLocale)) notFound();
-  const messages = await getMessages();
 
   return (
     <html lang={typedLocale}>
       <body
-        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden dark`}
+        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
       >
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
