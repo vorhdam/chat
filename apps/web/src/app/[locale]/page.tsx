@@ -2,7 +2,7 @@ export default async function HomePage() {
   return (
     // copied from https://ui.shadcn.com/typeset
     <div className="flex justify-center m-4">
-      <div className="typeset typeset-docs w-[70ch] p-2">
+      <div className="typeset w-[70ch] p-2">
         <h1>Building a Streaming Chatbot</h1>
         <p>
           The <code>useChat</code> hook makes it effortless to create a

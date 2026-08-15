@@ -1,14 +1,9 @@
-/*
- * shadcn/typeset
- * https://ui.shadcn.com/docs/typeset.
- */
-
 @layer components {
   .typeset {
-    --typeset-font-body: inherit;
-    --typeset-font-heading: var(--font-heading);
-    --typeset-font-mono: var(--font-mono);
-    --typeset-size: 1em;
+    --typeset-font-body: var(--font-geist, inherit);
+    --typeset-font-heading: var(--font-geist, var(--font-heading));
+    --typeset-font-mono: var(--font-geist-mono, var(--font-mono));
+    --typeset-size: 15px;
     --typeset-leading: 1.75;
     --typeset-flow: 1.25em;
   }
@@ -370,8 +365,7 @@
       caption-side: bottom;
     }
 
-    /* Tables. Separators sit on cells, not tr:last-child: append-safe.
-       Bare tables stay real tables (keep their semantics) and wrap to fit. */
+    /* Tables. */
     &:where(table) {
       max-width: 100%;
       font-size: 1em;
@@ -384,9 +378,6 @@
       margin-block-end: 0;
     }
 
-    /* Horizontal scroll for any wide block. Wrap it and the wrapper owns the
-       flow margin. Tables shrink to fit, so widen the table to make it scroll
-       instead of compress. */
     &:where(.typeset-scroll) {
       overflow-x: auto;
       margin-block-start: var(--typeset-flow);
@@ -423,7 +414,7 @@
       text-align: end;
     }
 
-    /* Blocks inside list items keep the list's tighter rhythm. */
+    /* Blocks inside list items. */
     &:where(li > blockquote, li > table, li > figure) {
       margin-block-start: 0.5em;
     }
@@ -440,7 +431,6 @@
       }
     }
 
-    /* Forced colors strips the code background, so give it a border. */
     @media (forced-colors: active) {
       &:where(:not(pre) > code) {
         border: 1px solid;
@@ -448,7 +438,7 @@
     }
   }
 
-  /* First child adds no space above. Last so it wins ties. */
+  /* First child spacing override. */
   .typeset
     > :where(:first-child):not(
       :where(
