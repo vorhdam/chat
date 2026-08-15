@@ -5,11 +5,12 @@ import { notFound } from "next/navigation";
 import { ReactNode, Suspense } from "react";
 
 import Providers from "@/components/providers";
+import { cn } from "@/components/utils";
 import { routing } from "@/i18n/routing";
 import config, { Locale } from "@repo/config";
 
 import "../globals.css";
-import Loading from "./loading";
+import Loading from "../loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -64,7 +65,11 @@ export default async function RootLayout({
   return (
     <html lang={typedLocale} className={theme}>
       <body
-        className={`flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased overflow-x-hidden`}
+        className={cn(
+          "flex flex-col antialiased overflow-x-hidden",
+          geistSans.variable,
+          geistMono.variable,
+        )}
       >
         <Suspense fallback={<Loading />}>
           <Providers>{children}</Providers>

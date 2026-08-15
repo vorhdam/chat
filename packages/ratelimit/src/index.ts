@@ -3,15 +3,24 @@ import "server-only";
 import config from "@repo/config";
 import redis from "@repo/redis";
 
-type LimitedBy = undefined | "user" | "global";
+type LimitedBy = "user" | "global";
 
-export type RateLimitResult = {
-  allowed: boolean;
+interface BaseRateLimitResult {
   remaining: number;
   reset: string;
   ttl: number;
-  limitedBy?: LimitedBy;
-};
+}
+
+interface RateLimitAllowed extends BaseRateLimitResult {
+  allowed: true;
+}
+
+interface RateLimitDenied extends BaseRateLimitResult {
+  allowed: false;
+  limitedBy: LimitedBy;
+}
+
+type RateLimitResult = RateLimitAllowed | RateLimitDenied;
 
 async function checkLimit(
   key: string,
@@ -39,8 +48,8 @@ async function checkLimit(
       remaining: Math.max(0, limit - current),
       reset: reset(ttl),
       ttl,
-      limitedBy: allowed ? undefined : limitedBy,
-    };
+      ...(!allowed && { limitedBy }),
+    } as RateLimitResult;
   } catch (err) {
     console.error(`Ratelimit: Redis error for key "${key}"`, err);
     return {
@@ -76,7 +85,7 @@ const limitGlobal = () =>
  * @param ip The ip of the request
  * @returns The verdict of the ratelimiter
  */
-export default async function rateLimit(ip: string): Promise<RateLimitResult> {
+async function rateLimit(ip: string): Promise<RateLimitResult> {
   const [userResult, globalResult] = await Promise.all([
     limitUser(ip),
     limitGlobal(),
@@ -84,3 +93,5 @@ export default async function rateLimit(ip: string): Promise<RateLimitResult> {
 
   return globalResult.allowed ? userResult : globalResult;
 }
+
+export { rateLimit, type LimitedBy, type RateLimitResult };
