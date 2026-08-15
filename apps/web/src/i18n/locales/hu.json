@@ -1,5 +1,7 @@
 {
-  "Home": {
-    "helloWorld": "Hello, Világ!"
+  "Errors": {
+    "notFound": "Sajnos nem találtuk meg amit keresel.",
+    "clientRatelimit": "Túl gyakran próbálod elérni a szolgáltatásunkat. Kérlek próbáld később.",
+    "globalRatelimit": "Elég magas forgalmat tapasztalunk. Hamarosan újra elérhetőek leszünk."
   }
 }

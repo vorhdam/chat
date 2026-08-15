@@ -68,8 +68,8 @@ const config: Config = {
   ratelimit: {
     clientDuration: 60,
     clientLimit: 300,
-    globalDuration: 60,
-    globalLimit: 300,
+    globalDuration: 10,
+    globalLimit: 2,
   },
 };
 

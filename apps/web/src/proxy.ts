@@ -2,7 +2,7 @@ import settings from "@repo/config";
 import { rateLimit } from "@repo/ratelimit";
 import createMiddleware from "next-intl/middleware";
 import { NextRequest } from "next/server";
-import { rateLimited } from "./app/[locale]/ratelimited";
+import { rateLimited } from "./app/[locale]/(errors)/ratelimited";
 import { routing } from "./i18n/routing";
 
 const intlMiddleware = createMiddleware(routing);

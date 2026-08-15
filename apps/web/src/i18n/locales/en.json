@@ -1,5 +1,7 @@
 {
-  "Home": {
-    "helloWorld": "Hello, World!"
+  "Errors": {
+    "notFound": "Sorry, we couldn't find what you are looking for.",
+    "clientRatelimit": "You've been trying to access our service way too often. Try again later.",
+    "globalRatelimit": "We're expriencing an unexpected amount of traffic. We'll be back shortly."
   }
 }
