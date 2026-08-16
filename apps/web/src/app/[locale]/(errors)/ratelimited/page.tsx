@@ -1,5 +1,5 @@
 import { Separator } from "@/components/ui/separator";
-import { LimitedBy } from "@repo/ratelimit";
+import { type LimitedBy } from "@repo/ratelimit";
 import { getTranslations } from "next-intl/server";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";

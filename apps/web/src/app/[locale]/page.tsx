@@ -1,4 +1,4 @@
-export default async function HomePage() {
+export default function HomePage() {
   return (
     // copied from https://ui.shadcn.com/typeset
     <div className="flex justify-center m-4">

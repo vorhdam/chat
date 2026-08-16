@@ -1,4 +1,4 @@
-import { Locale } from "@repo/config";
+import { type Locale } from "@repo/config";
 import { getRequestConfig } from "next-intl/server";
 import * as rootParams from "next/root-params";
 import { routing } from "./routing";

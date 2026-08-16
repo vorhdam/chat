@@ -19,16 +19,30 @@ type Config = Readonly<{
   /** The branding name of the main application*/
   name: string;
   color: {
+    /** The name of the color cookie. */
+    cookieName: string;
     /** An array of all available colors in the application.*/
     colors: readonly Color[];
     /** The default color of the application.*/
     defaultColor: Color;
+  };
+  theme: {
+    /** The name of the theme cookie. */
+    cookieName: string;
   };
   i18n: {
     /** An array of all available locales in the application.*/
     locales: readonly Locale[];
     /** The default locale of the application.*/
     defaultLocale: Locale;
+  };
+  session: {
+    /** The name of the session cookie. */
+    cookieName: string;
+    /** The name of the session header. */
+    headerName: string;
+    /** The duration the session is alive in seconds.*/
+    duration: number;
   };
   cache: {
     /** The time the cache lives by default in seconds.*/
@@ -53,12 +67,21 @@ type Config = Readonly<{
 const config: Config = {
   name: "Nordaun",
   color: {
+    cookieName: "color",
     colors,
     defaultColor: "white",
+  },
+  theme: {
+    cookieName: "theme",
   },
   i18n: {
     locales,
     defaultLocale: "en",
+  },
+  session: {
+    cookieName: "session",
+    headerName: "Session",
+    duration: 1000 * 60 * 60 * 24 * 30,
   },
   cache: {
     duration: 600,

@@ -11,13 +11,13 @@ export default async function Providers({
   return (
     <I18nProvider>
       <ThemeProvider
-        cookieName="NEXT_THEME"
+        cookieName={config.theme.cookieName}
         defaultTheme="system"
         enableSystem
         disableTransition
       >
         <ColorProvider
-          cookieName="NEXT_COLOR"
+          cookieName={config.color.cookieName}
           classPrefix="color-"
           colors={config.color.colors}
           defaultColor={config.color.defaultColor}

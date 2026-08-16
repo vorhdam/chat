@@ -1,5 +1,5 @@
 import config from "@repo/config";
-import { RateLimitResult } from "@repo/ratelimit";
+import { type RateLimitResult } from "@repo/ratelimit";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function rateLimited(

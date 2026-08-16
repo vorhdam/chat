@@ -14,6 +14,9 @@
   "material-icon-theme.activeIconPack": "react",
   "material-icon-theme.folders.associations": {
     "ratelimit": "update",
-    "[locale]": "global"
+    "ratelimited": "update",
+    "[locale]": "global",
+    "(errors)": "error",
+    "[...rest]": "json"
   }
 }

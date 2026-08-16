@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { ReactNode, Suspense } from "react";
+import { type ReactNode, Suspense } from "react";
 
 import Providers from "@/components/providers";
 import { cn } from "@/components/utils";
 import { routing } from "@/i18n/routing";
-import config, { Locale } from "@repo/config";
+import config, { type Locale } from "@repo/config";
 
 import "../globals.css";
 import Loading from "../loading";
@@ -60,7 +60,8 @@ export default async function RootLayout({
   const typedLocale = locale as Locale;
   if (!routing.locales.includes(typedLocale)) notFound();
 
-  const theme: string = (await cookies()).get("NEXT_THEME")?.value || "";
+  const theme: string =
+    (await cookies()).get(config.theme.cookieName)?.value || "";
 
   return (
     <html lang={typedLocale} className={theme}>

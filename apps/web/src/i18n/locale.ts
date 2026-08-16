@@ -1,4 +1,4 @@
-import config, { Locale } from "@repo/config";
+import config, { type Locale } from "@repo/config";
 import { useLocale as useUnstableLocale } from "next-intl";
 import { getLocale as getUnstableLocale } from "next-intl/server";
 
