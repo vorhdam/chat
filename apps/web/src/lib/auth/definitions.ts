@@ -1,3 +1,4 @@
+import { type User } from "@repo/database/types";
 import parsePhoneNumberFromString from "libphonenumber-js";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
 import * as z from "zod";
@@ -83,10 +84,14 @@ type CookiePayload = Pick<
   "httpOnly" | "secure" | "sameSite" | "path" | "expires"
 >;
 
+type Profile = Pick<User, "id" | "name" | "username">;
+
 export {
   LoginSchema,
   SignupSchema,
   type AuthState,
   type CookiePayload,
+  type Profile,
   type SessionPayload,
+  type User,
 };

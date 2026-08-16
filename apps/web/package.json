@@ -27,6 +27,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@repo/cache": "*",
     "@repo/config": "*",
     "@repo/database": "*",
     "@repo/eslint": "*",
