@@ -18,5 +18,8 @@
     "[locale]": "global",
     "(errors)": "error",
     "[...rest]": "json"
+  },
+  "[svg]": {
+    "editor.defaultFormatter": "jock.svg"
   }
 }

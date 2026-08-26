@@ -8,7 +8,7 @@ export default function Loading() {
           <defs>
             <mask id="text-mask" maskUnits="userSpaceOnUse">
               <rect width="100%" height="100%" fill="black" />
-              <Logo fill="white" type="square" />
+              <Logo variant="default" />
             </mask>
           </defs>
         </svg>

@@ -1,3 +1,5 @@
+"use server";
+
 import prisma from "@repo/database";
 import { compare, hash } from "bcryptjs";
 import { getTranslations } from "next-intl/server";
@@ -42,25 +44,33 @@ export async function signup(
     name: formData.get("name"),
     email: formData.get("email"),
     username: formData.get("username"),
+    phone: formData.get("phone"),
     password: formData.get("password"),
   });
 
+  console.log("hello");
+  console.log("phone number", formData.get("username"));
+
   if (!validFields.success)
     return t(treeifyError(validFields.error).properties!);
-  const { name, email, username, password } = validFields.data;
+  const { name, email, username, phone, password } = validFields.data;
 
-  const [existingEmail, existingUsername] = await Promise.all([
+  const [existingEmail, existingUsername, existingPhone] = await Promise.all([
     prisma.user.count({ where: { email } }),
     prisma.user.count({ where: { username } }),
+    prisma.user.count({ where: { phone } }),
   ]);
+
   if (existingEmail > 0) return t("emailTaken");
   if (existingUsername > 0) return t("usernameTaken");
+  if (existingPhone > 0) return t("phoneTaken");
 
   const newUser = await prisma.user.create({
     data: {
       name,
       email,
       username,
+      phone,
       password: await hash(password, 12),
     },
   });
