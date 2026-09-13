@@ -8,7 +8,6 @@ import parsePhoneNumberFromString, {
 } from "libphonenumber-js";
 import * as React from "react";
 
-import { countryNames } from "@/components/lib/geo";
 import {
   Command,
   CommandEmpty,
@@ -30,8 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { cn } from "@/components/utils";
-
-const codes: CountryCode[] = getCountries();
+import { useTranslations } from "next-intl";
 
 type PhoneProps = React.ComponentProps<"input"> & {
   value?: string;
@@ -47,13 +45,8 @@ function Phone({
   emptyPlaceholder,
   ...props
 }: PhoneProps) {
-  const countries = React.useMemo(
-    () =>
-      [...codes].sort((a, b) => {
-        return countryNames[a].localeCompare(countryNames[b]);
-      }),
-    [],
-  );
+  const t = useTranslations("Countries");
+  const countries: CountryCode[] = getCountries();
 
   const [country, setCountry] = React.useState<CountryCode>("US");
   const [number, setNumber] = React.useState<string>("");
@@ -119,7 +112,7 @@ function Phone({
                     {countries.map((countryCode) => (
                       <CommandItem
                         key={countryCode}
-                        value={`${countryNames[countryCode]} +${getCountryCallingCode(countryCode)}`}
+                        value={`${t(countryCode)} +${getCountryCallingCode(countryCode)}`}
                         onSelect={() => handleCountryChange(countryCode)}
                         className="cursor-pointer"
                       >
@@ -129,7 +122,7 @@ function Phone({
                             +{getCountryCallingCode(countryCode)}
                           </span>
                           <span className="text-muted-foreground flex-1">
-                            {countryNames[countryCode]}
+                            {t(countryCode)}
                           </span>
                           {country === countryCode && (
                             <svg
