@@ -2,20 +2,20 @@
   "name": "chat",
   "private": true,
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
+    "build": "bun --bun turbo run build",
+    "dev": "bun --bun turbo run dev",
+    "lint": "bun --bun turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types",
-    "db:generate": "turbo run db:generate",
-    "db:migrate": "turbo run db:migrate",
-    "db:studio": "turbo run db:studio",
-    "db:push": "turbo run db:push",
-    "db:pull": "turbo run db:pull"
+    "check-types": "bun --bun turbo run check-types",
+    "db:generate": "bun --bun turbo run db:generate",
+    "db:migrate": "bun --bun turbo run db:migrate",
+    "db:studio": "bun --bun turbo run db:studio",
+    "db:push": "bun --bun turbo run db:push",
+    "db:pull": "bun --bun turbo run db:pull"
   },
   "devDependencies": {
-    "prettier": "^3.7.4",
-    "turbo": "^2.10.9",
+    "prettier": "^3.9.6",
+    "turbo": "^2.10.12",
     "typescript": "5.9.2"
   },
   "engines": {
@@ -24,7 +24,7 @@
   "devEngines": {
     "packageManager": {
       "name": "bun",
-      "version": "1.3.14"
+      "version": "1.4.2"
     }
   },
   "workspaces": [

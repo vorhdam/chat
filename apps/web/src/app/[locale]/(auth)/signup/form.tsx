@@ -32,8 +32,6 @@ export function SignupForm() {
       ...prev,
       [name]: value,
     }));
-
-    console.log(name, value);
   };
 
   return (

@@ -48,9 +48,6 @@ export async function signup(
     password: formData.get("password"),
   });
 
-  console.log("hello");
-  console.log("phone number", formData.get("username"));
-
   if (!validFields.success)
     return t(treeifyError(validFields.error).properties!);
   const { name, email, username, phone, password } = validFields.data;

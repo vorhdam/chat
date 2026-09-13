@@ -17,7 +17,9 @@
     "ratelimited": "update",
     "[locale]": "global",
     "(errors)": "error",
-    "[...rest]": "json"
+    "[...rest]": "json",
+    "(auth)": "secure",
+    "buttons": "guard"
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
