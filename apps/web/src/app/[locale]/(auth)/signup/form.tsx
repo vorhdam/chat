@@ -1,6 +1,6 @@
 "use client";
 
-import { signup } from "@/auth/actions";
+import { onboarding } from "@/auth/actions";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Field, FieldGroup, FieldLabel, FieldSet } from "@/components/ui/field";
@@ -16,7 +16,11 @@ export function SignupForm() {
   const t = useTranslations("SignupPage");
   const [agreed, setAgreed] = useState<boolean>(false);
 
-  const [state, action, pending] = useActionState(signup, undefined);
+  const [state, action, pending] = useActionState(
+    onboarding.bind(0, "finalize"),
+    undefined,
+  );
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",

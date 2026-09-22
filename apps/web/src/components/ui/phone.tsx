@@ -28,7 +28,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/components/utils";
+import { cn } from "cn";
 import { useTranslations } from "next-intl";
 
 type PhoneProps = React.ComponentProps<"input"> & {

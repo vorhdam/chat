@@ -21,6 +21,7 @@
     "passwordLetter": "tartalmaznia kell egy betűt.",
     "passwordDigit": "tartalmaznia kell egy számot.",
     "passwordInvalid": "Helytelen email cím vagy jelszó.",
+    "passwordMismatch": "A két jelszónak egyeznie kell.",
     "unexpectedError": "Hmmm! Valami hiba történt. Próbáld meg később..."
   },
   "Countries": {
@@ -292,6 +293,34 @@
     "loginAction": "Bejelentkezés",
     "submit": "Regisztráció",
     "submitting": "Regisztrálunk..."
+  },
+  "OnboardingPage": {
+    "title": "Regisztráció",
+    "description": "Kérlek add meg ezeket az adatokat és bele is vághatunk.",
+    "nameLabel": "Név",
+    "namePlaceholder": "A teljes neved",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Az email címed",
+    "usernameLabel": "Felhasználónév",
+    "usernamePlaceholder": "A felhasználóneved",
+    "phoneLabel": "Telefon",
+    "phonePlaceholder": "A telefonszámod",
+    "phoneSearchPlaceholder": "Keress a saját régiódra",
+    "phoneEmptyPlaceholder": "Nem találtuk a régiódat vagy hívószámodat.",
+    "passwordLabel": "Jelszó",
+    "passwordPlaceholder": "A jelszavad",
+    "passwordCriteria": "A jelszavadnak:",
+    "confirmPasswordLabel": "Jelszó megerősítés",
+    "termsLabel": "Elfogadom az",
+    "termsAction": "Általános szerődési feltételeket",
+    "signupLabel": "Kevés időd van?",
+    "signupAction": "Regisztáció",
+    "progress": "Már nincs sok hátra...",
+    "back": "Vissza",
+    "continue": "Tovább",
+    "continuing": "Tovább léptetünk...",
+    "submit": "Onboard",
+    "submitting": "Boarding you on..."
   },
   "LoginPage": {
     "title": "Bejelentkezés",

@@ -4,7 +4,16 @@ import prisma from "@repo/database";
 import { compare, hash } from "bcryptjs";
 import { getTranslations } from "next-intl/server";
 import { treeifyError } from "zod/v4/core";
-import { LoginSchema, SignupSchema, type AuthState } from "./definitions";
+import {
+  LoginSchema,
+  OnboardingContactSchema,
+  OnboardingNameSchema,
+  OnboardingPasswordSchema,
+  OnboardingSchema,
+  onboardingSteps,
+  type AuthState,
+  type OnboardingStep,
+} from "./definitions";
 import { createSession, deleteSession } from "./sessions";
 
 /**
@@ -28,52 +37,6 @@ async function t(
     }
   }
   return { errors };
-}
-
-/**
- * ### Signup
- * Signs a user up.
- * *Requires React's useActionState() hook.*
- * @returns The new state of the server action (errors or a message)
- */
-export async function signup(
-  state: AuthState,
-  formData: FormData,
-): Promise<AuthState> {
-  const validFields = SignupSchema.safeParse({
-    name: formData.get("name"),
-    email: formData.get("email"),
-    username: formData.get("username"),
-    phone: formData.get("phone"),
-    password: formData.get("password"),
-  });
-
-  if (!validFields.success)
-    return t(treeifyError(validFields.error).properties!);
-  const { name, email, username, phone, password } = validFields.data;
-
-  const [existingEmail, existingUsername, existingPhone] = await Promise.all([
-    prisma.user.count({ where: { email } }),
-    prisma.user.count({ where: { username } }),
-    prisma.user.count({ where: { phone } }),
-  ]);
-
-  if (existingEmail > 0) return t("emailTaken");
-  if (existingUsername > 0) return t("usernameTaken");
-  if (existingPhone > 0) return t("phoneTaken");
-
-  const newUser = await prisma.user.create({
-    data: {
-      name,
-      email,
-      username,
-      phone,
-      password: await hash(password, 12),
-    },
-  });
-
-  if (!newUser.id) return t("unexpectedError");
-  await createSession({ userId: newUser.id, redirectUrl: "/account" });
 }
 
 /**
@@ -106,6 +69,100 @@ export async function login(
     return t("passwordInvalid");
 
   await createSession({ userId: user.id, redirectUrl: "/account" });
+}
+
+/**
+ * ### Onboarding / Signup
+ * Signs a user up.
+ * *Requires React's useActionState() hook.*
+ * @returns The new state of the server action (errors or a message)
+ */
+export async function onboarding(
+  step: OnboardingStep,
+  state: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  if (!onboardingSteps.includes(step)) return t("unexpectedError");
+
+  if (step === "name") {
+    const validFields = OnboardingNameSchema.safeParse({
+      name: formData.get("name"),
+      username: formData.get("username"),
+    });
+
+    if (!validFields.success)
+      return t(treeifyError(validFields.error).properties!);
+    const { username } = validFields.data;
+
+    const existingUsername = await prisma.user.count({ where: { username } });
+    if (existingUsername > 0) return t("usernameTaken");
+  }
+
+  if (step === "contact") {
+    const validFields = OnboardingContactSchema.safeParse({
+      email: formData.get("email"),
+      phone: formData.get("phone"),
+    });
+
+    if (!validFields.success)
+      return t(treeifyError(validFields.error).properties!);
+    const { email, phone } = validFields.data;
+
+    const [existingEmail, existingPhone] = await Promise.all([
+      prisma.user.count({ where: { email } }),
+      prisma.user.count({ where: { phone } }),
+    ]);
+
+    if (existingEmail > 0) return t("emailTaken");
+    if (existingPhone > 0) return t("phoneTaken");
+  }
+
+  if (step === "password") {
+    const validFields = OnboardingPasswordSchema.safeParse({
+      password: formData.get("password"),
+      confirmPassword: formData.get("confirmPassword"),
+    });
+
+    if (!validFields.success)
+      return t(treeifyError(validFields.error).properties!);
+  }
+
+  if (step === "finalize") {
+    const validFields = OnboardingSchema.safeParse({
+      name: formData.get("name"),
+      email: formData.get("email"),
+      username: formData.get("username"),
+      phone: formData.get("phone"),
+      password: formData.get("password"),
+    });
+
+    if (!validFields.success)
+      return t(treeifyError(validFields.error).properties!);
+    const { name, email, username, phone, password } = validFields.data;
+
+    const [existingEmail, existingUsername, existingPhone] = await Promise.all([
+      prisma.user.count({ where: { email } }),
+      prisma.user.count({ where: { username } }),
+      prisma.user.count({ where: { phone } }),
+    ]);
+
+    if (existingEmail > 0) return t("emailTaken");
+    if (existingUsername > 0) return t("usernameTaken");
+    if (existingPhone > 0) return t("phoneTaken");
+
+    const newUser = await prisma.user.create({
+      data: {
+        name,
+        email,
+        username,
+        phone,
+        password: await hash(password, 12),
+      },
+    });
+
+    if (!newUser.id) return t("unexpectedError");
+    await createSession({ userId: newUser.id, redirectUrl: "/account" });
+  }
 }
 
 /**

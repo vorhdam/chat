@@ -52,13 +52,33 @@ const LoginSchema = z.object({
   password: Password,
 });
 
-const SignupSchema = z.object({
+const OnboardingSchema = z.object({
   name: Name,
   email: Email,
   username: Username,
   phone: Phone,
   password: Password,
 });
+
+const OnboardingNameSchema = OnboardingSchema.pick({
+  name: true,
+  username: true,
+});
+
+const OnboardingContactSchema = OnboardingSchema.pick({
+  email: true,
+}).extend({ phone: Phone });
+
+const OnboardingPasswordSchema = OnboardingSchema.pick({
+  password: true,
+})
+  .extend({ confirmPassword: z.string().check(z.trim()) })
+  .check(
+    z.refine((data) => data.password === data.confirmPassword, {
+      error: "passwordMismatch",
+      path: ["confirmPassword"],
+    }),
+  );
 
 type AuthState =
   | {
@@ -68,6 +88,7 @@ type AuthState =
         phone?: string[];
         username?: string[];
         password?: string[];
+        confirmPassword?: string[];
       };
       message?: string;
     }
@@ -86,11 +107,19 @@ type CookiePayload = Pick<
 
 type Profile = Pick<User, "id" | "name" | "username">;
 
+const onboardingSteps = ["name", "contact", "password", "finalize"] as const;
+type OnboardingStep = (typeof onboardingSteps)[number];
+
 export {
   LoginSchema,
-  SignupSchema,
+  OnboardingContactSchema,
+  OnboardingNameSchema,
+  OnboardingPasswordSchema,
+  OnboardingSchema,
+  onboardingSteps,
   type AuthState,
   type CookiePayload,
+  type OnboardingStep,
   type Profile,
   type SessionPayload,
   type User,

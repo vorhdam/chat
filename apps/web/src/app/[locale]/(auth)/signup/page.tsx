@@ -27,12 +27,20 @@ export default async function SignupPage() {
         <SignupForm />
       </CardContent>
       <CardFooter className="flex flex-col gap-6 py-6 max-md:bg-transparent max-md:px-0 max-md:m-4">
-        <Label>
-          {t("loginLabel")}
-          <Link href={"/login"} className="underline text-foreground">
-            {t("loginAction")}
-          </Link>
-        </Label>
+        <div className="flex flex-col gap-2.5 items-center">
+          <Label>
+            {t("loginLabel")}
+            <Link href={"/login"} className="underline text-foreground">
+              {t("loginAction")}
+            </Link>
+          </Label>
+          <Label>
+            {t("onboardingLabel")}
+            <Link href={"/onboarding"} className="underline text-foreground">
+              {t("onboardingAction")}
+            </Link>
+          </Label>
+        </div>
       </CardFooter>
     </Card>
   );

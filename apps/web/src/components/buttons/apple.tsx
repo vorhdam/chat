@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@/components/utils";
+import { cn } from "cn";
 import { ComponentProps } from "react";
 import AppleLogo from "../icons/apple";
 import { Button } from "../ui/button";

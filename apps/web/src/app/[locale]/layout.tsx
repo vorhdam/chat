@@ -5,9 +5,9 @@ import { notFound } from "next/navigation";
 import { type ReactNode, Suspense } from "react";
 
 import Providers from "@/components/providers";
-import { cn } from "@/components/utils";
 import { routing } from "@/i18n/routing";
 import config, { type Locale } from "@repo/config";
+import { cn } from "cn";
 
 import "../globals.css";
 import Loading from "../loading";
