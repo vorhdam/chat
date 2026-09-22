@@ -12,6 +12,7 @@ import {
   ProgressLabel,
   ProgressValue,
 } from "@/components/ui/progress";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Warning, WarningDescription } from "@/components/ui/warning";
 import { Link } from "@/i18n/navigation";
 import { OnboardingStep, onboardingSteps } from "@/lib/auth/definitions";
@@ -30,7 +31,8 @@ import {
 export function OnboardingForm() {
   const t = useTranslations("OnboardingPage");
   const [step, setStep] = useState<OnboardingStep>("name");
-  const [agreed, setAgreed] = useState<boolean>(false);
+  const [datasAccepted, setDatasAccepted] = useState<boolean>(false);
+  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
   const submitted = useRef<boolean>(false);
 
   const [state, action, pending] = useActionState(
@@ -47,7 +49,8 @@ export function OnboardingForm() {
     confirmPassword: "",
   });
 
-  const handleTerms = () => setAgreed(!agreed);
+  const handleDatas = () => setDatasAccepted(!datasAccepted);
+  const handleTerms = () => setTermsAccepted(!termsAccepted);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -76,7 +79,10 @@ export function OnboardingForm() {
   }, [step]);
 
   useEffect(() => {
-    if (submitted.current && !pending && state === undefined) goNext();
+    if (submitted.current && !pending && state === undefined) {
+      goNext();
+      submitted.current = false;
+    }
   }, [pending, state, goNext]);
 
   return (
@@ -217,10 +223,30 @@ export function OnboardingForm() {
         </Activity>
         <Activity mode={step === "finalize" ? "visible" : "hidden"}>
           <FieldSet>
+            <Table className="rounded-lg overflow-hidden">
+              <TableBody>
+                {(["name", "email", "phone"] as const).map((key) => (
+                  <TableRow key={key}>
+                    <TableCell className="font-medium text-start">
+                      {t(`${key}Label`)}
+                    </TableCell>
+                    <TableCell className="text-end">{formData[key]}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+            <Field orientation="horizontal">
+              <Checkbox
+                id="datas"
+                checked={datasAccepted}
+                onCheckedChange={handleDatas}
+              />
+              <FieldLabel htmlFor="datas">{t("datasLabel")}</FieldLabel>
+            </Field>
             <Field orientation="horizontal">
               <Checkbox
                 id="terms"
-                checked={agreed}
+                checked={termsAccepted}
                 onCheckedChange={handleTerms}
               />
               <FieldLabel htmlFor="terms">
@@ -253,11 +279,11 @@ export function OnboardingForm() {
 
             {step === "finalize" ? (
               <Button
-                aria-disabled={pending && agreed}
+                aria-disabled={pending && termsAccepted && datasAccepted}
                 type="submit"
                 className="w-full flex-1"
                 size={"lg"}
-                disabled={!agreed}
+                disabled={!termsAccepted || !datasAccepted}
               >
                 {pending ? t("submitting") : t("submit")}
               </Button>

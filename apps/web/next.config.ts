@@ -12,6 +12,7 @@ const nextConfig: NextConfig = {
   },
   logging: {
     browserToTerminal: true,
+    serverFunctions: false,
   },
 };
 
