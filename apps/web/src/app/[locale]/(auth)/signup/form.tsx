@@ -17,7 +17,7 @@ export function SignupForm() {
   const [agreed, setAgreed] = useState<boolean>(false);
 
   const [state, action, pending] = useActionState(
-    onboarding.bind(0, "finalize"),
+    onboarding.bind(null, "finalize"),
     undefined,
   );
 

@@ -291,12 +291,14 @@
     "termsAction": "Általános szerődési feltételeket.",
     "loginLabel": "Már van fiókod?",
     "loginAction": "Bejelentkezés",
+    "onboardingLabel": "Túl sok ez így egyszerre?",
+    "onboardingAction": "Bevezető",
     "submit": "Regisztráció",
     "submitting": "Regisztrálunk..."
   },
   "OnboardingPage": {
-    "title": "Regisztráció",
-    "description": "Kérlek add meg ezeket az adatokat és bele is vághatunk.",
+    "title": "Bevezető",
+    "description": "Mondj egy keveset magadról a többit pedig bízd ránk.",
     "nameLabel": "Név",
     "namePlaceholder": "A teljes neved",
     "emailLabel": "Email",
@@ -314,14 +316,16 @@
     "datasLabel": "Elismerem, hogy a fenti adatok helyesek.",
     "termsLabel": "Elfogadom az",
     "termsAction": "Általános szerődési feltételeket",
+    "loginLabel": "Már van fiókod?",
+    "loginAction": "Bejelentkezés",
     "signupLabel": "Kevés időd van?",
     "signupAction": "Regisztáció",
     "progress": "Már nincs sok hátra...",
     "back": "Vissza",
     "continue": "Tovább",
     "continuing": "Tovább léptetünk...",
-    "submit": "Onboard",
-    "submitting": "Boarding you on..."
+    "submit": "Befejezés",
+    "submitting": "Regisztrálunk..."
   },
   "LoginPage": {
     "title": "Bejelentkezés",
@@ -337,7 +341,7 @@
     "signupAction": "Regisztrálj",
     "forgotPasswordLabel": "Elfelejtetted a jelszavad?",
     "forgotPasswordAction": "Állítsd vissza",
-    "submit": "Login",
-    "submitting": "Logging you in..."
+    "submit": "Bejelentkezés",
+    "submitting": "Bejeletkeztetünk..."
   }
 }

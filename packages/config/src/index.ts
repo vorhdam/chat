@@ -44,6 +44,14 @@ type Config = Readonly<{
     /** The duration the session is alive in seconds.*/
     duration: number;
   };
+  license: {
+    /** The name of the license cookie. */
+    cookieName: string;
+    /** The name of the license header. */
+    headerName: string;
+    /** The duration the license is alive in seconds.*/
+    duration: number;
+  };
   cache: {
     /** The time the cache lives by default in seconds.*/
     duration: number;
@@ -82,6 +90,11 @@ const config: Config = {
     cookieName: "session",
     headerName: "Session",
     duration: 1000 * 60 * 60 * 24 * 30,
+  },
+  license: {
+    cookieName: "license",
+    headerName: "License",
+    duration: 1000 * 60 * 5,
   },
   cache: {
     duration: 600,

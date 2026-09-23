@@ -94,9 +94,48 @@ type AuthState =
     }
   | undefined;
 
+type LicensedRoute = keyof typeof LicensedRoutes;
+
+type LicensedRouteType = {
+  name: string;
+  href: string;
+  hidden: boolean;
+};
+
+const LicensedRoutes = {
+  resetpassword: {
+    name: "resetPassword",
+    href: "/resetpassword",
+    hidden: false,
+  },
+  terminateaccount: {
+    name: "terminateAccount",
+    href: "/terminateaccount",
+    hidden: false,
+  },
+  migrateemail: {
+    name: "migrateEmail",
+    href: "/migrateemail",
+    hidden: false,
+  },
+  twofactorauth: {
+    name: "twoFactorAuth",
+    href: "/account",
+    hidden: true,
+  },
+} as const satisfies Record<string, LicensedRouteType>;
+
 type SessionPayload = {
   token: string;
   userId: string;
+  expiresAt: Date;
+};
+
+type LicensePayload = {
+  token: string;
+  userId: string;
+  signed: boolean;
+  scope: LicensedRoute;
   expiresAt: Date;
 };
 
@@ -111,6 +150,7 @@ const onboardingSteps = ["name", "contact", "password", "finalize"] as const;
 type OnboardingStep = (typeof onboardingSteps)[number];
 
 export {
+  LicensedRoutes,
   LoginSchema,
   OnboardingContactSchema,
   OnboardingNameSchema,
@@ -119,6 +159,8 @@ export {
   onboardingSteps,
   type AuthState,
   type CookiePayload,
+  type LicensedRoute,
+  type LicensePayload,
   type OnboardingStep,
   type Profile,
   type SessionPayload,

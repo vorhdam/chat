@@ -19,7 +19,8 @@
     "(errors)": "error",
     "[...rest]": "json",
     "(auth)": "secure",
-    "buttons": "guard"
+    "buttons": "guard",
+    "(licensed)": "private"
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"

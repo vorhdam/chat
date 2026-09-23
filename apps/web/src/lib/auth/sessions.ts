@@ -7,10 +7,9 @@ import { cookies, headers } from "next/headers";
 import { CookiePayload, SessionPayload } from "./definitions";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
-const cookieName = config.session.cookieName;
-const headerName = config.session.headerName;
-export const expiresAt = new Date(Date.now() + config.session.duration);
-export const cookieOptions: CookiePayload = {
+const { cookieName, headerName, duration } = config.session;
+const expiresAt = new Date(Date.now() + duration);
+const cookieOptions: CookiePayload = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   expires: expiresAt,

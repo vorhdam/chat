@@ -36,7 +36,7 @@ export function OnboardingForm() {
   const submitted = useRef<boolean>(false);
 
   const [state, action, pending] = useActionState(
-    onboarding.bind(0, step),
+    onboarding.bind(null, step),
     undefined,
   );
 
