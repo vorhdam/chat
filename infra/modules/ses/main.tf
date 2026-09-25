@@ -1,9 +1,4 @@
-# ==============================================================================
-# 1. SES DOMAIN IDENTITY & VERIFICATION
-# ==============================================================================
-
-# Registers the primary domain identity with AWS SES.
-# This initiates domain-level verification instead of verifying individual email addresses.
+# This initiates domain-level verification for email addresses.
 resource "aws_ses_domain_identity" "main" {
   domain = var.domain_name
 }
@@ -23,12 +18,7 @@ resource "aws_ses_domain_identity_verification" "verification" {
   depends_on = [aws_route53_record.ses_verification]
 }
 
-# ==============================================================================
-# 2. DKIM (DomainKeys Identified Mail) FOR HIGH DELIVERABILITY
-# ==============================================================================
-
 # Generates 3 DKIM tokens required by AWS Easy DKIM.
-# DKIM cryptographically signs outgoing emails to prevent email spoofing.
 resource "aws_ses_domain_dkim" "main" {
   domain = aws_ses_domain_identity.main.domain
 }
@@ -42,10 +32,6 @@ resource "aws_route53_record" "dkim" {
   ttl     = 600
   records = ["${aws_ses_domain_dkim.main.dkim_tokens[count.index]}.dkim.amazonses.com"]
 }
-
-# ==============================================================================
-# 3. SENDER POLICY FRAMEWORK (SPF) & DMARC DNS RECORDS
-# ==============================================================================
 
 # SPF record specifies that AWS SES servers are authorized to send email on behalf of your domain.
 resource "aws_route53_record" "spf" {
@@ -65,19 +51,11 @@ resource "aws_route53_record" "dmarc" {
   records = ["v=DMARC1; p=quarantine; pct=100; rua=mailto:dmarc-reports@${var.domain_name}"]
 }
 
-# ==============================================================================
-# 4. CONFIGURATION SET & METRICS TRACKING
-# ==============================================================================
-
 # Configuration Sets allow tracking metrics like bounces, complaints, opens, and clicks.
 resource "aws_ses_configuration_set" "main" {
   name                       = "${var.configuration_set_name}-${var.environment}"
-  reputation_metrics_enabled = true # Enables tracking for bounce and complaint rates
+  reputation_metrics_enabled = true
 }
-
-# ==============================================================================
-# 5. SNS NOTIFICATIONS FOR BOUNCES & COMPLAINTS
-# ==============================================================================
 
 # SNS Topic to receive real-time notifications when an email bounces or is marked as spam.
 resource "aws_sns_topic" "ses_events" {
@@ -116,13 +94,9 @@ resource "aws_ses_event_destination" "sns_destination" {
   }
 }
 
-# ==============================================================================
-# 6. DEDICATED IAM USER & ACCESS KEYS FOR APPLICATION
-# ==============================================================================
-
 # Programmatic IAM User created specifically for sending emails from your application.
-resource "aws_iam_user" "ses_app_user" {
-  name = "ses-app-sender-${var.environment}"
+resource "aws_iam_user" "ses_user" {
+  name = "ses-sender-${var.environment}"
 
   tags = {
     Environment = var.environment
@@ -130,15 +104,15 @@ resource "aws_iam_user" "ses_app_user" {
   }
 }
 
-# Generates long-lived access keys (Access Key ID and Secret Access Key) for the user.
-resource "aws_iam_access_key" "ses_app_user_key" {
-  user = aws_iam_user.ses_app_user.name
+# Generates long-lived access keys (Access Key ID and Access Key Secret) for the user.
+resource "aws_iam_access_key" "ses_user_key" {
+  user = aws_iam_user.ses_user.name
 }
 
 # IAM Policy applying Principle of Least Privilege: allows ONLY sending emails via SES.
-resource "aws_iam_user_policy" "ses_app_user_policy" {
+resource "aws_iam_user_policy" "ses_user_policy" {
   name = "SESSendOnlyPolicy"
-  user = aws_iam_user.ses_app_user.name
+  user = aws_iam_user.ses_user.name
 
   policy = jsonencode({
     Version = "2012-10-17"

@@ -1,12 +1,12 @@
 output "ses_access_key_id" {
   description = "AWS Access Key ID for SES sending"
-  value       = module.ses.app_user_access_key_id
+  value       = module.ses.user_access_key_id
   sensitive   = true
 }
 
 output "ses_access_key_secret" {
   description = "AWS Access Key Secret for SES sending"
-  value       = module.ses.app_user_access_key_secret
+  value       = module.ses.user_access_key_secret
   sensitive   = true
 }
 

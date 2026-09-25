@@ -1,0 +1,35 @@
+# Local .terraform directories containing downloaded providers and modules
+*.terraform/
+
+# Local Terraform state files (contain unencrypted secrets, access keys, and passwords)
+*.tfstate
+.tfstate.
+*.tfstate.backup
+
+# Variable definition files (often contain sensitive values like zone IDs or passwords)
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Crash logs created by Terraform CLI on failure
+crash.log
+crash.*.log
+
+# Local environment variable files
+.env
+.env.*
+!.env.example
+
+# AWS access key files or certificates
+*.pem
+*.pub
+aws_credentials
+
+
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

@@ -13,26 +13,26 @@ output "sns_topic_arn" {
   value       = aws_sns_topic.ses_events.arn
 }
 
-output "app_user_access_key_id" {
+output "user_access_key_id" {
   description = "AWS Access Key ID for the TypeScript API"
-  value       = aws_iam_access_key.ses_app_user_key.id
+  value       = aws_iam_access_key.ses_user_key.id
   sensitive   = true
 }
 
-output "app_user_access_key_secret" {
+output "user_access_key_secret" {
   description = "AWS Access Key Secret for the TypeScript API"
-  value       = aws_iam_access_key.ses_app_user_key.secret
+  value       = aws_iam_access_key.ses_user_key.secret
   sensitive   = true
 }
 
 output "smtp_username" {
   description = "SES SMTP Username (same as Access Key ID)"
-  value       = aws_iam_access_key.ses_app_user_key.id
+  value       = aws_iam_access_key.ses_user_key.id
   sensitive   = true
 }
 
 output "smtp_password" {
   description = "SES SMTP Password generated from the access key"
-  value       = aws_iam_access_key.ses_app_user_key.ses_smtp_password_v4
+  value       = aws_iam_access_key.ses_user_key.ses_smtp_password_v4
   sensitive   = true
 }

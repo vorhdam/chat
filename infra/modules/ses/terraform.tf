@@ -1,4 +1,3 @@
-# Standard provider requirements block for the child module
 terraform {
   required_version = ">= 1.5.0"
 

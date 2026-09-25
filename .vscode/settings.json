@@ -20,7 +20,8 @@
     "[...rest]": "json",
     "(auth)": "secure",
     "buttons": "guard",
-    "(licensed)": "private"
+    "(licensed)": "private",
+    "ses": "mail"
   },
   "[svg]": {
     "editor.defaultFormatter": "jock.svg"
