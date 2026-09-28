@@ -1,5 +1,5 @@
 provider "aws" {
-  region = var.aws_region
+  region = var.AWS_REGION
 
   default_tags {
     tags = {
@@ -12,8 +12,8 @@ provider "aws" {
 
 module "ses" {
   source                 = "../../modules/ses"
-  domain_name            = var.domain_name
-  route53_zone_id        = var.route53_zone_id
+  domain_name            = var.DOMAIN_NAME
+  route53_zone_id        = var.ROUTE53_ZONE_ID
   environment            = "dev"
   configuration_set_name = "ses-config"
 }

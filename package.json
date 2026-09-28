@@ -12,12 +12,12 @@
     "db:studio": "bun --bun turbo run db:studio",
     "db:push": "bun --bun turbo run db:push",
     "db:pull": "bun --bun turbo run db:pull",
-    "infra:init": "cd infra/environments/dev && terraform init",
-    "infra:validate": "cd infra/environments/dev && terraform validate",
-    "infra:plan": "cd infra/environments/dev && terraform plan",
-    "infra:apply": "cd infra/environments/dev && terraform apply",
-    "infra:destroy": "cd infra/environments/dev && terraform destroy",
-    "infra:output": "cd infra/environments/dev && terraform output -json"
+    "infra:init": "terraform -chdir=infra/environments/dev init",
+    "infra:validate": "terraform -chdir=infra/environments/dev validate",
+    "infra:plan": "bun run --env-file=.env -- terraform -chdir=infra/environments/dev plan",
+    "infra:apply": "bun run --env-file=.env -- terraform -chdir=infra/environments/dev apply",
+    "infra:destroy": "terraform -chdir=infra/environments/dev destroy",
+    "infra:output": "terraform -chdir=infra/environments/dev output -json"
   },
   "devDependencies": {
     "prettier": "^3.9.6",

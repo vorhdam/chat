@@ -52,6 +52,10 @@ type Config = Readonly<{
     /** The duration the license is alive in seconds.*/
     duration: number;
   };
+  mail: {
+    /** The default sender email address */
+    defaultEmail: string;
+  };
   cache: {
     /** The time the cache lives by default in seconds.*/
     duration: number;
@@ -95,6 +99,9 @@ const config: Config = {
     cookieName: "license",
     headerName: "License",
     duration: 1000 * 60 * 5,
+  },
+  mail: {
+    defaultEmail: "noreply@nordaun.com",
   },
   cache: {
     duration: 600,

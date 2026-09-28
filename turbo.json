@@ -1,7 +1,18 @@
 {
   "$schema": "https://v2-10-9.turborepo.dev/schema.json",
   "ui": "tui",
-  "globalEnv": ["NODE_ENV", "REDIS_URL", "DATABASE_URL", "JWT_SECRET"],
+  "globalEnv": [
+    "NODE_ENV",
+    "REDIS_URL",
+    "DATABASE_URL",
+    "JWT_SECRET",
+    "TF_VAR_AWS_REGION",
+    "TF_VAR_DOMAIN_NAME",
+    "TF_VAR_ROUTE53_ZONE_ID",
+    "AWS_SES_KEY_ID",
+    "AWS_SES_KEY_SECRET",
+    "AWS_SES_CONFIG_SET"
+  ],
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate"],

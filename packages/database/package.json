@@ -10,11 +10,11 @@
   "scripts": {
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio",
-    "db:push": "prisma db push",
-    "db:pull": "prisma db pull"
+    "db:generate": "bun --env-file=../../.env run prisma generate",
+    "db:migrate": "bun --env-file=../../.env run prisma migrate dev",
+    "db:studio": "bun --env-file=../../.env run prisma studio",
+    "db:push": "bun --env-file=../../.env run prisma db push",
+    "db:pull": "bun --env-file=../../.env run prisma db pull"
   },
   "devDependencies": {
     "@repo/eslint": "*",
