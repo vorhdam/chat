@@ -1,0 +1,53 @@
+<mjml>
+  <mj-body>
+    <mj-section background-color="#181818">
+      <mj-column>
+        <mj-image
+          align="center"
+          border="none"
+          padding="16px 24px"
+          src="${config.url.logo}"
+          target="_blank"
+          alt="${config.name} Logo"
+          width="100px"
+        ></mj-image>
+        <mj-divider border-width="1px" border-color="#3f3f3f" />
+        <mj-text
+          align="left"
+          color="#55575d"
+          font-family="Arial, sans-serif"
+          font-size="24px"
+        >
+          <p style="margin: 8px 0; color: #ffffff"><b>${header}</b></p>
+        </mj-text>
+        <mj-text
+          align="justify"
+          color="#55575d"
+          font-family="Arial, sans-serif"
+          font-size="16px"
+        >
+          <p style="margin: 8px 0; color: #d4d4d4; word-spacing: 2.5px">
+            ${main}
+          </p>
+        </mj-text>
+        <mj-text
+          align="center"
+          color="#55575d"
+          font-family="Arial, sans-serif"
+          font-size="32px"
+        >
+          <p style="margin: 8px 0; color: #ffffff"><b>${otp}</b></p>
+        </mj-text>
+        <mj-text
+          align="left"
+          color="#55575d"
+          font-family="Arial, sans-serif"
+          font-size="16px"
+        >
+          <p style="margin: 8px 0; color: #d4d4d4">${footer}</p>
+          <p style="margin: 8px 0; color: #ffffff"><b>${config.name}</b></p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

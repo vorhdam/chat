@@ -8,7 +8,6 @@
     "./*": "./src/schemas/*.ts"
   },
   "scripts": {
-    "email:test": "bun --env-file=../../.env run ./src/test.ts",
     "lint": "eslint . --max-warnings 0",
     "check-types": "tsc --noEmit"
   },

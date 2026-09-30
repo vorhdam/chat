@@ -22,100 +22,354 @@ export function VerifyEmail({
   otp,
   footer,
 }: VerifySchema): string {
-  return `
-  <!DOCTYPE html>
-<html>
+  return `<!doctype html>
+<html
+  lang="und"
+  dir="auto"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:v="urn:schemas-microsoft-com:vml"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="color-scheme" content="light only" />
-    <meta name="supported-color-schemes" content="light" />
-    <title>Verification Email</title>
+    <title></title>
+    <!--[if !mso]><!-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!--<![endif]-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type="text/css">
+      #outlook a {
+        padding: 0;
+      }
+
+      body {
+        margin: 0;
+        padding: 0;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+      }
+
+      table,
+      td {
+        border-collapse: collapse;
+        mso-table-lspace: 0pt;
+        mso-table-rspace: 0pt;
+      }
+
+      img {
+        border: 0;
+        height: auto;
+        line-height: 100%;
+        outline: none;
+        text-decoration: none;
+        -ms-interpolation-mode: bicubic;
+      }
+
+      p {
+        display: block;
+        margin: 13px 0;
+      }
+    </style>
+    <!--[if mso]>
+      <noscript>
+        <xml>
+          <o:OfficeDocumentSettings>
+            <o:AllowPNG />
+            <o:PixelsPerInch>96</o:PixelsPerInch>
+          </o:OfficeDocumentSettings>
+        </xml>
+      </noscript>
+    <![endif]-->
+    <!--[if lte mso 11]>
+      <style type="text/css">
+        .mj-outlook-group-fix {
+          width: 100% !important;
+        }
+      </style>
+    <![endif]-->
+    <style type="text/css">
+      @media only screen and (min-width: 480px) {
+        .mj-column-per-100 {
+          width: 100% !important;
+          max-width: 100%;
+        }
+      }
+    </style>
+    <style media="screen and (min-width:480px)">
+      .moz-text-html .mj-column-per-100 {
+        width: 100% !important;
+        max-width: 100%;
+      }
+    </style>
+    <style type="text/css">
+      @media only screen and (max-width: 479px) {
+        table.mj-full-width-mobile {
+          width: 100% !important;
+        }
+
+        td.mj-full-width-mobile {
+          width: auto !important;
+        }
+      }
+    </style>
   </head>
-  <body
-    style="
-      margin: 0;
-      padding: 0;
-      background-color: #f4f4f5;
-      font-family: Arial, sans-serif;
-    "
-  >
-    <table
-      role="presentation"
-      cellpadding="0"
-      cellspacing="0"
-      width="100%"
-      style="background-color: #f4f4f5; height: 100%; margin: 0; padding: 0;"
+
+  <body style="word-spacing: normal">
+    <div
+      aria-roledescription="email"
+      role="article"
+      lang="und"
+      dir="auto"
+      style="word-spacing: normal"
     >
-      <tr>
-        <td align="center" style="padding: 40px 10px;">
-          <table
-            role="presentation"
-            cellpadding="0"
-            cellspacing="0"
-            width="100%"
-            style="
-              max-width: 600px;
-              background-color: #18181b;
-              background-image: linear-gradient(#18181b, #18181b);
-              color: #eeeeeeff;
-              border-radius: 4px;
-            "
-          >
+      <!--[if mso | IE]><table align="center" border="0" cellpadding="0" cellspacing="0" class="" role="presentation" style="width:600px;" width="600" bgcolor="#181818" ><tr><td style="line-height:0px;font-size:0px;mso-line-height-rule:exactly;"><![endif]-->
+      <div
+        style="
+          background: #181818;
+          background-color: #181818;
+          margin: 0px auto;
+          max-width: 600px;
+        "
+      >
+        <table
+          align="center"
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          role="presentation"
+          style="background: #181818; background-color: #181818; width: 100%"
+        >
+          <tbody>
             <tr>
-              <td align="center" style="padding: 30px 40px 10px 40px">
-                <img
-                  src="${config.url.logo}"
-                  alt="${config.name} Logo"
-                  height="15"
-                  style="display: block; margin: 0 auto"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 0 40px">
-                <hr
-                  style="
-                    border: 0;
-                    border-top: 1px solid #3f3f46;
-                    margin: 20px 0;
-                  "
-                />
-              </td>
-            </tr>
-            <tr>
-              <td style="padding: 0 40px 20px 40px; color: #eeeeeeff">
-                <h1
-                  style="margin: 0 0 20px 0; font-size: 24px; font-weight: bold; color: #eeeeeeff;"
-                >
-                  ${header}
-                </h1>
-                <p
-                  style="margin: 0 0 20px 0; font-size: 16px; line-height: 1.5; text-align: justify; color: #eeeeeeff;"
-                >
-                  ${main}
-                </p>
+              <td
+                style="
+                  direction: ltr;
+                  font-size: 0px;
+                  padding: 20px 0;
+                  text-align: center;
+                "
+              >
+                <!--[if mso | IE]><table role="presentation" border="0" cellpadding="0" cellspacing="0"><tr><td class="" style="vertical-align:top;width:600px;" ><![endif]-->
                 <div
+                  class="mj-column-per-100 mj-outlook-group-fix"
                   style="
-                    font-size: 32px;
-                    font-weight: bold;
-                    text-align: center;
-                    margin: 15px 0;
-                    color: #eeeeeeff;
+                    font-size: 0px;
+                    text-align: left;
+                    direction: ltr;
+                    display: inline-block;
+                    vertical-align: top;
+                    width: 100%;
                   "
                 >
-                  ${otp}
+                  <table
+                    border="0"
+                    cellpadding="0"
+                    cellspacing="0"
+                    role="presentation"
+                    style="vertical-align: top"
+                    width="100%"
+                  >
+                    <tbody>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-size: 0px;
+                            padding: 16px 24px;
+                            word-break: break-word;
+                          "
+                        >
+                          <table
+                            border="0"
+                            cellpadding="0"
+                            cellspacing="0"
+                            role="presentation"
+                            style="
+                              border-collapse: collapse;
+                              border-spacing: 0px;
+                            "
+                          >
+                            <tbody>
+                              <tr>
+                                <td style="width: 100px">
+                                  <img
+                                    alt="${config.name} Logo"
+                                    src="${config.url.logo}"
+                                    style="
+                                      border: none;
+                                      display: block;
+                                      outline: none;
+                                      text-decoration: none;
+                                      height: auto;
+                                      width: 100%;
+                                      font-size: 13px;
+                                    "
+                                    width="100"
+                                    height="auto"
+                                  />
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-size: 0px;
+                            padding: 10px 25px;
+                            word-break: break-word;
+                          "
+                        >
+                          <p
+                            style="
+                              border-top: solid 1px #3f3f3f;
+                              font-size: 1px;
+                              margin: 0px auto;
+                              width: 100%;
+                            "
+                          ></p>
+                          <!--[if mso | IE
+                            ]><table
+                              align="center"
+                              border="0"
+                              cellpadding="0"
+                              cellspacing="0"
+                              style="
+                                border-top: solid 1px #3f3f3f;
+                                font-size: 1px;
+                                margin: 0px auto;
+                                width: 550px;
+                              "
+                              role="presentation"
+                              width="550px"
+                            >
+                              <tr>
+                                <td style="height: 0; line-height: 0">
+                                  &nbsp;
+                                </td>
+                              </tr>
+                            </table><!
+                          [endif]-->
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          align="left"
+                          style="
+                            font-size: 0px;
+                            padding: 10px 25px;
+                            word-break: break-word;
+                          "
+                        >
+                          <div
+                            style="
+                              font-family: Arial, sans-serif;
+                              font-size: 24px;
+                              line-height: 1;
+                              text-align: left;
+                              color: #55575d;
+                            "
+                          >
+                            <p style="margin: 8px 0; color: #ffffff">
+                              <b>${header}</b>
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          align="justify"
+                          style="
+                            font-size: 0px;
+                            padding: 10px 25px;
+                            word-break: break-word;
+                          "
+                        >
+                          <div
+                            style="
+                              font-family: Arial, sans-serif;
+                              font-size: 16px;
+                              line-height: 1;
+                              text-align: justify;
+                              color: #55575d;
+                            "
+                          >
+                            <p
+                              style="
+                                margin: 8px 0;
+                                color: #d4d4d4;
+                                word-spacing: 2.5px;
+                              "
+                            >
+                              ${main}
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          align="center"
+                          style="
+                            font-size: 0px;
+                            padding: 10px 25px;
+                            word-break: break-word;
+                          "
+                        >
+                          <div
+                            style="
+                              font-family: Arial, sans-serif;
+                              font-size: 32px;
+                              line-height: 1;
+                              text-align: center;
+                              color: #55575d;
+                            "
+                          >
+                            <p style="margin: 8px 0; color: #ffffff">
+                              <b>${otp}</b>
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td
+                          align="left"
+                          style="
+                            font-size: 0px;
+                            padding: 10px 25px;
+                            word-break: break-word;
+                          "
+                        >
+                          <div
+                            style="
+                              font-family: Arial, sans-serif;
+                              font-size: 16px;
+                              line-height: 1;
+                              text-align: left;
+                              color: #55575d;
+                            "
+                          >
+                            <p style="margin: 8px 0; color: #d4d4d4">
+                              ${footer}
+                            </p>
+                            <p style="margin: 8px 0; color: #ffffff">
+                              <b>${config.name}</b>
+                            </p>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
-                <p style="margin: 0; font-size: 16px; color: #eeeeeeff;">
-                  ${footer}, <br /><strong style="color: #eeeeeeff;">${config.name}</strong>
-                </p>
+                <!--[if mso | IE]></td></tr></table><![endif]-->
               </td>
             </tr>
-          </table>
-        </td>
-      </tr>
-    </table>
+          </tbody>
+        </table>
+      </div>
+      <!--[if mso | IE]></td></tr></table><![endif]-->
+    </div>
   </body>
-</html>
-`;
+</html>`;
 }
