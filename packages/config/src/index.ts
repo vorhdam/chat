@@ -74,6 +74,10 @@ type Config = Readonly<{
     /** The maximum amount of request that are allowed in that window above globally.*/
     globalLimit: number;
   };
+  url: {
+    /** The URL of the application's logo*/
+    logo: string;
+  };
 }>;
 
 const config: Config = {
@@ -113,6 +117,9 @@ const config: Config = {
     clientLimit: 300,
     globalDuration: 60,
     globalLimit: 300,
+  },
+  url: {
+    logo: "https://i.imgur.com/0bw1xdF.png",
   },
 };
 
