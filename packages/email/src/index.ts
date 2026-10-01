@@ -1,3 +1,5 @@
+import "server-only";
+
 import { SESv2Client, SendEmailCommand } from "@aws-sdk/client-sesv2";
 import config from "@repo/config";
 

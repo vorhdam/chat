@@ -2,7 +2,8 @@ import "server-only";
 
 import { cache } from "@repo/cache";
 import prisma from "@repo/database";
-import { Profile, SessionPayload, User } from "./definitions";
+import { LicensePayload, Profile, SessionPayload, User } from "./definitions";
+import { verifyLicense } from "./licenses";
 import { verifySession } from "./sessions";
 
 export const getUser = async (): Promise<Omit<
@@ -63,4 +64,10 @@ export const getSession = async (): Promise<SessionPayload | null> => {
   const session = await verifySession();
   if (!session?.userId) return null;
   return session;
+};
+
+export const getLicense = async (): Promise<LicensePayload | null> => {
+  const license = await verifyLicense();
+  if (!license?.userId) return null;
+  return license;
 };

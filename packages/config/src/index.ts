@@ -53,6 +53,8 @@ type Config = Readonly<{
     duration: number;
   };
   mail: {
+    /** The URL of the application's logo*/
+    headerLogo: string;
     /** The default sender email address */
     defaultEmail: string;
   };
@@ -74,9 +76,9 @@ type Config = Readonly<{
     /** The maximum amount of request that are allowed in that window above globally.*/
     globalLimit: number;
   };
-  url: {
-    /** The URL of the application's logo*/
-    logo: string;
+  auth: {
+    /** The length of a One Time Password (OTP) */
+    otpLength: number;
   };
 }>;
 
@@ -105,6 +107,7 @@ const config: Config = {
     duration: 1000 * 60 * 5,
   },
   mail: {
+    headerLogo: "https://i.imgur.com/0bw1xdF.png",
     defaultEmail: "noreply@nordaun.com",
   },
   cache: {
@@ -118,8 +121,8 @@ const config: Config = {
     globalDuration: 60,
     globalLimit: 300,
   },
-  url: {
-    logo: "https://i.imgur.com/0bw1xdF.png",
+  auth: {
+    otpLength: 6,
   },
 };
 

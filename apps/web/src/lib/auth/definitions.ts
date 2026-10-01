@@ -1,3 +1,4 @@
+import config from "@repo/config";
 import { type User } from "@repo/database/types";
 import parsePhoneNumberFromString from "libphonenumber-js";
 import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
@@ -47,6 +48,10 @@ const Password = z
     z.trim(),
   );
 
+const Otp = z
+  .string()
+  .check(z.length(config.auth.otpLength, { error: "otpLength" }));
+
 const LoginSchema = z.object({
   email: Email,
   password: Password,
@@ -80,6 +85,14 @@ const OnboardingPasswordSchema = OnboardingSchema.pick({
     }),
   );
 
+const EmailSchema = z.object({
+  email: Email,
+});
+
+const OtpSchema = z.object({
+  otp: Otp,
+});
+
 type AuthState =
   | {
       errors?: {
@@ -89,6 +102,7 @@ type AuthState =
         username?: string[];
         password?: string[];
         confirmPassword?: string[];
+        otp?: string[];
       };
       message?: string;
     }
@@ -139,6 +153,13 @@ type LicensePayload = {
   expiresAt: Date;
 };
 
+type VerifyMailParams = {
+  name: string;
+  email: string;
+  otp: string;
+  route: LicensedRoute;
+};
+
 type CookiePayload = Pick<
   ResponseCookie,
   "httpOnly" | "secure" | "sameSite" | "path" | "expires"
@@ -149,7 +170,11 @@ type Profile = Pick<User, "id" | "name" | "username">;
 const onboardingSteps = ["name", "contact", "password", "finalize"] as const;
 type OnboardingStep = (typeof onboardingSteps)[number];
 
+const verifySteps = ["email", "otp"] as const;
+type VerifyStep = (typeof verifySteps)[number];
+
 export {
+  EmailSchema,
   LicensedRoutes,
   LoginSchema,
   OnboardingContactSchema,
@@ -157,6 +182,8 @@ export {
   OnboardingPasswordSchema,
   OnboardingSchema,
   onboardingSteps,
+  OtpSchema,
+  verifySteps,
   type AuthState,
   type CookiePayload,
   type LicensedRoute,
@@ -165,4 +192,6 @@ export {
   type Profile,
   type SessionPayload,
   type User,
+  type VerifyMailParams,
+  type VerifyStep,
 };

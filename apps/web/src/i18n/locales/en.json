@@ -24,6 +24,24 @@
     "passwordMismatch": "The two passwords must match.",
     "unexpectedError": "Oops! Something went wrong. Try again later..."
   },
+  "Emails": {
+    "resetPasswordSubject": "Password Reset",
+    "resetPasswordHeader": "Dear {name},",
+    "resetPasswordMain": "We received a request to reset your password. If you made this request, use the code below to reset your password. If not, do not share this code with anyone and simply ignore this email.",
+    "resetPasswordFooter": "Best regards,",
+    "migrateEmailSubject": "Email Migration",
+    "migrateEmailHeader": "Dear {name},",
+    "migrateEmailMain": "We received a request to change your email. If you made this request, use the code below to change your email. If not, do not share this code with anyone and simply ignore this email.",
+    "migrateEmailFooter": "Best regards,",
+    "terminateAccountSubject": "Account Termination",
+    "terminateAccountHeader": "Dear {name},",
+    "terminateAccountMain": "We received a request to permanently delete your account. Please be aware that this action is irreversible, and all your data will be permanently lost. If you made this request, use the code below to proceed. If not, do not share this code with anyone and simply ignore this email.",
+    "terminateAccountFooter": "Best regards,",
+    "twoFactorAuthSubject": "Two-Factor Authentication",
+    "twoFactorAuthHeader": "Dear {name},",
+    "twoFactorAuthMain": "We detected a new login attempt to your account. If this was you use the code below to continue. If not, do not share this code with anyone and simply ignore this email.",
+    "twoFactorAuthFooter": "Best regards,"
+  },
   "Countries": {
     "AC": "Ascension Island",
     "AD": "Andorra",
@@ -343,5 +361,13 @@
     "forgotPasswordAction": "Reset it",
     "submit": "Login",
     "submitting": "Logging you in..."
+  },
+  "VerifyPage": {
+    "title": "Verify",
+    "description": "Please verify your identity by entering your email!",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Your email address",
+    "submit": "Verify",
+    "submitting": "Verifing..."
   }
 }

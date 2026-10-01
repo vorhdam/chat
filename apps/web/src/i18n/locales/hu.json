@@ -24,6 +24,24 @@
     "passwordMismatch": "A két jelszónak egyeznie kell.",
     "unexpectedError": "Hmmm! Valami hiba történt. Próbáld meg később..."
   },
+  "Emails": {
+    "resetPasswordSubject": "Jelszó visszaállítása",
+    "resetPasswordHeader": "Kedves {name},",
+    "resetPasswordMain": "Kaptunk egy kérést a jelszavad visszaállítására. Ha действительно te kérted, használd az alábbi kódot a jelszó megváltoztatásához. Ha nem te voltál, akkor ne oszd meg senkivel a kódot, és nyugodtan hagyd figyelmen kívül ezt az emailt.",
+    "resetPasswordFooter": "Üdvözlettel,",
+    "migrateEmailSubject": "Email cím módosítása",
+    "migrateEmailHeader": "Kedves {name},",
+    "migrateEmailMain": "Kaptunk egy kérést az email címed megváltoztatására. Ha te voltál az, használd az alábbi kódot a módosításhoz. Ha nem, kérjük, ne oszd meg a kódot senkivel, és hagyd figyelmen kívül ezt az emailt.",
+    "migrateEmailFooter": "Üdvözlettel,",
+    "terminateAccountSubject": "Fiók törlése",
+    "terminateAccountHeader": "Kedves {name},",
+    "terminateAccountMain": "Kaptunk egy kérést a fiókod végleges törlésére. Fontos tudnod, hogy ez a művelet nem visszavonható, és minden adatod véglegesen törlődik. Ha te kérted, használd az alábbi kódot a folytatáshoz. Ha nem, ne oszd meg a kódot senkivel, és hagyd figyelmen kívül ezt az emailt.",
+    "terminateAccountFooter": "Üdvözlettel,",
+    "twoFactorAuthSubject": "Kétlépcsős azonosítás",
+    "twoFactorAuthHeader": "Kedves {name},",
+    "twoFactorAuthMain": "Új bejelentkezési kísérletet észleltünk a fiókodnál. Ha ez te voltál, használd az alábbi kódot a folytatáshoz. Ha nem, ne oszd meg a kódot senkivel, és hagyd figyelmen kívül ezt az emailt.",
+    "twoFactorAuthFooter": "Üdvözlettel,"
+  },
   "Countries": {
     "AC": "Ascension-sziget",
     "AD": "Andorra",
@@ -343,5 +361,13 @@
     "forgotPasswordAction": "Állítsd vissza",
     "submit": "Bejelentkezés",
     "submitting": "Bejeletkeztetünk..."
+  },
+  "VerifyPage": {
+    "title": "Hitelesítés",
+    "description": "Kérlek igazold, hogy te vagy az, az emaileddel!",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Az email címed",
+    "submit": "Hitelesítés",
+    "submitting": "Hitelesítünk..."
   }
 }

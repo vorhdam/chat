@@ -194,7 +194,7 @@ export function VerifyEmail({
                                 <td style="width: 100px">
                                   <img
                                     alt="${config.name} Logo"
-                                    src="${config.url.logo}"
+                                    src="${config.mail.headerLogo}"
                                     style="
                                       border: none;
                                       display: block;
