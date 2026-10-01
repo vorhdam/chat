@@ -68,6 +68,6 @@ export const getSession = async (): Promise<SessionPayload | null> => {
 
 export const getLicense = async (): Promise<LicensePayload | null> => {
   const license = await verifyLicense();
-  if (!license?.userId) return null;
+  if (!license?.email) return null;
   return license;
 };

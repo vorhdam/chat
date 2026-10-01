@@ -41,18 +41,18 @@ export async function decrypt(license: string): Promise<LicenseData | null> {
 
 export async function createLicense({
   scope,
-  userId,
+  email,
   redirectUrl,
 }: {
   scope: LicensedRoute;
-  userId: string;
+  email: string;
   redirectUrl?: string;
 }): Promise<LicensePayload> {
   const signed = false;
-  const token = await encrypt({ scope, userId, signed, expiresAt });
+  const token = await encrypt({ scope, email, signed, expiresAt });
   (await cookies()).set(cookieName, token, cookieOptions);
   if (redirectUrl) await redirect(redirectUrl);
-  return { token, scope, userId, signed, expiresAt };
+  return { token, scope, email, signed, expiresAt };
 }
 
 export async function verifyLicense(): Promise<LicensePayload | null> {
@@ -61,14 +61,14 @@ export async function verifyLicense(): Promise<LicensePayload | null> {
   const bearer = header?.startsWith("Bearer ") ? header.split(" ")[1] : "";
   const token = cookie || bearer || "";
   const license = await decrypt(token);
-  if (!license?.userId) return null;
+  if (!license?.email) return null;
   return { token, ...license };
 }
 
 export async function signLicense(): Promise<LicensePayload | null> {
   const license = await verifyLicense();
   if (!license) return null;
-  const reach = { userId: license.userId, scope: license.scope };
+  const reach = { email: license.email, scope: license.scope };
   const token = await encrypt({ ...reach, signed: true, expiresAt });
   (await cookies()).set(cookieName, token, cookieOptions);
   return { token, ...reach, signed: true, expiresAt };
@@ -76,7 +76,7 @@ export async function signLicense(): Promise<LicensePayload | null> {
 
 export async function deleteLicense() {
   const license = await verifyLicense();
-  if (!license?.userId) return null;
+  if (!license?.email) return null;
   (await cookies()).delete(cookieName);
   return license;
 }

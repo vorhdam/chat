@@ -27,7 +27,7 @@ import {
   type AuthState,
   type OnboardingStep,
 } from "./definitions";
-import { createLicense, signLicense } from "./licenses";
+import { createLicense, deleteLicense, signLicense } from "./licenses";
 import { createSession, deleteSession } from "./sessions";
 
 /**
@@ -109,7 +109,13 @@ export async function login(
 
   const user = await prisma.user.findUnique({
     where: { email },
-    select: { id: true, name: true, password: true, twoFactorAuth: true },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      password: true,
+      twoFactorAuth: true,
+    },
   });
 
   if (!user?.id || !user?.password) return t("passwordInvalid");
@@ -134,7 +140,7 @@ export async function login(
       sendEmail(mailOptions),
       createLicense({
         scope: "twofactorauth",
-        userId: user.id,
+        email: user.email,
         redirectUrl: "/verify?scope=twofactorauth",
       }),
     ]);
@@ -243,6 +249,7 @@ export async function onboarding(
  */
 export async function logout() {
   await deleteSession();
+  await deleteLicense();
 }
 
 /**
@@ -273,30 +280,28 @@ export async function verify(
 
     const user = await prisma.user.findUnique({
       where: { email },
-      select: { id: true, name: true },
+      select: { id: true, name: true, email: true },
     });
 
-    if (!user?.id || !user?.name) return t("emailNotFound");
+    if (user?.id && user?.name) {
+      const otp = generateOtp();
+      const mailOptions = await getMailOptions({
+        name: user.name,
+        email,
+        otp,
+        route: scope,
+      });
 
-    const otp = generateOtp();
-    const mailOptions = await getMailOptions({
-      name: user.name,
-      email,
-      otp,
-      route: scope,
-    });
+      await Promise.all([
+        prisma.user.update({
+          where: { id: user.id },
+          data: { otp: await hash(otp, 12) },
+        }),
+        sendEmail(mailOptions),
+      ]);
+    }
 
-    await Promise.all([
-      prisma.user.update({
-        where: { id: user.id },
-        data: { otp: await hash(otp, 12) },
-      }),
-      sendEmail(mailOptions),
-      createLicense({
-        scope,
-        userId: user.id,
-      }),
-    ]);
+    await createLicense({ scope, email });
   }
 
   if (step === "otp") {
@@ -312,11 +317,11 @@ export async function verify(
     const { otp } = validFields.data;
 
     const user = await prisma.user.findUnique({
-      where: { id: license.userId },
+      where: { email: license.email },
       select: { id: true, otp: true },
     });
 
-    if (!user?.id || !user?.otp) return t("licenseInvalid");
+    if (!user?.id || !user?.otp) return t("otpInvalid");
     const otpMatch = await compare(otp, user.otp);
     if (!otpMatch) return t("otpInvalid");
 

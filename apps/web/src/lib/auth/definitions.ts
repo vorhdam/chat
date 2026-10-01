@@ -147,7 +147,7 @@ type SessionPayload = {
 
 type LicensePayload = {
   token: string;
-  userId: string;
+  email: string;
   signed: boolean;
   scope: LicensedRoute;
   expiresAt: Date;

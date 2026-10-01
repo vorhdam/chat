@@ -22,6 +22,9 @@
     "passwordDigit": "contain a number.",
     "passwordInvalid": "Invalid email or password.",
     "passwordMismatch": "The two passwords must match.",
+    "otpLength": "Your verification code is too short.",
+    "otpInvalid": "Invalid verification code.",
+    "licenseInvalid": "You don't have access to this resource.",
     "unexpectedError": "Oops! Something went wrong. Try again later..."
   },
   "Emails": {

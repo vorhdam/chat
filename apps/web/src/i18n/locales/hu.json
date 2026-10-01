@@ -22,6 +22,9 @@
     "passwordDigit": "tartalmaznia kell egy számot.",
     "passwordInvalid": "Helytelen email cím vagy jelszó.",
     "passwordMismatch": "A két jelszónak egyeznie kell.",
+    "otpLength": "A hitelesítő kódod túl rövid.",
+    "otpInvalid": "Hibás hitelesítő kód.",
+    "licenseInvalid": "Nincs hozzáférésed ehhez a forráshoz.",
     "unexpectedError": "Hmmm! Valami hiba történt. Próbáld meg később..."
   },
   "Emails": {
