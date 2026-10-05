@@ -1,8 +1,12 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { type ReactNode } from "react";
+import * as React from "react";
 
-export async function I18nProvider({ children }: { children: ReactNode }) {
+export async function I18nProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const messages = await getMessages();
 
   return (

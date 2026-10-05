@@ -1,8 +1,9 @@
+import parsePhoneNumberFromString from "libphonenumber-js";
+import { type ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import * as z from "zod";
+
 import config from "@repo/config";
 import { type User } from "@repo/database/types";
-import parsePhoneNumberFromString from "libphonenumber-js";
-import { ResponseCookie } from "next/dist/compiled/@edge-runtime/cookies";
-import * as z from "zod";
 
 const Name = z.string().check(
   z.minLength(5, { error: "nameShort" }),
@@ -167,11 +168,11 @@ type CookiePayload = Pick<
 
 type Profile = Pick<User, "id" | "name" | "username">;
 
-const onboardingSteps = ["name", "contact", "password", "finalize"] as const;
-type OnboardingStep = (typeof onboardingSteps)[number];
+const OnboardingSteps = ["name", "contact", "password", "finalize"] as const;
+type OnboardingStep = (typeof OnboardingSteps)[number];
 
-const verifySteps = ["email", "otp"] as const;
-type VerifyStep = (typeof verifySteps)[number];
+const VerifySteps = ["email", "otp"] as const;
+type VerifyStep = (typeof VerifySteps)[number];
 
 export {
   EmailSchema,
@@ -181,9 +182,9 @@ export {
   OnboardingNameSchema,
   OnboardingPasswordSchema,
   OnboardingSchema,
-  onboardingSteps,
+  OnboardingSteps,
   OtpSchema,
-  verifySteps,
+  VerifySteps,
   type AuthState,
   type CookiePayload,
   type LicensedRoute,

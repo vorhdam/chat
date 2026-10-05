@@ -15,32 +15,23 @@ import {
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Warning, WarningDescription } from "@/components/ui/warning";
 import { Link } from "@/i18n/navigation";
-import { OnboardingStep, onboardingSteps } from "@/lib/auth/definitions";
+import { type OnboardingStep, OnboardingSteps } from "@/lib/auth/definitions";
 import { useTranslations } from "next-intl";
-import {
-  Activity,
-  ChangeEvent,
-  useActionState,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import * as React from "react";
 
 export function OnboardingForm() {
   const t = useTranslations("OnboardingPage");
-  const [step, setStep] = useState<OnboardingStep>("name");
-  const [datasAccepted, setDatasAccepted] = useState<boolean>(false);
-  const [termsAccepted, setTermsAccepted] = useState<boolean>(false);
-  const submitted = useRef<boolean>(false);
+  const [step, setStep] = React.useState<OnboardingStep>("name");
+  const [datasAccepted, setDatasAccepted] = React.useState<boolean>(false);
+  const [termsAccepted, setTermsAccepted] = React.useState<boolean>(false);
+  const submitted = React.useRef<boolean>(false);
 
-  const [state, action, pending] = useActionState(
+  const [state, action, pending] = React.useActionState(
     onboarding.bind(null, step),
     undefined,
   );
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     name: "",
     email: "",
     username: "",
@@ -52,7 +43,7 @@ export function OnboardingForm() {
   const handleDatas = () => setDatasAccepted(!datasAccepted);
   const handleTerms = () => setTermsAccepted(!termsAccepted);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -61,24 +52,24 @@ export function OnboardingForm() {
   };
 
   const goBack = () => {
-    const previousStep = onboardingSteps[onboardingSteps.indexOf(step) - 1];
+    const previousStep = OnboardingSteps[OnboardingSteps.indexOf(step) - 1];
     if (previousStep) setStep(previousStep);
   };
 
-  const goNext = useCallback(() => {
-    const nextStep = onboardingSteps[onboardingSteps.indexOf(step) + 1];
+  const goNext = React.useCallback(() => {
+    const nextStep = OnboardingSteps[OnboardingSteps.indexOf(step) + 1];
     if (nextStep) setStep(nextStep);
   }, [step]);
 
   const onSubmit = () => (submitted.current = true);
 
-  const progress: number = useMemo(() => {
-    const current = onboardingSteps.indexOf(step) + 1;
-    const unit = Math.floor(100 / onboardingSteps.length);
+  const progress: number = React.useMemo(() => {
+    const current = OnboardingSteps.indexOf(step) + 1;
+    const unit = Math.floor(100 / OnboardingSteps.length);
     return unit * current;
   }, [step]);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (submitted.current && !pending && state === undefined) {
       goNext();
       submitted.current = false;
@@ -96,7 +87,7 @@ export function OnboardingForm() {
         </Progress>
       </FieldGroup>
       <FieldGroup>
-        <Activity mode={step === "name" ? "visible" : "hidden"}>
+        <React.Activity mode={step === "name" ? "visible" : "hidden"}>
           <FieldSet>
             <Field>
               <FieldLabel htmlFor="name">{t("nameLabel")}</FieldLabel>
@@ -134,8 +125,8 @@ export function OnboardingForm() {
               )}
             </Field>
           </FieldSet>
-        </Activity>
-        <Activity mode={step === "contact" ? "visible" : "hidden"}>
+        </React.Activity>
+        <React.Activity mode={step === "contact" ? "visible" : "hidden"}>
           <FieldSet>
             <Field>
               <FieldLabel htmlFor="email">{t("emailLabel")}</FieldLabel>
@@ -175,8 +166,8 @@ export function OnboardingForm() {
               )}
             </Field>
           </FieldSet>
-        </Activity>
-        <Activity mode={step === "password" ? "visible" : "hidden"}>
+        </React.Activity>
+        <React.Activity mode={step === "password" ? "visible" : "hidden"}>
           <FieldSet>
             <Field>
               <FieldLabel htmlFor="password">{t("passwordLabel")}</FieldLabel>
@@ -220,8 +211,8 @@ export function OnboardingForm() {
               )}
             </Field>
           </FieldSet>
-        </Activity>
-        <Activity mode={step === "finalize" ? "visible" : "hidden"}>
+        </React.Activity>
+        <React.Activity mode={step === "finalize" ? "visible" : "hidden"}>
           <FieldSet>
             <Table className="rounded-lg overflow-hidden">
               <TableBody>
@@ -257,7 +248,7 @@ export function OnboardingForm() {
               </FieldLabel>
             </Field>
           </FieldSet>
-        </Activity>
+        </React.Activity>
         {state?.message && (
           <Warning variant={"destructive"}>
             <WarningDescription>{state.message}</WarningDescription>

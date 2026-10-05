@@ -1,37 +1,39 @@
 "use server";
 
-import { redirect } from "@/i18n/navigation";
-import config from "@repo/config";
-import prisma from "@repo/database";
-import { sendEmail, SendEmailOptions } from "@repo/email";
-import { VerifyEmail } from "@repo/email/verify";
 import { compare, hash } from "bcryptjs";
 import { randomInt } from "crypto";
 import { getTranslations } from "next-intl/server";
 import { treeifyError } from "zod/v4/core";
+
+import { redirect } from "@/i18n/navigation";
+import config from "@repo/config";
+import prisma from "@repo/database";
+import { sendEmail, type SendEmailOptions } from "@repo/email";
+import { VerifyEmail } from "@repo/email/verify";
+
 import { getLicense } from "./dal";
 import {
+  type AuthState,
   EmailSchema,
-  LicensedRoute,
+  type LicensedRoute,
   LicensedRoutes,
   LoginSchema,
   OnboardingContactSchema,
   OnboardingNameSchema,
   OnboardingPasswordSchema,
   OnboardingSchema,
-  onboardingSteps,
-  OtpSchema,
-  VerifyMailParams,
-  VerifyStep,
-  verifySteps,
-  type AuthState,
   type OnboardingStep,
+  OnboardingSteps,
+  OtpSchema,
+  type VerifyMailParams,
+  type VerifyStep,
+  VerifySteps,
 } from "./definitions";
 import { createLicense, deleteLicense, signLicense } from "./licenses";
 import { createSession, deleteSession } from "./sessions";
 
 /**
- * ### Translate
+ * ## Translate
  * Translates an error object's values or string to the user's preferred language.
  * @param properties the translateable string or object
  * @returns A translated string or object
@@ -55,7 +57,7 @@ async function t(
 
 /**
  * ## Generate OTP
- * Creates a new one time password that is the current configs length.
+ * Creates a new one time password that is the current config's length.
  * @returns The generated OTP string
  */
 function generateOtp(): string {
@@ -89,7 +91,7 @@ async function getMailOptions({
 }
 
 /**
- * ### Login
+ * ## Login
  * Logs a user in.
  * *Requires React's useActionState() hook.*
  * @returns The new state of the server action (errors or a message).
@@ -148,8 +150,8 @@ export async function login(
 }
 
 /**
- * ### Onboarding / Signup
- * Signs a user up.
+ * ## Onboarding / Signup
+ * Signs a user up (step by step and full flow compatible).
  * *Requires React's useActionState() hook.*
  * @param step The state the user is currently at.
  * @returns The new state of the server action (errors or a message)
@@ -159,7 +161,7 @@ export async function onboarding(
   state: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
-  if (!onboardingSteps.includes(step)) return t("unexpectedError");
+  if (!OnboardingSteps.includes(step)) return t("unexpectedError");
 
   if (step === "name") {
     const validFields = OnboardingNameSchema.safeParse({
@@ -243,7 +245,7 @@ export async function onboarding(
 }
 
 /**
- * ### Logout
+ * ## Logout
  * Logs a user out.
  * *Doesn't require React's useActionState() hook.*
  */
@@ -266,7 +268,7 @@ export async function verify(
   state: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
-  if (!verifySteps.includes(step)) return t("unexpectedError");
+  if (!VerifySteps.includes(step)) return t("unexpectedError");
 
   if (step === "email") {
     if (!LicensedRoutes[scope]) return await redirect("/login");

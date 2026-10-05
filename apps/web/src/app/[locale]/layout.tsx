@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
+import { type Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
-import { type ReactNode, Suspense } from "react";
+import * as React from "react";
 
 import Providers from "@/components/providers";
 import { routing } from "@/i18n/routing";
@@ -53,7 +53,7 @@ export default async function RootLayout({
   children,
   params,
 }: Readonly<{
-  children: ReactNode;
+  children: React.ReactNode;
   params: Promise<{ locale: string }>;
 }>) {
   const { locale } = await params;
@@ -72,9 +72,9 @@ export default async function RootLayout({
           geistMono.variable,
         )}
       >
-        <Suspense fallback={<Loading />}>
+        <React.Suspense fallback={<Loading />}>
           <Providers>{children}</Providers>
-        </Suspense>
+        </React.Suspense>
       </body>
     </html>
   );

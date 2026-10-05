@@ -7,18 +7,18 @@ import { Input } from "@/components/ui/input";
 import { Password } from "@/components/ui/password";
 import { Warning, WarningDescription } from "@/components/ui/warning";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useActionState, useState } from "react";
+import * as React from "react";
 
 export function LoginForm() {
   const t = useTranslations("LoginPage");
 
-  const [state, action, pending] = useActionState(login, undefined);
-  const [formData, setFormData] = useState({
+  const [state, action, pending] = React.useActionState(login, undefined);
+  const [formData, setFormData] = React.useState({
     email: "",
     password: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,

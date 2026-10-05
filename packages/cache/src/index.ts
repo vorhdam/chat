@@ -23,7 +23,7 @@ function safeStringify(value: unknown): string | null {
   }
 }
 
-/** Acquire a lock, returning a token if we got it, or null if someone else holds it. */
+/** Acquire a lock, returning a token if we own it, or null if someone else does. */
 async function acquireLock(key: string, ttl: number): Promise<string | null> {
   const token = crypto.randomUUID();
   const result = await redis.set(
@@ -48,9 +48,9 @@ function sleep(ms: number) {
 }
 
 /**
- * ### Get Cache
- * @description Get the stored cache associated to a key. Returns null on a
- * miss, a parse error, or a Redis error — all of these just mean "compute it".
+ * ## Get Cache
+ * @description Get the data associated to a cache key.
+ * @returns the data on a hit and null on a miss.
  */
 export async function getCache<T>(key: string): Promise<T | null> {
   try {
@@ -63,7 +63,7 @@ export async function getCache<T>(key: string): Promise<T | null> {
 }
 
 /**
- * ### Set Cache
+ * ## Set Cache
  * @description Set a new cache with a unique key.
  */
 export async function setCache(
@@ -72,7 +72,7 @@ export async function setCache(
   ttl = config.cache.duration * 1000,
 ): Promise<void> {
   const json = safeStringify(value);
-  if (json === null) return; // do not store invalid JSON
+  if (json === null) return;
 
   try {
     await redis.setex(key, ttl, json);
@@ -82,7 +82,7 @@ export async function setCache(
 }
 
 /**
- * ### Clear Cache
+ * ## Clear Cache
  * @description Clear a key from the cache.
  */
 export async function clearCache(key: string): Promise<void> {
@@ -94,14 +94,14 @@ export async function clearCache(key: string): Promise<void> {
 }
 
 /**
- * ### Cache
- * @description Cache-aside helper.
- * - Pass a plain value (or resolved Promise) to just cache that value directly — no locking needed.
- * - Pass a function to compute-and-cache it, with stampede protection: only the first
- *   concurrent caller for a given key runs `compute`, the rest poll the cache and
- *   receive the result once it's written. If the computing caller doesn't finish
- *   within `lockTimeout` (e.g. it crashed), waiters give up and compute it themselves
- *   instead of waiting forever.
+ * ## Cache
+ * @description
+ * - Pass a plain value to cache that directly.
+ * - Pass a function to compute-and-cache it. Only the first concurrent caller
+ *   for a given key computes, the rest poll the cache and receive the result
+ *   once it's written. If the computing caller doesn't finish within the lock
+ *   timeout the rest of the callers will compute as well.
+ * @returns The the value that has been newly associated to the key.
  */
 export async function cache<TReturn>(
   key: string,

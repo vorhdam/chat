@@ -10,7 +10,7 @@ const adapter = new PrismaPg({
 });
 
 /**
- * ### Prisma Client
+ * ## Prisma Client
  * @description The Prisma Client that is used for accessing the Postgres database.
  */
 const prisma =

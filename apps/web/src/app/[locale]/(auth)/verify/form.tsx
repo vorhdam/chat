@@ -13,40 +13,32 @@ import { verify } from "@/lib/auth/actions";
 import {
   LicensedRoute,
   LicensedRoutes,
-  VerifyStep,
-  verifySteps,
+  type VerifyStep,
+  VerifySteps,
 } from "@/lib/auth/definitions";
 import config from "@repo/config";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import {
-  Activity,
-  ChangeEvent,
-  useActionState,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import * as React from "react";
 
 export function VerifyForm() {
   const t = useTranslations("VerifyPage");
-  const [step, setStep] = useState<VerifyStep>("email");
-  const submitted = useRef<boolean>(false);
+  const [step, setStep] = React.useState<VerifyStep>("email");
+  const submitted = React.useRef<boolean>(false);
   const searchParams = useSearchParams();
   const scope: LicensedRoute = searchParams.get("scope") as LicensedRoute;
 
-  const [state, action, pending] = useActionState(
+  const [state, action, pending] = React.useActionState(
     verify.bind(null, step).bind(null, scope),
     undefined,
   );
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     email: "",
     otp: "",
   });
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement> | string) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement> | string) => {
     const isOtp = typeof e === "string";
     setFormData((prev) => ({
       ...prev,
@@ -54,14 +46,14 @@ export function VerifyForm() {
     }));
   };
 
-  const goNext = useCallback(() => {
-    const nextStep = verifySteps[verifySteps.indexOf(step) + 1];
+  const goNext = React.useCallback(() => {
+    const nextStep = VerifySteps[VerifySteps.indexOf(step) + 1];
     if (nextStep) setStep(nextStep);
   }, [step]);
 
   const onSubmit = () => (submitted.current = true);
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (LicensedRoutes[scope].hidden) goNext();
     if (submitted.current && !pending && state === undefined) {
       goNext();
@@ -72,7 +64,7 @@ export function VerifyForm() {
   return (
     <form action={action} onSubmit={onSubmit}>
       <FieldGroup>
-        <Activity mode={step === "email" ? "visible" : "hidden"}>
+        <React.Activity mode={step === "email" ? "visible" : "hidden"}>
           <FieldSet>
             <Field>
               <FieldLabel htmlFor="email">{t("emailLabel")}</FieldLabel>
@@ -93,8 +85,8 @@ export function VerifyForm() {
               )}
             </Field>
           </FieldSet>
-        </Activity>
-        <Activity mode={step === "otp" ? "visible" : "hidden"}>
+        </React.Activity>
+        <React.Activity mode={step === "otp" ? "visible" : "hidden"}>
           <FieldSet>
             <Field>
               <InputOTP
@@ -121,7 +113,7 @@ export function VerifyForm() {
               )}
             </Field>
           </FieldSet>
-        </Activity>
+        </React.Activity>
         {state?.message && (
           <Warning variant={"destructive"}>
             <WarningDescription>{state.message}</WarningDescription>

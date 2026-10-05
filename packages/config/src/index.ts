@@ -82,6 +82,10 @@ type Config = Readonly<{
   };
 }>;
 
+/**
+ * ## Config
+ * @description The global configuration for the application.
+ */
 const config: Config = {
   name: "Nordaun",
   color: {

@@ -4,7 +4,7 @@ import { redirect } from "@/i18n/navigation";
 import config from "@repo/config";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies, headers } from "next/headers";
-import { CookiePayload, SessionPayload } from "./definitions";
+import { type CookiePayload, type SessionPayload } from "./definitions";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
 const { cookieName, headerName, duration } = config.session;

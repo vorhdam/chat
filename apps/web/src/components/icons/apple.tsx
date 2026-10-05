@@ -1,6 +1,6 @@
-import { HTMLAttributes } from "react";
+import * as React from "react";
 
-interface LogoProps extends HTMLAttributes<SVGElement> {
+interface LogoProps extends React.HTMLAttributes<SVGElement> {
   variant?: "default" | "icon" | "wordmark";
 }
 

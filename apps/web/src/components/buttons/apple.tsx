@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "cn";
-import { ComponentProps } from "react";
+import * as React from "react";
 import AppleLogo from "../icons/apple";
 import { Button } from "../ui/button";
 
@@ -9,7 +9,7 @@ export default function AppleButton({
   children,
   className,
   ...props
-}: ComponentProps<"button">) {
+}: React.ComponentProps<"button">) {
   return (
     <Button
       name="loginWithApple"

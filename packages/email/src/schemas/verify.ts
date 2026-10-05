@@ -11,10 +11,10 @@ type VerifySchema = {
  * ## Verify Email
  * @description Creates an HTML markup that can be used in emails to display verification codes.
  * @param header The header of the email. (usually holds a greeting message).
- * @param main The main part of the email holding contents and the aim of the email.
+ * @param main The main part of the email containing the aim of the email.
  * @param otp The code that is displayed in the center of the email.
  * @param footer The footer of the email. (goodbye message without the signature).
- * @returns HTML document processable by emails.
+ * @returns An HTML document which is renderable by email providers.
  */
 export function VerifyEmail({
   header,

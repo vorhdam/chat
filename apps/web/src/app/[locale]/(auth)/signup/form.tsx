@@ -10,18 +10,18 @@ import { Phone } from "@/components/ui/phone";
 import { Warning, WarningDescription } from "@/components/ui/warning";
 import { Link } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
-import { ChangeEvent, useActionState, useState } from "react";
+import * as React from "react";
 
 export function SignupForm() {
   const t = useTranslations("SignupPage");
-  const [agreed, setAgreed] = useState<boolean>(false);
+  const [agreed, setAgreed] = React.useState<boolean>(false);
 
-  const [state, action, pending] = useActionState(
+  const [state, action, pending] = React.useActionState(
     onboarding.bind(null, "finalize"),
     undefined,
   );
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = React.useState({
     name: "",
     email: "",
     username: "",
@@ -30,7 +30,7 @@ export function SignupForm() {
   });
 
   const handleTerms = () => setAgreed(!agreed);
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,

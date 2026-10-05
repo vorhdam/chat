@@ -7,11 +7,11 @@ const redisClientSingleton = () => {
 };
 
 declare const globalThis: {
-    redisGlobal: RedisClient;
-  } & typeof global;
+  redisGlobal: RedisClient;
+} & typeof global;
 
 /**
- * ### Redis Client
+ * ## Redis Client
  * @description The Redis Client that is used for caching and ratelimiting.
  */
 const client = globalThis.redisGlobal ?? redisClientSingleton();

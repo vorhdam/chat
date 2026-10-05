@@ -19,6 +19,15 @@ export type SendEmailOptions = {
   from?: string;
 };
 
+/**
+ * Send Email
+ * @description Sends an email to a user via AWS SES from the application.
+ * @param to The recipint(s) of the email.
+ * @param subject The subject of the email.
+ * @param html The mail-safe html string that is rendered in the email.
+ * @param text Optional text for the email.
+ * @param from The sender of the email. (Must be authorized by AWS).
+ */
 export async function sendEmail({
   to,
   subject,

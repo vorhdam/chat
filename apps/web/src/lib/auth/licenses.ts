@@ -4,7 +4,11 @@ import { redirect } from "@/i18n/navigation";
 import config from "@repo/config";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies, headers } from "next/headers";
-import { CookiePayload, LicensePayload, LicensedRoute } from "./definitions";
+import {
+  type CookiePayload,
+  type LicensePayload,
+  type LicensedRoute,
+} from "./definitions";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
 const { cookieName, headerName, duration } = config.license;

@@ -1,11 +1,13 @@
 "use client";
 
+import { cn } from "cn";
 import parsePhoneNumberFromString, {
-  CountryCode,
-  E164Number,
+  type CountryCode,
+  type E164Number,
   getCountries,
   getCountryCallingCode,
 } from "libphonenumber-js";
+import { useTranslations } from "next-intl";
 import * as React from "react";
 
 import {
@@ -28,8 +30,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "cn";
-import { useTranslations } from "next-intl";
 
 type PhoneProps = React.ComponentProps<"input"> & {
   value?: string;

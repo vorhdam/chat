@@ -80,10 +80,10 @@ const limitGlobal = () =>
   );
 
 /**
- * ### Rate Limiter
- * @description The ratelimiter intended to stop malicious or spam requests which checks for **per-user** and **global** patterns.
- * @param ip The ip of the request
- * @returns The verdict of the ratelimiter
+ * ## Rate Limiter
+ * @description The ratelimiter intended to stop malicious requests and offers protection against both per-user and global patterns.
+ * @param ip The ip of the request.
+ * @returns The verdict of the ratelimiter.
  */
 async function rateLimit(ip: string): Promise<RateLimitResult> {
   const [userResult, globalResult] = await Promise.all([
