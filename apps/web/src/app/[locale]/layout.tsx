@@ -9,8 +9,8 @@ import { routing } from "@/i18n/routing";
 import config, { type Locale } from "@repo/config";
 import { cn } from "cn";
 
-import "../globals.css";
-import Loading from "../loading";
+import "@/app/globals.css";
+import Loading from "@/app/loading";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -122,8 +122,7 @@ export async function login(
 
   if (!user?.id || !user?.password) return t("passwordInvalid");
   const passwordMatch = await compare(password, user.password);
-  if (!passwordMatch || !user?.id || !user?.password)
-    return t("passwordInvalid");
+  if (!passwordMatch) return t("passwordInvalid");
 
   if (user.twoFactorAuth) {
     const otp = generateOtp();
@@ -187,13 +186,13 @@ export async function onboarding(
       return t(treeifyError(validFields.error).properties!);
     const { email, phone } = validFields.data;
 
-    const [existingEmail, existingPhone] = await Promise.all([
-      prisma.user.count({ where: { email } }),
-      prisma.user.count({ where: { phone } }),
-    ]);
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ email }, { phone }] },
+      select: { email: true, phone: true },
+    });
 
-    if (existingEmail > 0) return t("emailTaken");
-    if (existingPhone > 0) return t("phoneTaken");
+    if (existingUser?.email === email) return t("emailTaken");
+    if (existingUser?.phone === phone) return t("phoneTaken");
   }
 
   if (step === "password") {
@@ -219,15 +218,14 @@ export async function onboarding(
       return t(treeifyError(validFields.error).properties!);
     const { name, email, username, phone, password } = validFields.data;
 
-    const [existingEmail, existingUsername, existingPhone] = await Promise.all([
-      prisma.user.count({ where: { email } }),
-      prisma.user.count({ where: { username } }),
-      prisma.user.count({ where: { phone } }),
-    ]);
+    const existingUser = await prisma.user.findFirst({
+      where: { OR: [{ email }, { username }, { phone }] },
+      select: { email: true, username: true, phone: true },
+    });
 
-    if (existingEmail > 0) return t("emailTaken");
-    if (existingUsername > 0) return t("usernameTaken");
-    if (existingPhone > 0) return t("phoneTaken");
+    if (existingUser?.email === email) return t("emailTaken");
+    if (existingUser?.phone === phone) return t("phoneTaken");
+    if (existingUser?.username === username) return t("usernameTaken");
 
     const newUser = await prisma.user.create({
       data: {

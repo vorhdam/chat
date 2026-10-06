@@ -1,9 +1,9 @@
 "use client";
 
+import AppleLogo from "@/components/icons/apple";
+import { Button } from "@/components/ui/button";
 import { cn } from "cn";
 import * as React from "react";
-import AppleLogo from "../icons/apple";
-import { Button } from "../ui/button";
 
 export default function AppleButton({
   children,

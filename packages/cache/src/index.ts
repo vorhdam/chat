@@ -1,5 +1,6 @@
 import "server-only";
 
+import { createId } from "@paralleldrive/cuid2";
 import config from "@repo/config";
 import redis from "@repo/redis";
 
@@ -25,9 +26,9 @@ function safeStringify(value: unknown): string | null {
 
 /** Acquire a lock, returning a token if we own it, or null if someone else does. */
 async function acquireLock(key: string, ttl: number): Promise<string | null> {
-  const token = crypto.randomUUID();
+  const token = createId();
   const result = await redis.set(
-    `${key}:lock`,
+    `lock:${key}`,
     token,
     "NX",
     "PX",
@@ -38,7 +39,7 @@ async function acquireLock(key: string, ttl: number): Promise<string | null> {
 
 /** Release the lock only if we still own it (avoids deleting someone else's lock). */
 async function releaseLock(key: string, token: string): Promise<void> {
-  const lockKey = `${key}:lock`;
+  const lockKey = `lock:${key}`;
   const current = await redis.get(lockKey);
   if (current === token) await redis.del(lockKey);
 }

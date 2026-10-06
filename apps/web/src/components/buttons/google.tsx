@@ -1,9 +1,9 @@
 "use client";
 
+import GoogleLogo from "@/components/icons/google";
+import { Button } from "@/components/ui/button";
 import { cn } from "cn";
 import * as React from "react";
-import GoogleLogo from "../icons/google";
-import { Button } from "../ui/button";
 
 export default function GoogleButton({
   children,

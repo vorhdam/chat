@@ -19,5 +19,8 @@
     "eslint": "^9.39.1",
     "server-only": "^0.0.1",
     "typescript": "^5.9.2"
+  },
+  "dependencies": {
+    "@paralleldrive/cuid2": "^3.3.0"
   }
 }
