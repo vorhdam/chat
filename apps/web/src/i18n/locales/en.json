@@ -35,6 +35,8 @@
     "migrateEmailSubject": "Email Migration",
     "migrateEmailHeader": "Dear {name},",
     "migrateEmailMain": "We received a request to change your email. If you made this request, use the code below to change your email. If not, do not share this code with anyone and simply ignore this email.",
+    "migrateEmailClaimMain": "Someone recently requested to change their email address to yours. If this was you and you own this account, click the button below to complete the transfer and claim your account. If not, please ignore this email.",
+    "migrateEmailClaimButton": "Claim account",
     "migrateEmailFooter": "Best regards,",
     "terminateAccountSubject": "Account Termination",
     "terminateAccountHeader": "Dear {name},",

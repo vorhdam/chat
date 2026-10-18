@@ -35,6 +35,8 @@
     "migrateEmailSubject": "Email cím módosítása",
     "migrateEmailHeader": "Kedves {name},",
     "migrateEmailMain": "Kaptunk egy kérést az email címed megváltoztatására. Ha te voltál az, használd az alábbi kódot a módosításhoz. Ha nem, kérjük, ne oszd meg a kódot senkivel, és hagyd figyelmen kívül ezt az emailt.",
+    "migarteEmailClaimMain": "Valaki nemrég azt kérte, hogy az email címét a tiédre módosítsuk. Ha te voltál az, és te vagy a fiók tulajdonosa, kattints az alábbi gombra a fiókod átvételéhez. Ha nem, kérjük, hagyd figyelmen kívül ezt az emailt.",
+    "migrateEmailClaimButton": "Fiók átvétele",
     "migrateEmailFooter": "Üdvözlettel,",
     "terminateAccountSubject": "Fiók törlése",
     "terminateAccountHeader": "Kedves {name},",

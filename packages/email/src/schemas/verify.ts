@@ -1,6 +1,6 @@
 import config from "@repo/config";
 
-type VerifySchema = {
+type VerifyMailParams = {
   header: string;
   main: string;
   otp: string;
@@ -21,7 +21,7 @@ export function VerifyEmail({
   main,
   otp,
   footer,
-}: VerifySchema): string {
+}: VerifyMailParams): string {
   return `<!doctype html>
 <html
   lang="und"

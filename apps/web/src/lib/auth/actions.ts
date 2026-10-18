@@ -9,12 +9,15 @@ import { redirect } from "@/i18n/navigation";
 import config from "@repo/config";
 import prisma from "@repo/database";
 import { sendEmail, type SendEmailOptions } from "@repo/email";
+import { ClaimEmail } from "@repo/email/claim";
 import { VerifyEmail } from "@repo/email/verify";
 
+import { getLocale } from "@/i18n/locale";
 import { jwtVerify, SignJWT } from "jose";
 import { getLicense } from "./dal";
 import {
   type AuthState,
+  type ClaimMailParams,
   EmailSchema,
   type LicensedRoute,
   LicensedRoutes,
@@ -92,11 +95,11 @@ export async function decrypt(token: string): Promise<any> {
 }
 
 /**
- * ## Get Mail Options
+ * ## Get Verify Mail Options
  * Constructs a verify mail object with an OTP attached.
  * @returns The generated mail options.
  */
-async function getMailOptions({
+async function getVerifyMailOptions({
   name,
   email,
   otp,
@@ -111,6 +114,32 @@ async function getMailOptions({
       header: e(`${LicensedRoutes[route].name}Header`, { name }),
       main: e(`${LicensedRoutes[route].name}Main`),
       otp,
+      footer: e(`${LicensedRoutes[route].name}Footer`),
+    }),
+  };
+}
+
+/**
+ * ## Get Verify Mail Options
+ * Constructs a verify mail object with an OTP attached.
+ * @returns The generated mail options.
+ */
+async function getClaimMailOptions({
+  name,
+  email,
+  href,
+  route,
+}: ClaimMailParams): Promise<SendEmailOptions> {
+  const e = await getTranslations("Emails");
+  return {
+    from: `${config.name} <${config.mail.defaultEmail}>`,
+    to: email,
+    subject: e(`${LicensedRoutes[route].name}Subject`),
+    html: ClaimEmail({
+      header: e(`${LicensedRoutes[route].name}Header`, { name }),
+      main: e(`${LicensedRoutes[route].name}ClaimMain`),
+      href,
+      button: e(`${LicensedRoutes[route].name}ClaimButton`),
       footer: e(`${LicensedRoutes[route].name}Footer`),
     }),
   };
@@ -152,7 +181,7 @@ export async function login(
 
   if (user.twoFactorAuth) {
     const otp = generateOtp();
-    const mailOptions = await getMailOptions({
+    const mailOptions = await getVerifyMailOptions({
       name: user.name,
       email,
       otp,
@@ -311,7 +340,7 @@ export async function verify(
 
     if (user?.id && user?.name) {
       const otp = generateOtp();
-      const mailOptions = await getMailOptions({
+      const mailOptions = await getVerifyMailOptions({
         name: user.name,
         email,
         otp,
@@ -370,6 +399,7 @@ export async function migrateEmail(
   if (step === "grant") {
     const license = await getLicense();
     if (license?.scope !== "migrateemail") return t("licenseInvalid");
+
     const validFields = MigrateEmailSchema.safeParse({
       email: formData.get("email"),
       confirmEmail: formData.get("confirmEmail"),
@@ -379,8 +409,16 @@ export async function migrateEmail(
       return t(treeifyError(validFields.error).properties!);
     const { email } = validFields.data;
 
-    const existingEmail = await prisma.user.count({ where: { email } });
-    if (existingEmail > 0) return t("emailTaken");
+    const [user, existingEmailCount] = await Promise.all([
+      prisma.user.findFirst({
+        where: { email: license.email },
+        select: { name: true },
+      }),
+      prisma.user.count({ where: { email } }),
+    ]);
+
+    if (!user?.name) return t("licenseInvalid");
+    if (existingEmailCount > 0) return t("emailTaken");
 
     const payload: MigrateEmailPayload = {
       oldEmail: license.email,
@@ -389,6 +427,17 @@ export async function migrateEmail(
     };
 
     const token = await encrypt(payload);
-    console.log("token", token);
+    const locale = await getLocale();
+    const href = new URL(`/${locale}/migrateemail/${token}`, config.baseURL)
+      .href;
+
+    const mailOptions = await getClaimMailOptions({
+      name: user.name,
+      email,
+      href,
+      route: "migrateemail",
+    });
+
+    await sendEmail(mailOptions);
   }
 }

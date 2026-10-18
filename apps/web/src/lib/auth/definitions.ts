@@ -173,12 +173,20 @@ type MigrateEmailPayload = {
   expiresAt: Date;
 };
 
-type VerifyMailParams = {
+type MailParams = {
   name: string;
   email: string;
+};
+
+interface VerifyMailParams extends MailParams {
   otp: string;
   route: LicensedRoute;
-};
+}
+
+interface ClaimMailParams extends MailParams {
+  href: string;
+  route: LicensedRoute;
+}
 
 type CookiePayload = Pick<
   ResponseCookie,
@@ -210,6 +218,7 @@ export {
   OtpSchema,
   VerifySteps,
   type AuthState,
+  type ClaimMailParams,
   type CookiePayload,
   type LicensedRoute,
   type LicensePayload,

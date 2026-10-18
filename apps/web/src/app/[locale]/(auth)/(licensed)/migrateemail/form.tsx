@@ -10,6 +10,8 @@ import * as React from "react";
 
 export function MigrateEmailForm() {
   const t = useTranslations("MigrateEmailPage");
+  const [success, setSuccess] = React.useState<boolean>(false);
+  const submitted = React.useRef<boolean>(false);
 
   const [state, action, pending] = React.useActionState(
     migrateEmail.bind(null, "grant"),
@@ -28,8 +30,17 @@ export function MigrateEmailForm() {
     }));
   };
 
+  const onSubmit = () => (submitted.current = true);
+
+  React.useEffect(() => {
+    if (submitted.current && !pending && state === undefined) {
+      setSuccess(true);
+      submitted.current = false;
+    }
+  }, [pending, state]);
+
   return (
-    <form action={action}>
+    <form action={action} onSubmit={onSubmit}>
       <FieldGroup>
         <FieldSet>
           <Field>

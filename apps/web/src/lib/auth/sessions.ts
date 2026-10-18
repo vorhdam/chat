@@ -19,7 +19,7 @@ const cookieOptions: CookiePayload = {
 
 type SessionData = Omit<SessionPayload, "token">;
 
-async function encrypt(payload: SessionData): Promise<string> {
+export async function encrypt(payload: SessionData): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -27,7 +27,7 @@ async function encrypt(payload: SessionData): Promise<string> {
     .sign(key);
 }
 
-async function decrypt(session: string): Promise<SessionData | null> {
+export async function decrypt(session: string): Promise<SessionData | null> {
   if (!session) return null;
   try {
     const { payload } = await jwtVerify(session, key, {

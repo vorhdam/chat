@@ -18,6 +18,8 @@ export type Locale = (typeof locales)[number];
 type Config = Readonly<{
   /** The branding name of the main application*/
   name: string;
+  /** The base URL (domain) of the main application*/
+  baseURL: string;
   color: {
     /** The name of the color cookie. */
     cookieName: string;
@@ -88,6 +90,7 @@ type Config = Readonly<{
  */
 const config: Config = {
   name: "Nordaun",
+  baseURL: "http://localhost:3000",
   color: {
     cookieName: "color",
     colors,

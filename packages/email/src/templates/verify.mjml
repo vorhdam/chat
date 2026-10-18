@@ -6,7 +6,7 @@
           align="center"
           border="none"
           padding="16px 24px"
-          src="${config.url.logo}"
+          src="${config.mail.headerLogo}"
           target="_blank"
           alt="${config.name} Logo"
           width="100px"
