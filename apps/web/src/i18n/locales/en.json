@@ -372,5 +372,14 @@
     "emailPlaceholder": "Your email address",
     "submit": "Verify",
     "submitting": "Verifing..."
+  },
+  "MigrateEmailPage": {
+    "title": "Migrate Email",
+    "description": "Enter a new email you would like to use from now on!",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Your email address",
+    "confirmEmailLabel": "Confirm Email",
+    "submit": "Migrate Email",
+    "submitting": "Migrating your email..."
   }
 }

@@ -23,7 +23,7 @@ const cookieOptions: CookiePayload = {
 
 type LicenseData = Omit<LicensePayload, "token">;
 
-export async function encrypt(payload: LicenseData): Promise<string> {
+async function encrypt(payload: LicenseData): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
@@ -31,7 +31,7 @@ export async function encrypt(payload: LicenseData): Promise<string> {
     .sign(key);
 }
 
-export async function decrypt(license: string): Promise<LicenseData | null> {
+async function decrypt(license: string): Promise<LicenseData | null> {
   if (!license) return null;
   try {
     const { payload } = await jwtVerify(license, key, {

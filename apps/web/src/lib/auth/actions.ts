@@ -11,6 +11,7 @@ import prisma from "@repo/database";
 import { sendEmail, type SendEmailOptions } from "@repo/email";
 import { VerifyEmail } from "@repo/email/verify";
 
+import { jwtVerify, SignJWT } from "jose";
 import { getLicense } from "./dal";
 import {
   type AuthState,
@@ -18,6 +19,10 @@ import {
   type LicensedRoute,
   LicensedRoutes,
   LoginSchema,
+  MigrateEmailPayload,
+  MigrateEmailSchema,
+  MigrateEmailStep,
+  MigrateEmailSteps,
   OnboardingContactSchema,
   OnboardingNameSchema,
   OnboardingPasswordSchema,
@@ -63,6 +68,27 @@ async function t(
 function generateOtp(): string {
   const seed = randomInt(Math.pow(10, config.auth.otpLength));
   return seed.toString().padStart(config.auth.otpLength, "0");
+}
+
+export async function encrypt(payload: any): Promise<string> {
+  return new SignJWT(payload)
+    .setProtectedHeader({ alg: "HS256" })
+    .setIssuedAt()
+    .setExpirationTime(new Date(Date.now() + config.license.duration))
+    .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
+}
+
+export async function decrypt(token: string): Promise<any> {
+  try {
+    const { payload } = await jwtVerify(
+      token,
+      new TextEncoder().encode(process.env.JWT_SECRET!),
+      { algorithms: ["HS256"] },
+    );
+    return payload;
+  } catch {
+    return null;
+  }
 }
 
 /**
@@ -331,5 +357,38 @@ export async function verify(
       userId: user.id,
       redirectUrl: LicensedRoutes[license.scope].href,
     });
+  }
+}
+
+export async function migrateEmail(
+  step: MigrateEmailStep,
+  state: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  if (!MigrateEmailSteps.includes(step)) return t("unexpectedError");
+
+  if (step === "grant") {
+    const license = await getLicense();
+    if (license?.scope !== "migrateemail") return t("licenseInvalid");
+    const validFields = MigrateEmailSchema.safeParse({
+      email: formData.get("email"),
+      confirmEmail: formData.get("confirmEmail"),
+    });
+
+    if (!validFields.success)
+      return t(treeifyError(validFields.error).properties!);
+    const { email } = validFields.data;
+
+    const existingEmail = await prisma.user.count({ where: { email } });
+    if (existingEmail > 0) return t("emailTaken");
+
+    const payload: MigrateEmailPayload = {
+      oldEmail: license.email,
+      newEmail: email,
+      expiresAt: new Date(Date.now() + config.license.duration),
+    };
+
+    const token = await encrypt(payload);
+    console.log("token", token);
   }
 }

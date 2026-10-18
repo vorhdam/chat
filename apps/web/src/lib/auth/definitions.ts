@@ -78,11 +78,23 @@ const OnboardingContactSchema = OnboardingSchema.pick({
 const OnboardingPasswordSchema = OnboardingSchema.pick({
   password: true,
 })
-  .extend({ confirmPassword: z.string().check(z.trim()) })
+  .extend({ confirmPassword: Password })
   .check(
     z.refine((data) => data.password === data.confirmPassword, {
       error: "passwordMismatch",
       path: ["confirmPassword"],
+    }),
+  );
+
+const MigrateEmailSchema = z
+  .object({
+    email: Email,
+    confirmEmail: Email,
+  })
+  .check(
+    z.refine((data) => data.email === data.confirmEmail, {
+      error: "emailMismatch",
+      path: ["confirmEmail"],
     }),
   );
 
@@ -99,6 +111,7 @@ type AuthState =
       errors?: {
         name?: string[];
         email?: string[];
+        confirmEmail?: string[];
         phone?: string[];
         username?: string[];
         password?: string[];
@@ -154,6 +167,12 @@ type LicensePayload = {
   expiresAt: Date;
 };
 
+type MigrateEmailPayload = {
+  oldEmail: string;
+  newEmail: string;
+  expiresAt: Date;
+};
+
 type VerifyMailParams = {
   name: string;
   email: string;
@@ -171,6 +190,9 @@ type Profile = Pick<User, "id" | "name" | "username">;
 const OnboardingSteps = ["name", "contact", "password", "finalize"] as const;
 type OnboardingStep = (typeof OnboardingSteps)[number];
 
+const MigrateEmailSteps = ["grant", "claim"] as const;
+type MigrateEmailStep = (typeof MigrateEmailSteps)[number];
+
 const VerifySteps = ["email", "otp"] as const;
 type VerifyStep = (typeof VerifySteps)[number];
 
@@ -178,6 +200,8 @@ export {
   EmailSchema,
   LicensedRoutes,
   LoginSchema,
+  MigrateEmailSchema,
+  MigrateEmailSteps,
   OnboardingContactSchema,
   OnboardingNameSchema,
   OnboardingPasswordSchema,
@@ -189,6 +213,8 @@ export {
   type CookiePayload,
   type LicensedRoute,
   type LicensePayload,
+  type MigrateEmailPayload,
+  type MigrateEmailStep,
   type OnboardingStep,
   type Profile,
   type SessionPayload,

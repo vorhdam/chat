@@ -372,5 +372,14 @@
     "emailPlaceholder": "Az email címed",
     "submit": "Hitelesítés",
     "submitting": "Hitelesítünk..."
+  },
+  "MigrateEmailPage": {
+    "title": "Email változtatás",
+    "description": "Adj meg egy új emailt, amit mostantól használni szeretnél!",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Az email címed",
+    "confirmEmailLabel": "Email megerősítés",
+    "submit": "Email változtatás",
+    "submitting": "Megváltoztatjuk az emailedet..."
   }
 }
