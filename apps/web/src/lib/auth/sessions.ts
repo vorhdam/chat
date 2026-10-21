@@ -8,11 +8,9 @@ import { type CookiePayload, type SessionPayload } from "./definitions";
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
 const { cookieName, headerName, duration } = config.session;
-const expiresAt = new Date(Date.now() + duration);
 const cookieOptions: CookiePayload = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  expires: expiresAt,
   sameSite: "lax",
   path: "/",
 };
@@ -23,7 +21,7 @@ export async function encrypt(payload: SessionData): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(expiresAt)
+    .setExpirationTime(payload.expiresAt)
     .sign(key);
 }
 
@@ -46,6 +44,7 @@ export async function createSession({
   userId: string;
   redirectUrl: string | null;
 }): Promise<SessionPayload> {
+  const expiresAt = new Date(Date.now() + duration);
   const token = await encrypt({ userId, expiresAt });
   (await cookies()).set(cookieName, token, cookieOptions);
   if (redirectUrl) await redirect(redirectUrl);
@@ -65,6 +64,7 @@ export async function verifySession(): Promise<SessionPayload | null> {
 export async function updateSession(): Promise<SessionPayload | null> {
   const session = await verifySession();
   if (!session) return null;
+  const expiresAt = new Date(Date.now() + duration);
   const token = await encrypt({ userId: session.userId, expiresAt });
   (await cookies()).set(cookieName, token, cookieOptions);
   return { token, userId: session.userId, expiresAt };

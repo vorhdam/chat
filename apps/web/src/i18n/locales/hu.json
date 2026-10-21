@@ -369,7 +369,7 @@
   },
   "VerifyPage": {
     "title": "Hitelesítés",
-    "description": "Kérlek igazold, hogy te vagy az, az emaileddel!",
+    "description": "Add meg az emailedet vagy a kódot, amit küldtünk rá!",
     "emailLabel": "Email",
     "emailPlaceholder": "Az email címed",
     "submit": "Hitelesítés",
@@ -377,10 +377,15 @@
   },
   "MigrateEmailPage": {
     "title": "Email változtatás",
-    "description": "Adj meg egy új emailt, amit mostantól használni szeretnél!",
+    "description": "Változtasd meg a régi emailedet egy vadonatújra!",
+    "claimTitle": "Email átvétel",
+    "claimDescription": "Biztos végre akarod hajtani a következő tranzakciót?",
     "emailLabel": "Email",
     "emailPlaceholder": "Az email címed",
     "confirmEmailLabel": "Email megerősítés",
+    "emailSent": "Elküldtünk egy megerősítő emailt az új címedre, ami tartalmaz egy átvevő linket.",
+    "claim": "Email átvétele",
+    "claiming": "Emailed megváltoztatása...",
     "submit": "Email változtatás",
     "submitting": "Megváltoztatjuk az emailedet..."
   }

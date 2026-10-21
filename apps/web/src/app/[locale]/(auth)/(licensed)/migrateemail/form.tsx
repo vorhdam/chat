@@ -10,7 +10,7 @@ import * as React from "react";
 
 export function MigrateEmailForm() {
   const t = useTranslations("MigrateEmailPage");
-  const [success, setSuccess] = React.useState<boolean>(false);
+  const [success, setSuccess] = React.useState<boolean>(true);
   const submitted = React.useRef<boolean>(false);
 
   const [state, action, pending] = React.useActionState(
@@ -40,60 +40,69 @@ export function MigrateEmailForm() {
   }, [pending, state]);
 
   return (
-    <form action={action} onSubmit={onSubmit}>
-      <FieldGroup>
-        <FieldSet>
-          <Field>
-            <FieldLabel htmlFor="email">{t("emailLabel")}</FieldLabel>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              placeholder={t("emailPlaceholder")}
-              value={formData.email}
-              onChange={handleChange}
-            />
-            {state?.errors?.email && (
-              <Warning variant="destructive">
-                <WarningDescription>{state.errors.email[0]}</WarningDescription>
-              </Warning>
-            )}
-          </Field>
-          <Field>
-            <FieldLabel htmlFor="confirmEmail">
-              {t("confirmEmailLabel")}
-            </FieldLabel>
-            <Input
-              id="confirmEmail"
-              name="confirmEmail"
-              type="email"
-              placeholder={t("emailPlaceholder")}
-              value={formData.confirmEmail}
-              onChange={handleChange}
-            />
-            {state?.errors?.confirmEmail && (
-              <Warning variant="destructive">
-                <WarningDescription>
-                  {state.errors.confirmEmail[0]}
-                </WarningDescription>
-              </Warning>
-            )}
-          </Field>
-          {state?.message && (
-            <Warning variant={"destructive"}>
-              <WarningDescription>{state.message}</WarningDescription>
-            </Warning>
-          )}
-          <Button
-            aria-disabled={pending}
-            type="submit"
-            className="w-full"
-            size={"lg"}
-          >
-            {pending ? t("submitting") : t("submit")}
-          </Button>
-        </FieldSet>
-      </FieldGroup>
-    </form>
+    <>
+      <React.Activity mode={success ? "hidden" : "visible"}>
+        <form action={action} onSubmit={onSubmit}>
+          <FieldGroup>
+            <FieldSet>
+              <Field>
+                <FieldLabel htmlFor="email">{t("emailLabel")}</FieldLabel>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  placeholder={t("emailPlaceholder")}
+                  value={formData.email}
+                  onChange={handleChange}
+                />
+                {state?.errors?.email && (
+                  <Warning variant="destructive">
+                    <WarningDescription>
+                      {state.errors.email[0]}
+                    </WarningDescription>
+                  </Warning>
+                )}
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="confirmEmail">
+                  {t("confirmEmailLabel")}
+                </FieldLabel>
+                <Input
+                  id="confirmEmail"
+                  name="confirmEmail"
+                  type="email"
+                  placeholder={t("emailPlaceholder")}
+                  value={formData.confirmEmail}
+                  onChange={handleChange}
+                />
+                {state?.errors?.confirmEmail && (
+                  <Warning variant="destructive">
+                    <WarningDescription>
+                      {state.errors.confirmEmail[0]}
+                    </WarningDescription>
+                  </Warning>
+                )}
+              </Field>
+              {state?.message && (
+                <Warning variant={"destructive"}>
+                  <WarningDescription>{state.message}</WarningDescription>
+                </Warning>
+              )}
+              <Button
+                aria-disabled={pending}
+                type="submit"
+                className="w-full"
+                size={"lg"}
+              >
+                {pending ? t("submitting") : t("submit")}
+              </Button>
+            </FieldSet>
+          </FieldGroup>
+        </form>
+      </React.Activity>
+      <React.Activity mode={success ? "visible" : "hidden"}>
+        <div className="font-bold mb-4">{t("emailSent")}</div>
+      </React.Activity>
+    </>
   );
 }

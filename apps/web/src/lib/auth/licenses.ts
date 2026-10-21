@@ -12,11 +12,9 @@ import {
 
 const key = new TextEncoder().encode(process.env.JWT_SECRET!);
 const { cookieName, headerName, duration } = config.license;
-const expiresAt = new Date(Date.now() + duration);
 const cookieOptions: CookiePayload = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
-  expires: expiresAt,
   sameSite: "lax",
   path: "/",
 };
@@ -27,7 +25,7 @@ export async function encrypt(payload: LicenseData): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(expiresAt)
+    .setExpirationTime(payload.expiresAt)
     .sign(key);
 }
 
@@ -53,8 +51,12 @@ export async function createLicense({
   redirectUrl?: string;
 }): Promise<LicensePayload> {
   const signed = false;
+  const expiresAt = new Date(Date.now() + duration);
   const token = await encrypt({ scope, email, signed, expiresAt });
-  (await cookies()).set(cookieName, token, cookieOptions);
+  (await cookies()).set(cookieName, token, {
+    ...cookieOptions,
+    expires: expiresAt,
+  });
   if (redirectUrl) await redirect(redirectUrl);
   return { token, scope, email, signed, expiresAt };
 }
@@ -73,8 +75,12 @@ export async function signLicense(): Promise<LicensePayload | null> {
   const license = await verifyLicense();
   if (!license) return null;
   const reach = { email: license.email, scope: license.scope };
+  const expiresAt = new Date(Date.now() + duration);
   const token = await encrypt({ ...reach, signed: true, expiresAt });
-  (await cookies()).set(cookieName, token, cookieOptions);
+  (await cookies()).set(cookieName, token, {
+    ...cookieOptions,
+    expires: expiresAt,
+  });
   return { token, ...reach, signed: true, expiresAt };
 }
 

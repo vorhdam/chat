@@ -369,7 +369,7 @@
   },
   "VerifyPage": {
     "title": "Verify",
-    "description": "Please verify your identity by entering your email!",
+    "description": "Enter your email or the code that was sent in your inbox!",
     "emailLabel": "Email",
     "emailPlaceholder": "Your email address",
     "submit": "Verify",
@@ -377,10 +377,15 @@
   },
   "MigrateEmailPage": {
     "title": "Migrate Email",
-    "description": "Enter a new email you would like to use from now on!",
+    "description": "Change your old email address to new shiny one!",
+    "claimTitle": "Claim Email",
+    "claimDescription": "Are you sure you want to complete the following transaction?",
     "emailLabel": "Email",
     "emailPlaceholder": "Your email address",
     "confirmEmailLabel": "Confirm Email",
+    "emailSent": "We have sent a confirm email containing a claim link to your new inbox.",
+    "claim": "Claim Email",
+    "claiming": "Claiming your email...",
     "submit": "Migrate Email",
     "submitting": "Migrating your email..."
   }

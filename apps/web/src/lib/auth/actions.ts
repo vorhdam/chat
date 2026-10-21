@@ -2,9 +2,11 @@
 
 import { compare, hash } from "bcryptjs";
 import { randomInt } from "crypto";
+import { type JWTPayload, jwtVerify, SignJWT } from "jose";
 import { getTranslations } from "next-intl/server";
 import { treeifyError } from "zod/v4/core";
 
+import { getLocale } from "@/i18n/locale";
 import { redirect } from "@/i18n/navigation";
 import config from "@repo/config";
 import prisma from "@repo/database";
@@ -12,8 +14,6 @@ import { sendEmail, type SendEmailOptions } from "@repo/email";
 import { ClaimEmail } from "@repo/email/claim";
 import { VerifyEmail } from "@repo/email/verify";
 
-import { getLocale } from "@/i18n/locale";
-import { jwtVerify, SignJWT } from "jose";
 import { getLicense } from "./dal";
 import {
   type AuthState,
@@ -73,15 +73,17 @@ function generateOtp(): string {
   return seed.toString().padStart(config.auth.otpLength, "0");
 }
 
-export async function encrypt(payload: any): Promise<string> {
+export async function encrypt(
+  payload: Record<string, unknown>,
+): Promise<string> {
   return new SignJWT(payload)
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(new Date(Date.now() + config.license.duration))
+    .setExpirationTime(new Date(Date.now() + config.session.duration))
     .sign(new TextEncoder().encode(process.env.JWT_SECRET!));
 }
 
-export async function decrypt(token: string): Promise<any> {
+export async function decrypt(token: string): Promise<JWTPayload | null> {
   try {
     const { payload } = await jwtVerify(
       token,
@@ -333,30 +335,31 @@ export async function verify(
       return t(treeifyError(validFields.error).properties!);
     const { email } = validFields.data;
 
-    const user = await prisma.user.findUnique({
-      where: { email },
-      select: { id: true, name: true, email: true },
+    const [user] = await Promise.all([
+      prisma.user.findUnique({
+        where: { email },
+        select: { id: true, name: true, email: true },
+      }),
+      createLicense({ scope, email }),
+    ]);
+
+    if (!user) return;
+
+    const otp = generateOtp();
+    const mailOptions = await getVerifyMailOptions({
+      name: user.name,
+      email,
+      otp,
+      route: scope,
     });
 
-    if (user?.id && user?.name) {
-      const otp = generateOtp();
-      const mailOptions = await getVerifyMailOptions({
-        name: user.name,
-        email,
-        otp,
-        route: scope,
-      });
-
-      await Promise.all([
-        prisma.user.update({
-          where: { id: user.id },
-          data: { otp: await hash(otp, 12) },
-        }),
-        sendEmail(mailOptions),
-      ]);
-    }
-
-    await createLicense({ scope, email });
+    await Promise.all([
+      prisma.user.update({
+        where: { id: user.id },
+        data: { otp: await hash(otp, 12) },
+      }),
+      sendEmail(mailOptions),
+    ]);
   }
 
   if (step === "otp") {
@@ -389,17 +392,23 @@ export async function verify(
   }
 }
 
+/**
+ * ## Migrate Email Action
+ * Migrates a user's email to a new email.
+ * *Requires React's useActionState() hook.*
+ * @param step The state the user is currently at.
+ * @returns The new state of the server action (errors or a message).
+ */
 export async function migrateEmail(
   step: MigrateEmailStep,
   state: AuthState,
   formData: FormData,
 ): Promise<AuthState> {
   if (!MigrateEmailSteps.includes(step)) return t("unexpectedError");
+  const license = await getLicense();
+  if (license?.scope !== "migrateemail") return t("licenseInvalid");
 
   if (step === "grant") {
-    const license = await getLicense();
-    if (license?.scope !== "migrateemail") return t("licenseInvalid");
-
     const validFields = MigrateEmailSchema.safeParse({
       email: formData.get("email"),
       confirmEmail: formData.get("confirmEmail"),
@@ -439,5 +448,26 @@ export async function migrateEmail(
     });
 
     await sendEmail(mailOptions);
+  }
+
+  if (step === "claim") {
+    const code = formData.get("code")?.toString();
+    if (!code) return t("licenseInvalid");
+
+    const { oldEmail, newEmail }: MigrateEmailPayload = (await decrypt(
+      code,
+    )) as MigrateEmailPayload;
+    if (!oldEmail) return t("licenseInvalid");
+
+    const user = await prisma.user.update({
+      where: { email: oldEmail },
+      data: { email: newEmail },
+      select: { id: true },
+    });
+
+    await createSession({
+      userId: user.id,
+      redirectUrl: "/account",
+    });
   }
 }

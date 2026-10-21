@@ -190,7 +190,7 @@ interface ClaimMailParams extends MailParams {
 
 type CookiePayload = Pick<
   ResponseCookie,
-  "httpOnly" | "secure" | "sameSite" | "path" | "expires"
+  "httpOnly" | "secure" | "sameSite" | "path"
 >;
 
 type Profile = Pick<User, "id" | "name" | "username">;
