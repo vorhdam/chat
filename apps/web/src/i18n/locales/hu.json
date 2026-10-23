@@ -320,8 +320,34 @@
     "submitting": "Regisztrálunk..."
   },
   "OnboardingPage": {
-    "title": "Bevezető",
-    "description": "Mondj egy keveset magadról a többit pedig bízd ránk.",
+    "name": {
+      "title": "Bevezető",
+      "description": "Mondj egy keveset magadról, a többit pedig bízd ránk.",
+      "progress": "Már nincs sok hátra...",
+      "submit": "Igen, ez én vagyok",
+      "submitting": "Úúú, Szép neved van..."
+    },
+    "contact": {
+      "title": "Bevezető",
+      "description": "Most mondd el, hogyan tudunk elérni téged ha kell.",
+      "progress": "Mindjárt vége...",
+      "submit": "Igen, ezek az enyéim",
+      "submitting": "Beállítjuk az elérhetőségeidet..."
+    },
+    "password": {
+      "title": "Bevezető",
+      "description": "Itt az ideje a szuper biztos jelszónak.",
+      "progress": "Már nagyon közel vagy...",
+      "submit": "Ez jónak tűnik",
+      "submitting": "Biztonság ellenőrzése..."
+    },
+    "finalize": {
+      "title": "Bevezető",
+      "description": "Végül nézd meg, hogy minden stimmel-e.",
+      "progress": "Már csak egy gombnyomás...",
+      "submit": "Regisztráció",
+      "submitting": "Regisztrálunk..."
+    },
     "nameLabel": "Név",
     "namePlaceholder": "A teljes neved",
     "emailLabel": "Email",
@@ -343,12 +369,7 @@
     "loginAction": "Bejelentkezés",
     "signupLabel": "Kevés időd van?",
     "signupAction": "Regisztáció",
-    "progress": "Már nincs sok hátra...",
-    "back": "Vissza",
-    "continue": "Tovább",
-    "continuing": "Tovább léptetünk...",
-    "submit": "Befejezés",
-    "submitting": "Regisztrálunk..."
+    "back": "Vissza"
   },
   "LoginPage": {
     "title": "Bejelentkezés",
@@ -368,25 +389,37 @@
     "submitting": "Bejeletkeztetünk..."
   },
   "VerifyPage": {
-    "title": "Hitelesítés",
-    "description": "Add meg az emailedet vagy a kódot, amit küldtünk rá!",
+    "email": {
+      "title": "Hitelesítés",
+      "description": "Kérlek add meg az email címedet, hogy tudjuk tényleg te vagy az!",
+      "submit": "Hitelesítés",
+      "submitting": "Hitelesítő email küldése..."
+    },
+    "otp": {
+      "title": "Megerősítés",
+      "description": "Kérlek add meg a kódot, amit az email címedre küldtünk!",
+      "submit": "Megerősítés",
+      "submitting": "Kód ellenőrzése..."
+    },
     "emailLabel": "Email",
-    "emailPlaceholder": "Az email címed",
-    "submit": "Hitelesítés",
-    "submitting": "Hitelesítünk..."
+    "emailPlaceholder": "Az email címed"
   },
   "MigrateEmailPage": {
-    "title": "Email változtatás",
-    "description": "Változtasd meg a régi emailedet egy vadonatújra!",
-    "claimTitle": "Email átvétel",
-    "claimDescription": "Biztos végre akarod hajtani a következő tranzakciót?",
+    "grant": {
+      "title": "Email változtatás",
+      "description": "Változtasd meg a régi emailedet egy vadonatújra!",
+      "submit": "Email változtatás",
+      "submitting": "Megváltoztatjuk az emailedet..."
+    },
+    "claim": {
+      "claimTitle": "Email átvétel",
+      "claimDescription": "Biztos, hogy át akarod venni a következő emailt?",
+      "claim": "Email átvétele",
+      "claiming": "Emailed megváltoztatása..."
+    },
     "emailLabel": "Email",
     "emailPlaceholder": "Az email címed",
     "confirmEmailLabel": "Email megerősítés",
-    "emailSent": "Elküldtünk egy megerősítő emailt az új címedre, ami tartalmaz egy átvevő linket.",
-    "claim": "Email átvétele",
-    "claiming": "Emailed megváltoztatása...",
-    "submit": "Email változtatás",
-    "submitting": "Megváltoztatjuk az emailedet..."
+    "emailSent": "Elküldtünk egy megerősítő emailt az új címedre, ami tartalmaz egy átvevő linket."
   }
 }

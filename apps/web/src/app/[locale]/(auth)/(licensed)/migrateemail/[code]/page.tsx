@@ -30,8 +30,8 @@ export default async function MigrateEmailClaimPage({
     return (
       <Card className="max-w-160 w-full text-center gap-6 max-md:bg-transparent max-md:ring-0">
         <CardHeader className="pt-4">
-          <CardTitle>{t("claimTitle")}</CardTitle>
-          <CardDescription>{t("claimDescription")}</CardDescription>
+          <CardTitle>{t("claim.title")}</CardTitle>
+          <CardDescription>{t("claim.description")}</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
           <div className="flex flex-col items-center justify-center gap-1">

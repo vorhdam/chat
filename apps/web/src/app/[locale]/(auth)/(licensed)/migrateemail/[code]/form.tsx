@@ -31,7 +31,7 @@ export function MigrateEmailClaimForm({ code }: { code: string }) {
             className="w-full"
             size={"lg"}
           >
-            {pending ? t("claiming") : t("claim")}
+            {pending ? t("claim.submitting") : t("claim.submit")}
           </Button>
         </FieldSet>
       </FieldGroup>

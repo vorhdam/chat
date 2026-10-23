@@ -13,17 +13,17 @@ import { verify } from "@/lib/auth/actions";
 import {
   LicensedRoute,
   LicensedRoutes,
-  type VerifyStep,
   VerifySteps,
 } from "@/lib/auth/definitions";
 import config from "@repo/config";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import * as React from "react";
+import { useVerify } from "./context";
 
 export function VerifyForm() {
   const t = useTranslations("VerifyPage");
-  const [step, setStep] = React.useState<VerifyStep>("email");
+  const { step, setStep } = useVerify();
   const submitted = React.useRef<boolean>(false);
   const searchParams = useSearchParams();
   const scope: LicensedRoute = searchParams.get("scope") as LicensedRoute;
@@ -125,7 +125,7 @@ export function VerifyForm() {
           className="w-full"
           size={"lg"}
         >
-          {pending ? t("submitting") : t("submit")}
+          {pending ? t(`${step}.submitting`) : t(`${step}.submit`)}
         </Button>
       </FieldGroup>
     </form>

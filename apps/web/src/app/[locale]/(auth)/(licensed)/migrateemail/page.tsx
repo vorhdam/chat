@@ -19,8 +19,8 @@ export default async function MigrateEmailPage() {
   return (
     <Card className="max-w-160 w-full text-center gap-6 max-md:bg-transparent max-md:ring-0">
       <CardHeader className="pt-4">
-        <CardTitle>{t("title")}</CardTitle>
-        <CardDescription>{t("description")}</CardDescription>
+        <CardTitle>{t("grant.title")}</CardTitle>
+        <CardDescription>{t("grant.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <MigrateEmailForm />

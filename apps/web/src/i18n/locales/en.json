@@ -320,8 +320,34 @@
     "submitting": "Signing you up..."
   },
   "OnboardingPage": {
-    "title": "Onboarding",
-    "description": "Tell is a bit about yourself and we'll set you up.",
+    "name": {
+      "title": "Onboarding",
+      "description": "Tell is a bit about yourself and we'll set you up.",
+      "progress": "There is not much left...",
+      "submit": "Yes, that's me",
+      "submitting": "You have a beautiful name..."
+    },
+    "contact": {
+      "title": "Onboarding",
+      "description": "Now tell us how can we contact you if needed.",
+      "progress": "Almost there...",
+      "submit": "These are mine",
+      "submitting": "Setting up contacts for you..."
+    },
+    "password": {
+      "title": "Onboarding",
+      "description": "Now time for the super safe password that you remember.",
+      "progress": "You are sooo close...",
+      "submit": "This looks safe",
+      "submitting": "Checking safety..."
+    },
+    "finalize": {
+      "title": "Onboarding",
+      "description": "Please check if everything is correct.",
+      "progress": "This is it, just a last click...",
+      "submit": "Onboard",
+      "submitting": "Boarding you on..."
+    },
     "nameLabel": "Name",
     "namePlaceholder": "Your fullname",
     "emailLabel": "Email",
@@ -343,12 +369,7 @@
     "loginAction": "Login",
     "signupLabel": "Running short on time?",
     "signupAction": "Signup",
-    "progress": "There is not much left...",
-    "back": "Back",
-    "continue": "Continue",
-    "continuing": "Contnuing...",
-    "submit": "Onboard",
-    "submitting": "Boarding you on..."
+    "back": "Back"
   },
   "LoginPage": {
     "title": "Login",
@@ -368,25 +389,37 @@
     "submitting": "Logging you in..."
   },
   "VerifyPage": {
-    "title": "Verify",
-    "description": "Enter your email or the code that was sent in your inbox!",
+    "email": {
+      "title": "Verify",
+      "description": "Please verify that it's you by entering your email!",
+      "submit": "Verify",
+      "submitting": "Sending confirm email..."
+    },
+    "otp": {
+      "title": "Confirm",
+      "description": "Please enter the code that was sent to your inbox!",
+      "submit": "Confirm",
+      "submitting": "Checking your code..."
+    },
     "emailLabel": "Email",
-    "emailPlaceholder": "Your email address",
-    "submit": "Verify",
-    "submitting": "Verifing..."
+    "emailPlaceholder": "Your email address"
   },
   "MigrateEmailPage": {
-    "title": "Migrate Email",
-    "description": "Change your old email address to new shiny one!",
-    "claimTitle": "Claim Email",
-    "claimDescription": "Are you sure you want to complete the following transaction?",
+    "grant": {
+      "title": "Migrate Email",
+      "description": "Change your old email address to new shiny one!",
+      "submit": "Migrate Email",
+      "submitting": "Migrating your email..."
+    },
+    "claim": {
+      "title": "Claim Email",
+      "description": "Are you sure you want to claim the following profile?",
+      "submit": "Claim Profile",
+      "submitting": "Claiming your profile..."
+    },
     "emailLabel": "Email",
     "emailPlaceholder": "Your email address",
     "confirmEmailLabel": "Confirm Email",
-    "emailSent": "We have sent a confirm email containing a claim link to your new inbox.",
-    "claim": "Claim Email",
-    "claiming": "Claiming your email...",
-    "submit": "Migrate Email",
-    "submitting": "Migrating your email..."
+    "emailSent": "We have sent a confirm email containing a claim link to your new inbox."
   }
 }

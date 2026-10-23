@@ -30,7 +30,9 @@ const ColorContext = React.createContext<ColorContextType>({
  *  setColor("purple") // sets purple as the new color
  */
 function useColor<T extends string = string>() {
-  return React.useContext(ColorContext) as unknown as ColorContextType<T>;
+  const context = React.useContext(ColorContext);
+  if (!context) throw new Error("useColor must be used within ColorProvider.");
+  return context as unknown as ColorContextType<T>;
 }
 
 type ColorProviderProps<T extends string> = {

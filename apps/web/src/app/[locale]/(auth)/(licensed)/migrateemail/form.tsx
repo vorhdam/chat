@@ -10,7 +10,7 @@ import * as React from "react";
 
 export function MigrateEmailForm() {
   const t = useTranslations("MigrateEmailPage");
-  const [success, setSuccess] = React.useState<boolean>(true);
+  const [success, setSuccess] = React.useState<boolean>(false);
   const submitted = React.useRef<boolean>(false);
 
   const [state, action, pending] = React.useActionState(
@@ -94,7 +94,7 @@ export function MigrateEmailForm() {
                 className="w-full"
                 size={"lg"}
               >
-                {pending ? t("submitting") : t("submit")}
+                {pending ? t("grant.submitting") : t("grant.submit")}
               </Button>
             </FieldSet>
           </FieldGroup>

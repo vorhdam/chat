@@ -36,7 +36,9 @@ const ThemeContext = React.createContext<ThemeContextType>({
  *  setTheme("dark") // sets dark as the new theme
  */
 function useTheme() {
-  return React.useContext(ThemeContext);
+  const context = React.useContext(ThemeContext);
+  if (!context) throw new Error("useTheme must be used within ThemeProvider.");
+  return context;
 }
 
 type ThemeProviderProps = {

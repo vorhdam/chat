@@ -15,13 +15,14 @@ import {
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { Warning, WarningDescription } from "@/components/ui/warning";
 import { Link } from "@/i18n/navigation";
-import { type OnboardingStep, OnboardingSteps } from "@/lib/auth/definitions";
+import { OnboardingSteps } from "@/lib/auth/definitions";
 import { useTranslations } from "next-intl";
 import * as React from "react";
+import { useOnboarding } from "./context";
 
 export function OnboardingForm() {
   const t = useTranslations("OnboardingPage");
-  const [step, setStep] = React.useState<OnboardingStep>("name");
+  const { step, setStep } = useOnboarding();
   const [datasAccepted, setDatasAccepted] = React.useState<boolean>(false);
   const [termsAccepted, setTermsAccepted] = React.useState<boolean>(false);
   const submitted = React.useRef<boolean>(false);
@@ -81,7 +82,7 @@ export function OnboardingForm() {
       <FieldGroup className="py-6">
         <Progress value={progress}>
           <ProgressLabel className={"text-muted-foreground"}>
-            {t("progress")}
+            {t(`${step}.progress`)}
           </ProgressLabel>
           <ProgressValue />
         </Progress>
@@ -268,26 +269,20 @@ export function OnboardingForm() {
               </Button>
             )}
 
-            {step === "finalize" ? (
-              <Button
-                aria-disabled={pending && termsAccepted && datasAccepted}
-                type="submit"
-                className="w-full flex-1"
-                size={"lg"}
-                disabled={!termsAccepted || !datasAccepted}
-              >
-                {pending ? t("submitting") : t("submit")}
-              </Button>
-            ) : (
-              <Button
-                aria-disabled={pending}
-                type="submit"
-                className="w-full flex-1"
-                size={"lg"}
-              >
-                {pending ? t("continuing") : t("continue")}
-              </Button>
-            )}
+            <Button
+              aria-disabled={
+                pending ||
+                (step === "finalize" && !(termsAccepted && datasAccepted))
+              }
+              type="submit"
+              className="w-full flex-1"
+              size={"lg"}
+              disabled={
+                step === "finalize" && !(termsAccepted && datasAccepted)
+              }
+            >
+              {pending ? t(`${step}.submitting`) : t(`${step}.submit`)}
+            </Button>
           </div>
         </FieldSet>
       </FieldGroup>
