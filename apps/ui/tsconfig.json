@@ -1,0 +1,23 @@
+{
+  "extends": "@repo/typescript/next.json",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@repo/color": ["../../packages/color/src/index.tsx"],
+      "@repo/theme": ["../../packages/theme/src/index.tsx"]
+    }
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "next-env.d.ts",
+    "next.config.js",
+    ".next/types/**/*.ts"
+  ],
+  "exclude": ["node_modules"]
+}

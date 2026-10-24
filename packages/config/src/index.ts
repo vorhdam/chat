@@ -11,9 +11,11 @@ const colors = [
   "white",
 ] as const;
 const locales = ["en", "hu"] as const;
+const installers = ["npm", "yarn", "pnpm", "bun"] as const;
 
 export type Color = (typeof colors)[number];
 export type Locale = (typeof locales)[number];
+export type Installer = (typeof installers)[number];
 
 type Config = Readonly<{
   /** The branding name of the main application*/
@@ -31,6 +33,14 @@ type Config = Readonly<{
   theme: {
     /** The name of the theme cookie. */
     cookieName: string;
+  };
+  installer: {
+    /** The name of the installer cookie. */
+    cookieName: string;
+    /** An array of all available installers in the application.*/
+    installers: readonly Installer[];
+    /** The default installer of the application.*/
+    defaultInstaller: Installer;
   };
   i18n: {
     /** An array of all available locales in the application.*/
@@ -98,6 +108,11 @@ const config: Config = {
   },
   theme: {
     cookieName: "theme",
+  },
+  installer: {
+    cookieName: "installer",
+    installers,
+    defaultInstaller: "bun",
   },
   i18n: {
     locales,
