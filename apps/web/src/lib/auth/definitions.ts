@@ -26,7 +26,7 @@ const Phone = z.string().check(
         return false;
       }
     },
-    { message: "phoneInvalid" },
+    { error: "phoneInvalid" },
   ),
 );
 
@@ -73,7 +73,8 @@ const OnboardingNameSchema = OnboardingSchema.pick({
 
 const OnboardingContactSchema = OnboardingSchema.pick({
   email: true,
-}).extend({ phone: Phone });
+  phone: true,
+});
 
 const OnboardingPasswordSchema = OnboardingSchema.pick({
   password: true,
@@ -89,14 +90,16 @@ const OnboardingPasswordSchema = OnboardingSchema.pick({
 const MigrateEmailSchema = z
   .object({
     email: Email,
-    confirmEmail: Email,
   })
+  .extend({ confirmEmail: Email })
   .check(
     z.refine((data) => data.email === data.confirmEmail, {
       error: "emailMismatch",
       path: ["confirmEmail"],
     }),
   );
+
+const ResetPasswordSchema = OnboardingPasswordSchema;
 
 const EmailSchema = z.object({
   email: Email,
@@ -153,25 +156,25 @@ const LicensedRoutes = {
   },
 } as const satisfies Record<string, LicensedRouteType>;
 
-type SessionPayload = {
+type Payload = {
   token: string;
-  userId: string;
   expiresAt: Date;
 };
 
-type LicensePayload = {
-  token: string;
+interface SessionPayload extends Payload {
+  userId: string;
+}
+
+interface LicensePayload extends Payload {
   email: string;
   signed: boolean;
   scope: LicensedRoute;
-  expiresAt: Date;
-};
+}
 
-type MigrateEmailPayload = {
+interface MigrateEmailPayload extends Omit<Payload, "token"> {
   oldEmail: string;
   newEmail: string;
-  expiresAt: Date;
-};
+}
 
 type MailParams = {
   name: string;
@@ -216,6 +219,7 @@ export {
   OnboardingSchema,
   OnboardingSteps,
   OtpSchema,
+  ResetPasswordSchema,
   VerifySteps,
   type AuthState,
   type ClaimMailParams,

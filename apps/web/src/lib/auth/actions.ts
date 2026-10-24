@@ -33,12 +33,13 @@ import {
   type OnboardingStep,
   OnboardingSteps,
   OtpSchema,
+  ResetPasswordSchema,
   type VerifyMailParams,
   type VerifyStep,
   VerifySteps,
 } from "./definitions";
 import { createLicense, deleteLicense, signLicense } from "./licenses";
-import { createSession, deleteSession } from "./sessions";
+import { createSession, deleteSession, updateSession } from "./sessions";
 
 /**
  * ## Translate
@@ -435,7 +436,7 @@ export async function migrateEmail(
       expiresAt: new Date(Date.now() + config.license.duration),
     };
 
-    const token = await encrypt(payload);
+    const token = await encrypt(payload as unknown as Record<string, unknown>);
     const locale = await getLocale();
     const href = new URL(`/${locale}/migrateemail/${token}`, config.baseURL)
       .href;
@@ -456,18 +457,78 @@ export async function migrateEmail(
 
     const { oldEmail, newEmail }: MigrateEmailPayload = (await decrypt(
       code,
-    )) as MigrateEmailPayload;
+    )) as unknown as MigrateEmailPayload;
     if (!oldEmail) return t("licenseInvalid");
 
-    const user = await prisma.user.update({
-      where: { email: oldEmail },
-      data: { email: newEmail },
-      select: { id: true },
-    });
-
-    await createSession({
-      userId: user.id,
-      redirectUrl: "/account",
-    });
+    await Promise.all([
+      await prisma.user.update({
+        where: { email: oldEmail },
+        data: { email: newEmail },
+      }),
+      deleteLicense(),
+      updateSession(),
+      redirect("/account"),
+    ]);
   }
+}
+
+/**
+ * ## Reset Password Action
+ * Resets (changes) the password of the user.
+ * *Requires React's useActionState() hook.*
+ * @returns The new state of the server action (errors or a message).
+ */
+export async function resetPassword(
+  state: AuthState,
+  formData: FormData,
+): Promise<AuthState> {
+  const license = await getLicense();
+  if (license?.scope !== "resetpassword") return t("licenseInvalid");
+
+  const validFields = ResetPasswordSchema.safeParse({
+    password: formData.get("password"),
+    confirmPassword: formData.get("confirmPassword"),
+  });
+
+  if (!validFields.success)
+    return t(treeifyError(validFields.error).properties!);
+  const { password } = validFields.data;
+
+  const existingUser = await prisma.user.count({
+    where: { email: license.email },
+  });
+  if (existingUser === 0) return t("licenseInvalid");
+
+  await Promise.all([
+    prisma.user.update({
+      where: { email: license.email },
+      data: { password: await hash(password, 12) },
+    }),
+    deleteLicense(),
+    updateSession(),
+    redirect("/account"),
+  ]);
+}
+
+/**
+ * ## Terminate Account Action
+ * Terminates (deletes) the account of the user (works with license).
+ * *Requires React's useActionState() hook.*
+ * @returns The new state of the server action (errors or a message).
+ */
+export async function terminateAccount(): Promise<AuthState> {
+  const license = await getLicense();
+  if (license?.scope !== "terminateaccount") return t("licenseInvalid");
+
+  const existingUser = await prisma.user.count({
+    where: { email: license.email },
+  });
+  if (existingUser === 0) return t("licenseInvalid");
+
+  await Promise.all([
+    prisma.user.delete({ where: { email: license.email } }),
+    deleteSession(),
+    deleteLicense(),
+    redirect("/account"),
+  ]);
 }

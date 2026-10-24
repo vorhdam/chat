@@ -206,7 +206,12 @@ export function OnboardingForm() {
               {state?.errors?.confirmPassword && (
                 <Warning variant="destructive">
                   <WarningDescription>
-                    {state.errors.confirmPassword[0]}
+                    <p>{t("passwordCriteria")}</p>
+                    <ul className="w-full text-start px-2">
+                      {state.errors.confirmPassword.map((error) => (
+                        <li key={error}>- {error}</li>
+                      ))}
+                    </ul>
                   </WarningDescription>
                 </Warning>
               )}

@@ -20,8 +20,8 @@
     "passwordLong": "rövidebbnek kell lennie.",
     "passwordLetter": "tartalmaznia kell egy betűt.",
     "passwordDigit": "tartalmaznia kell egy számot.",
+    "passwordMismatch": "meg kell egyeznie a másikkal.",
     "passwordInvalid": "Helytelen email cím vagy jelszó.",
-    "passwordMismatch": "A két jelszónak egyeznie kell.",
     "otpLength": "A hitelesítő kódod túl rövid.",
     "otpInvalid": "Hibás hitelesítő kód.",
     "licenseInvalid": "Nincs hozzáférésed ehhez a forráshoz.",
@@ -421,5 +421,23 @@
     "emailPlaceholder": "Az email címed",
     "confirmEmailLabel": "Email megerősítés",
     "emailSent": "Elküldtünk egy megerősítő emailt az új címedre, ami tartalmaz egy átvevő linket."
+  },
+  "ResetPasswordPage": {
+    "title": "Jelszó visszaállítása",
+    "description": "Adj meg egy új jelszót, amit ezentúl használni szeretnél!",
+    "passwordLabel": "Jelszó",
+    "confirmPasswordLabel": "Jelszó újra",
+    "passwordPlaceholder": "Az új jelszavad",
+    "passwordCriteria": "A jelszavadnak:",
+    "submit": "Ezt megjegyzem",
+    "submitting": "Jelszó visszaállítása..."
+  },
+  "TerminateAccountPage": {
+    "title": "Fiók megszüntetése",
+    "description": "Kérlek, olvasd el az alábbiakat, mielőtt törölnéd a fiókodat!",
+    "legal": "A fiókom megszüntetésének kérésével tudomásul veszem és hozzájárulok a fiókom és minden hozzá kapcsolódó személyes adat végleges törléséhez az Európai Unió adatvédelmi jogszabályai, beleértve az Általános Adatvédelmi Rendeletet (GDPR) is, szerint. Megértem, hogy ez a művelet nem vonható vissza, és elveszítem a hozzáférést minden szolgáltatáshoz, tartalomhoz és információhoz, amely a fiókomhoz kapcsolódik, beleértve többek között a mentett beállításokat, vásárlási előzményeket, üzeneteket és feltöltött fájlokat.\n\nTisztában vagyok azzal, hogy bizonyos adatok jogszabályi kötelezettség vagy jogos üzleti érdek miatt megőrzésre kerülhetnek, például adózási vagy könyvelési kötelezettségek teljesítése, jogviták rendezése vagy szerződéses feltételek érvényesítése céljából. A megőrzött adatokat biztonságosan tárolják és kizárólag a jogszabályok által engedélyezett célokra használják fel.\n\nA fiók megszüntetésének folytatásával megerősítem, hogy az adatok törléséhez való jogomat gyakorlom, és megértettem ennek következményeit. Tudomásul veszem továbbá, hogy a törlési folyamat még eltarthat egy ideig, és annak befejezését követően az adatok visszaállítása nem lesz lehetséges.\n\nMegértem, hogy bármilyen kérdés vagy pontosítás miatt kapcsolatba léphetek az Adatvédelmi Tisztviselővel (DPO) vagy a szolgáltató kijelölt adatvédelmi kapcsolattartójával.",
+    "terms": "Elfogadom a fenti feltételeket",
+    "submit": "Fiók megszüntetése",
+    "submitting": "Fiókod megszüntetése..."
   }
 }

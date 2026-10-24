@@ -20,8 +20,8 @@
     "passwordLong": "be a bit shorter.",
     "passwordLetter": "contain a letter.",
     "passwordDigit": "contain a number.",
+    "passwordMismatch": "match the other one.",
     "passwordInvalid": "Invalid email or password.",
-    "passwordMismatch": "The two passwords must match.",
     "otpLength": "Your verification code is too short.",
     "otpInvalid": "Invalid verification code.",
     "licenseInvalid": "You don't have access to this resource.",
@@ -421,5 +421,23 @@
     "emailPlaceholder": "Your email address",
     "confirmEmailLabel": "Confirm Email",
     "emailSent": "We have sent a confirm email containing a claim link to your new inbox."
+  },
+  "ResetPasswordPage": {
+    "title": "Reset Password",
+    "description": "Enter your new password you want to use later on!",
+    "passwordLabel": "Password",
+    "confirmPasswordLabel": "Confirm password",
+    "passwordPlaceholder": "Your password",
+    "passwordCriteria": "Your password must:",
+    "submit": "I'll remember this one",
+    "submitting": "Resetting your password..."
+  },
+  "TerminateAccountPage": {
+    "title": "Terminate Account",
+    "description": "Please read the following before deleting you account!",
+    "legal": "By requesting the termination of my account, I acknowledge and consent to the permanent deletion of my account and all personal data associated with it in accordance with applicable European Union data protection laws, including the General Data Protection Regulation (GDPR). I understand that this action is irreversible, and I will lose access to all services, content, and information linked to my account, including but not limited to saved preferences, purchase history, messages, and uploaded files.\n\nI am aware that certain data may be retained if required by law or for legitimate business purposes, such as compliance with tax or accounting obligations, resolution of disputes, or enforcement of contractual terms. Any retained data will be securely stored and processed only for the purposes permitted under applicable law.\n\nBy proceeding with the account termination, I confirm that I am exercising my right to erasure and have understood the consequences of this action. I also acknowledge that the deletion process may take a limited amount of time to complete, and once finalized, recovery of deleted data will not be possible. \n\nI understand that I may contact the Data Protection Officer (DPO) or the designated data privacy contact provided by the service for any questions or clarifications regarding my data, my rights under GDPR, or the account deletion process.",
+    "terms": "I agree to the terms stated above",
+    "submit": "Terminate Account",
+    "submitting": "Terminating your account..."
   }
 }
