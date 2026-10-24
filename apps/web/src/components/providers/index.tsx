@@ -1,7 +1,7 @@
-import { ColorProvider } from "@/components/providers/color";
 import { I18nProvider } from "@/components/providers/i18n";
-import { ThemeProvider } from "@/components/providers/theme";
+import { ColorProvider } from "@repo/color";
 import config from "@repo/config";
+import { ThemeProvider } from "@repo/theme";
 
 export default async function Providers({
   children,

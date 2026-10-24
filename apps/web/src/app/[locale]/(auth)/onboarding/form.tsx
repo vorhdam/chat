@@ -60,7 +60,7 @@ export function OnboardingForm() {
   const goNext = React.useCallback(() => {
     const nextStep = OnboardingSteps[OnboardingSteps.indexOf(step) + 1];
     if (nextStep) setStep(nextStep);
-  }, [step]);
+  }, [step, setStep]);
 
   const onSubmit = () => (submitted.current = true);
 

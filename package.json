@@ -4,6 +4,7 @@
   "scripts": {
     "build": "bun --bun turbo run build",
     "dev": "bun --bun turbo run dev",
+    "start": "bun --bun turbo run start",
     "lint": "bun --bun turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "check-types": "bun --bun turbo run check-types",
@@ -17,9 +18,14 @@
     "infra:plan": "bun run --env-file=.env -- terraform -chdir=infra/environments/dev plan",
     "infra:apply": "bun run --env-file=.env -- terraform -chdir=infra/environments/dev apply",
     "infra:destroy": "terraform -chdir=infra/environments/dev destroy",
-    "infra:output": "terraform -chdir=infra/environments/dev output -json"
+    "infra:output": "terraform -chdir=infra/environments/dev output -json",
+    "package:login": "bun x npm login",
+    "package:change": "changeset",
+    "package:version": "changeset version",
+    "package:release": "turbo build && changeset publish"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.3",
     "prettier": "^3.9.6",
     "turbo": "^2.10.12",
     "typescript": "5.9.2"
@@ -27,12 +33,7 @@
   "engines": {
     "node": ">=18"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "bun",
-      "version": "1.4.2"
-    }
-  },
+  "packageManager": "bun@1.4.2",
   "workspaces": [
     "apps/*",
     "packages/*",

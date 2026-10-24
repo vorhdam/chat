@@ -1,0 +1,43 @@
+{
+  "name": "@nordaun/color",
+  "version": "2.0.0",
+  "description": "A simple color provider and context for your React apps.",
+  "homepage": "https://ui.nordaun.com/packages/color",
+  "author": "vorhdam <https://github.com/vorhdam>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vorhdam/chat.git"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.tsx",
+      "import": "./src/index.tsx",
+      "default": "./src/index.tsx"
+    }
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
+    "package:build": "tsup ./src/index.tsx --format cjs,esm --dts",
+    "package:dev": "tsup ./src/index.tsx --format cjs,esm --dts --watch"
+  },
+  "devDependencies": {
+    "@repo/eslint": "*",
+    "@repo/typescript": "*",
+    "@types/js-cookie": "^3.0.6",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "eslint": "^9.39.1",
+    "js-cookie": "^3.0.8",
+    "react": "19.2.4",
+    "typescript": "^5.9.2"
+  }
+}

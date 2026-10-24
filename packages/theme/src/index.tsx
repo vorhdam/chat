@@ -27,13 +27,13 @@ const ThemeContext = React.createContext<ThemeContextType>({
 });
 
 /**
- * ### useTheme()
+ * ## useTheme()
  * @example
  *  const { theme, themes, setTheme } = useTheme()
  *
- *  console.log(theme) // logs the current theme
- *  console.log(themes) // logs all available themes
- *  setTheme("dark") // sets dark as the new theme
+ *  console.log(theme) // logs the current theme.
+ *  console.log(themes) // logs all available themes.
+ *  setTheme("dark") // sets dark as the new theme.
  */
 function useTheme() {
   const context = React.useContext(ThemeContext);
@@ -78,7 +78,7 @@ function applyTheme(resolved: Resolvable, disableTransition = false) {
 }
 
 /**
- * ### ThemeProvider
+ * ## ThemeProvider
  * @param cookieName The name of the cookie the color should be stored.
  * @param defaultTheme The theme that should be the fallback and default.
  * @param disableTransition Whether transition animations should be disabled.

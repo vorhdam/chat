@@ -88,7 +88,7 @@ export const getSession = async (): Promise<SessionPayload | null> => {
 };
 
 /**
- * ## Get Profile
+ * ## Get License
  * Gets a guest's or unverified user's license payload.
  * @returns The guest's or unverified user's license.
  */

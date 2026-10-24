@@ -21,13 +21,13 @@ const ColorContext = React.createContext<ColorContextType>({
 });
 
 /**
- * ### useColor()
+ * ## useColor()
  * @example
  *  const { color, colors, setColor } = useColor()
  *
- *  console.log(color) // logs the current color
- *  console.log(colors) // logs all available colors
- *  setColor("purple") // sets purple as the new color
+ *  console.log(color) // logs the current color.
+ *  console.log(colors) // logs all available colors.
+ *  setColor("purple") // sets purple as the new color.
  */
 function useColor<T extends string = string>() {
   const context = React.useContext(ColorContext);
@@ -61,7 +61,7 @@ function applyColor(
 }
 
 /**
- * ### ColorProvider
+ * ## ColorProvider
  * @param cookieName The name of the cookie the color should be stored.
  * @param classPrefix The className prefix that should be applied at the <html> tag.
  * @param classSuffix The className suffix that should be applied at the <html> tag.

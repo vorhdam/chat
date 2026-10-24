@@ -1,3 +1,5 @@
+import { Link } from "@/i18n/navigation";
+
 export default function HomePage() {
   return (
     // copied from https://ui.shadcn.com/typeset
@@ -32,9 +34,9 @@ export default function HomePage() {
           In this guide, you will learn how to use the <code>useChat</code> hook
           to create a chatbot application with real-time message streaming.
           Check out our{" "}
-          <a href="/docs/ai-sdk-ui/chatbot-tool-usage">
+          <Link href="/docs/ai-sdk-ui/chatbot-tool-usage">
             chatbot with tools guide
-          </a>{" "}
+          </Link>{" "}
           to learn how to use tools in your chatbot.
         </p>
 
