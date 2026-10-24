@@ -1,6 +1,6 @@
 {
   "name": "@nordaun/flags",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple flags content delivery package.",
   "homepage": "https://ui.nordaun.com/packages/flags",
   "author": "vorhdam <https://github.com/vorhdam>",
