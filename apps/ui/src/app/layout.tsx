@@ -10,7 +10,7 @@ import { cn } from "cn";
 import "@/app/globals.css";
 import Loading from "@/app/loading";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,10 +24,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${config.name}`,
-    default: config.name,
+    template: `%s | ${config.name}/ui`,
+    default: `${config.name}/ui`,
   },
-  description: "This does not matter now.",
+  description: "Simple components for your extraordinary creations.",
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
