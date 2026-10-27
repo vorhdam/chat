@@ -92,6 +92,22 @@ type Config = Readonly<{
     /** The length of a One Time Password (OTP) */
     otpLength: number;
   };
+  ui: {
+    /** The name of the ui subproject*/
+    name: string;
+    /** The namespace of the subproject packages on NPM.*/
+    namespace: string;
+    /** The base URL (domain) of the ui application*/
+    baseURL: string;
+    github: {
+      /** The author of the ui application*/
+      author: string;
+      /** The organization of the ui application*/
+      organization: string;
+      /** The public repository of the ui application*/
+      repository: string;
+    };
+  };
 }>;
 
 /**
@@ -145,6 +161,16 @@ const config: Config = {
   },
   auth: {
     otpLength: 6,
+  },
+  ui: {
+    name: "nordaun/ui",
+    namespace: "@nordaun",
+    baseURL: "https://ui.nordaun.com",
+    github: {
+      author: "https://github.com/vorhdam",
+      organization: "https://github.com/nordaun",
+      repository: "https://github.com/nordaun/ui",
+    },
   },
 };
 

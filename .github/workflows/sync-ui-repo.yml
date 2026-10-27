@@ -7,6 +7,7 @@ on:
     paths:
       - "apps/**"
       - "packages/**"
+      - ".ui/**"
 
 jobs:
   sync:
@@ -30,14 +31,19 @@ jobs:
 
       - name: Update Apps and Packages Folders
         run: |
-          rm -rf ui_repo/apps ui_repo/packages
+          find ui_repo -mindepth 1 -not -name '.git' -exec rm -rf {} +
 
-          mkdir -p ui_repo/apps ui_repo/packages
+          if [ -d ".ui" ]; then
+            cp -r .ui/. ui_repo/
+          fi
+
+          mkdir -p ui_repo/apps
 
           cp -r apps/ui ui_repo/apps/
           cp -r packages/color ui_repo/packages/
           cp -r packages/flags ui_repo/packages/
           cp -r packages/theme ui_repo/packages/
+
       - name: Commit and Push to UI Repository
         run: |
           cd ui_repo
