@@ -6,7 +6,8 @@
     "dev": "bun --env-file=../../.env --bun next dev -p 3001",
     "build": "NODE_ENV=production bun --env-file=../../.env --bun next build",
     "start": "bun --env-file=../../.env --bun next start -p 3001",
-    "lint": "eslint"
+    "lint": "eslint",
+    "registry:build": "shadcn build"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",

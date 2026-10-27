@@ -19,6 +19,8 @@
     "infra:apply": "bun run --env-file=.env -- terraform -chdir=infra/environments/dev apply",
     "infra:destroy": "terraform -chdir=infra/environments/dev destroy",
     "infra:output": "terraform -chdir=infra/environments/dev output -json",
+    "package:build": "turbo run package:build",
+    "package:dev": "turbo run package:dev",
     "package:login": "bun x npm login",
     "package:change": "changeset",
     "package:version": "changeset version",
@@ -27,6 +29,7 @@
   "devDependencies": {
     "@changesets/cli": "^3.0.3",
     "prettier": "^3.9.6",
+    "tsup": "^9.0.0",
     "turbo": "^2.10.12",
     "typescript": "5.9.2"
   },

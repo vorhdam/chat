@@ -49,6 +49,9 @@
     },
     "db:pull": {
       "cache": false
+    },
+    "package:build": {
+      "outputs": ["dist/**"]
     }
   }
 }

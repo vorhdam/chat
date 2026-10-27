@@ -1,5 +1,11 @@
 # @nordaun/color
 
+## 2.0.1
+
+### Patch Changes
+
+- Added builds to packages
+
 ## 2.0.0
 
 ### Major Changes

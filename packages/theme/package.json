@@ -1,6 +1,6 @@
 {
   "name": "@nordaun/theme",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A simple theme provider and context for your React apps.",
   "homepage": "https://ui.nordaun.com/packages/theme",
   "author": "vorhdam <https://github.com/vorhdam>",

@@ -1,0 +1,51 @@
+name: Sync UI Repository
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "apps/**"
+      - "packages/**"
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Private Monorepo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Setup Git Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Clone UI Repository
+        env:
+          PAT: ${{ secrets.UI_REPO_PAT }}
+        run: |
+          git clone https://x-access-token:${PAT}@github.com/vorhdam/ui.git ui_repo
+
+      - name: Update Apps and Packages Folders
+        run: |
+          rm -rf ui_repo/apps ui_repo/packages
+
+          mkdir -p ui_repo/apps ui_repo/packages
+
+          cp -r apps/ui ui_repo/apps/
+          cp -r packages/color ui_repo/packages/
+          cp -r packages/flags ui_repo/packages/
+          cp -r packages/theme ui_repo/packages/
+      - name: Commit and Push to UI Repository
+        run: |
+          cd ui_repo
+          git add .
+
+          if git diff-index --quiet HEAD; then
+            echo "No changes to sync."
+          else
+            git commit -m "Synced latest code from private monorepo"
+            git push origin main
+          fi

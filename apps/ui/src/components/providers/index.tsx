@@ -1,6 +1,8 @@
 import { ColorProvider } from "@repo/color";
 import config from "@repo/config";
 import { ThemeProvider } from "@repo/theme";
+import { TooltipProvider } from "../ui/tooltip";
+import InstallerProvider from "./installer";
 
 export default async function Providers({
   children,
@@ -20,7 +22,9 @@ export default async function Providers({
         colors={config.color.colors}
         defaultColor={config.color.defaultColor}
       >
-        {children}
+        <InstallerProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </InstallerProvider>
       </ColorProvider>
     </ThemeProvider>
   );

@@ -21,9 +21,7 @@ export default function InstallerProvider({
 }: {
   children: ReactNode;
 }) {
-  const cookieName = "INSTALLER";
-  const installers = config.installer.installers;
-  const defaultInstaller = config.installer.defaultInstaller;
+  const { cookieName, installers, defaultInstaller } = config.installer;
 
   const [current, setCurrent] = useState<Installer>(() => {
     let initialInstaller = cookies.get(cookieName) as Installer;

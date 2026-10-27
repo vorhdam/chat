@@ -1,4 +1,4 @@
-import Logo from "@/components/icons/logo";
+import Logo from "@/components/blocks/logo";
 
 export default function Loading() {
   return (
