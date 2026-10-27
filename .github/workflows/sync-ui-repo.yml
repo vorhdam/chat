@@ -58,11 +58,11 @@ jobs:
           cd ui_repo
 
           git remote set-url origin https://x-access-token:${PAT}@github.com/vorhdam/ui.git
-          git add .
+          git add -A
 
           if git diff-index --quiet HEAD; then
             echo "No changes to sync."
           else
             git commit -m "Synced latest code from private monorepo [skip ci]"
-            git push origin main
+            git push origin main --force
           fi
