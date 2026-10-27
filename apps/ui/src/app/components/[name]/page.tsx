@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import path from "path";
 
 import { CodeBlock } from "@/components/blocks/code";
+import { Dependencies } from "@/components/blocks/dependencies";
 import { Installation } from "@/components/blocks/intallation";
 import registry from "@/registry";
 import config from "@repo/config";
@@ -66,25 +67,34 @@ export default async function ComponentPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col w-full gap-8 max-w-2xl">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold">{component.title}</h1>
-        <h2 className="text-muted-foreground max-w-xl">
-          {component.description}
-        </h2>
+      <div className="flex flex-col typeset">
+        <h1>{component.title}</h1>
+        <p className="text-muted-foreground">{component.description}</p>
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Preview</h2>
+      <div className="flex flex-col typeset">
+        <h2>Preview</h2>
         <Component />
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Installation</h2>
+      <div className="flex flex-col typeset">
+        <h2>Installation</h2>
         <Installation name={component.name} type="component" />
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Usage</h2>
+      <div className="flex flex-col">
+        <div className="typeset mb-4">
+          <h2>Usage</h2>
+        </div>
         <CodeBlock
           directory={`/components/${component.name}-demo.tsx`}
           code={code}
+        />
+      </div>
+      <div className="flex flex-col">
+        <div className="typeset mb-4">
+          <h2>Dependencies</h2>
+        </div>
+        <Dependencies
+          dependencies={component.dependencies || []}
+          registryDependencies={component.registryDependencies || []}
         />
       </div>
     </div>

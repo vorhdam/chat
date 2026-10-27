@@ -9,66 +9,58 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col w-full gap-8 max-w-2xl">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold">About</h1>
-        <h2 className="text-muted-foreground">
-          Here you can read about how we design and create our components and
-          what you can expect from us in the future.
-        </h2>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Our approach</h2>
-        <span>
-          When we design these components we always try to make them very bare
-          bones. This is because we want you to customize it further, by themes,
-          colors or even editing the components themselves. We also think that
-          making components modular{" "}
-          <i>(basically allowing you to play LEGO with our subcomponents)</i> is
-          what makes our components so user friendly. However designing
-          components like this is not always easy. We have to think about how
-          the subcomponents communicate changes to the parent component. We use
-          contexts in almost all of our components to address this problem which
-          may not be the fastest but it is the simples approach.
-        </span>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Consistency</h2>
-        <span>
-          We really like the default look of shadcn as it is super easy to
-          understand from the user's perspective. Our components try to
-          replicate the look of these components as much as they can. This is
-          why custom presets work so well on our components. We use shadcn
-          components, colors and presets to build ours, so there is no suprise
-          that the result is extremely compatible with the already existing
-          components.
-        </span>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Why do we make this?</h2>
-        <span>
-          It started out as a component library for our main project then we
-          realised that many developers might need similar components that are
-          not included in shadcn's library. So we did what any reasonable person
-          would do. We made it opensource so you can enjoy it too. Now the
-          project is under MIT license. Also me{" "}
-          <i>(who is writing this page)</i> is a self-taught developer who
-          learned a lot from open-source projects. So it is a win-win.
-        </span>
-      </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Support our work</h2>
-        <span>
-          If you found this registry helpful please drop a star to our{" "}
-          <Link
-            href={config.ui.github.repository}
-            className="text-primary underline"
-          >
-            Github Repo
-          </Link>
-          .
-        </span>
-      </div>
+    <div className="flex flex-col w-full max-w-2xl typeset">
+      <h1>About</h1>
+      <p className="text-muted-foreground">
+        Discover how we design and build our components, as well as what's on
+        the horizon for our library.
+      </p>
+      <h2>Our approach</h2>
+      <p>
+        When building these components, our primary goal is to keep them clean
+        and unstyled. By delivering a minimalist foundation, we empower you to
+        customize every aspect—whether through themes, color tokens, or direct
+        code edits. We strongly believe in modular architecture; giving you the
+        freedom to assemble subcomponents like building blocks is what makes the
+        developer experience so intuitive. Crafting architecture this flexible,
+        however, brings unique challenges particularly managing how
+        subcomponents communicate state back to the parent. To solve this, we
+        rely heavily on React Context. While it might not always offer raw
+        maximum speed, it provides the cleanest and most reliable API for your
+        codebase.
+      </p>
+      <h2>Consistency</h2>
+      <p>
+        We're huge fans of the default design language pioneered by shadcn,
+        largely because of its clarity and user-centric approach. We
+        deliberately align our visual design with this ecosystem so that custom
+        presets and existing styles translate seamlessly. By leveraging shadcn's
+        foundational primitives, color scales, and design tokens, our library
+        integrates effortlessly into your existing projects without unexpected
+        style conflicts.
+      </p>
+      <h2>Why do we make this?</h2>
+      <p>
+        What began as an internal component library for our core product quickly
+        evolved when we noticed a gap in the ecosystem for specific UI patterns
+        not covered by shadcn. Naturally, we took the open-source route to share
+        these tools with the broader developer community. Today, the project is
+        open source under the MIT license. As a self-taught developer who built
+        a career on open-source software, releasing this library is both a
+        personal milestone and a way to give back.
+      </p>
+      <h2>Support our work</h2>
+      <p>
+        If this registry saves you time or helps your workflow, consider
+        starring the repository on{" "}
+        <Link
+          href={config.ui.github.repository}
+          className="text-primary underline"
+        >
+          Github
+        </Link>
+        . It goes a long way in supporting further development!
+      </p>
     </div>
   );
 }

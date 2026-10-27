@@ -26,7 +26,7 @@ const locations: Location[] = [
     title: "Parliament Building",
     description:
       "Landmark Gothic Revival–style edifice with lavishly decorated rooms, plus a visitors' center.",
-    image: "/assets/parliament.png",
+    image: "/assets/parliament.webp",
     color: "bg-rose-500",
   },
   {
@@ -35,7 +35,7 @@ const locations: Location[] = [
     title: "Buda Castle",
     description:
       "Palatial venue for the Hungarian National Gallery plus displays from Gothic altars to sculpture.",
-    image: "/assets/castle.png",
+    image: "/assets/castle.webp",
     color: "bg-emerald-500",
   },
   {
@@ -44,7 +44,7 @@ const locations: Location[] = [
     title: "Széchenyi Chain Bridge",
     description:
       "Landmark 19th-century suspension bridge, designed by William Tierney Clark & illuminated at night.",
-    image: "/assets/bridge.png",
+    image: "/assets/bridge.webp",
     color: "bg-sky-500",
   },
 ];
@@ -123,7 +123,7 @@ export default function MapDemo() {
                         height={1080}
                         src={l.image}
                         alt={l.title}
-                        className="relative z-20 object-cover grayscale mix-blend-multiply"
+                        className="relative z-20 object-cover grayscale mix-blend-multiply m-0 rounded-none"
                       />
                     </div>
                     <CardHeader>

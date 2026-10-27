@@ -67,26 +67,27 @@ export default async function ComponentPage({ params }: PageProps) {
 
   return (
     <div className="flex flex-col w-full gap-8 max-w-2xl">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold">{component.title}</h1>
-        <h2 className="text-muted-foreground max-w-xl">
-          {component.description}
-        </h2>
+      <div className="flex flex-col typeset">
+        <h1>{component.title}</h1>
+        <p className="text-muted-foreground">{component.description}</p>
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Installation</h2>
+      <div className="flex flex-col typeset">
+        <h2>Installation</h2>
         <Installation name={component.name} type="package" />
       </div>
-      <h2 className="text-xl font-semibold">Usage</h2>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Provider</h2>
+      <div className="flex flex-col">
+        <div className="typeset mb-4">
+          <h2>Provider</h2>
+        </div>
         <CodeBlock
           directory={`/providers/${component.name}.tsx`}
           code={providerCode}
         />
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Hook</h2>
+      <div className="flex flex-col">
+        <div className="typeset mb-4">
+          <h2>Hook</h2>
+        </div>
         <CodeBlock directory={`/hooks/${component.name}.tsx`} code={hookCode} />
       </div>
     </div>

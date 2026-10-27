@@ -24,7 +24,8 @@
     "package:login": "bun x npm login",
     "package:change": "changeset",
     "package:version": "changeset version",
-    "package:release": "turbo build && changeset publish"
+    "package:release": "turbo build && changeset publish",
+    "registry:build": "bun --bun turbo run registry:build"
   },
   "devDependencies": {
     "@changesets/cli": "^3.0.3",

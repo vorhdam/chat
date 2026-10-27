@@ -12,11 +12,9 @@ export default async function FlagsPage() {
 
   return (
     <div className="flex flex-col w-full gap-8 max-w-2xl">
-      <div className="flex flex-col gap-3">
-        <h1 className="text-3xl font-semibold">{component.title}</h1>
-        <h2 className="text-muted-foreground max-w-xl">
-          {component.description}
-        </h2>
+      <div className="flex flex-col typeset">
+        <h1>{component.title}</h1>
+        <p className="text-muted-foreground">{component.description}</p>
       </div>
       <div className="flex flex-col gap-3">
         <h2 className="text-xl font-semibold">Usage</h2>
@@ -30,12 +28,12 @@ export default async function FlagsPage() {
           components.
         </h3>
       </div>
-      <div className="flex flex-col gap-3">
-        <h2 className="text-xl font-semibold">Example</h2>
-        <h3 className="text-muted-foreground">
+      <div className="flex flex-col typeset">
+        <h2>Example</h2>
+        <p className="text-muted-foreground mb-4">
           These flags were rendered from the JSDelivery CDN which is available
           worldwide 24/7.
-        </h3>
+        </p>
         <div className="mx-auto flex flex-row gap-4">
           <Flag code="HU" className="size-16" />
           <Flag code="GB" className="size-16" />

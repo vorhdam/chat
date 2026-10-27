@@ -52,6 +52,9 @@
     },
     "package:build": {
       "outputs": ["dist/**"]
+    },
+    "registry:build": {
+      "outputs": ["dist/**"]
     }
   }
 }

@@ -8,6 +8,7 @@
       "title": "Flag",
       "description": "A simple flag display which renders a vector image of the selected country's flag by its country code.",
       "author": "vorhdam <https://github.com/vorhdam>",
+      "dependencies": ["dompurify", "html-react-parser"],
       "type": "registry:block",
       "files": [
         {

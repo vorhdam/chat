@@ -9,7 +9,6 @@ import parsePhoneNumberFromString, {
 } from "libphonenumber-js";
 import * as React from "react";
 
-import { countryNames } from "@/components/lib/geo";
 import {
   Command,
   CommandEmpty,
@@ -30,6 +29,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { countryNames } from "@/lib/geo";
 
 type PhoneProps = React.ComponentProps<"input"> & {
   value?: string;

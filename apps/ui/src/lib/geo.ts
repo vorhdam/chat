@@ -246,6 +246,4 @@ const countryNames = {
   ZW: "Zimbabwe",
 };
 
-const countryList = Object.keys(countryNames);
-
-export { countryList, countryNames };
+export { countryNames };
