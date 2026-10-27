@@ -50,7 +50,10 @@ jobs:
           cp -r packages/color ui_repo/packages/
           cp -r packages/flags ui_repo/packages/
           cp -r packages/theme ui_repo/packages/
+
       - name: Commit and Push to UI Repository
+        env:
+          PAT: ${{ secrets.UI_REPO_PAT }}
         run: |
           cd ui_repo
 
@@ -60,6 +63,6 @@ jobs:
           if git diff-index --quiet HEAD; then
             echo "No changes to sync."
           else
-            git commit -m "Synced latest code from private monorepo"
+            git commit -m "Synced latest code from private monorepo [skip ci]"
             git push origin main
           fi
