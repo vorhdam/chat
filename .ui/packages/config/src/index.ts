@@ -44,14 +44,14 @@ type Config = Readonly<{
     /** The namespace of the subproject packages on NPM.*/
     namespace: string;
     /** The base URL (domain) of the ui application*/
-    baseURL: string;
+    baseURL: `https://${string}`;
     github: {
       /** The author of the ui application*/
-      author: string;
+      author: `https://${string}`;
       /** The organization of the ui application*/
-      organization: string;
+      organization: `https://${string}`;
       /** The public repository of the ui application*/
-      repository: string;
+      repository: `https://${string}`;
     };
   };
 }>;

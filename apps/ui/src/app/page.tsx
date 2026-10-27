@@ -17,7 +17,7 @@ const satisfy = Satisfy({
 });
 
 export const metadata: Metadata = {
-  title: `Home | ${config.name}`,
+  title: `Home | ${config.ui.name}`,
   description: "Simple components for your extraordinary creations.",
 };
 
@@ -53,7 +53,7 @@ export default function Page() {
             Packages
           </Button>
         </Link>
-        <Link href="/">
+        <Link href={config.ui.github.repository}>
           <Button size={"lg"} variant={"secondary"} className="px-4">
             Github
           </Button>

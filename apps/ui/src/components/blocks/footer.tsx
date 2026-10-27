@@ -5,9 +5,10 @@ export function Footer() {
   return (
     <footer className="flex items-center justify-center w-dwv p-4 text-muted-foreground h-14 text-sm text-center">
       <span>
-        Built by <Link href="/">vorhdam</Link> at{" "}
-        <Link href="/">{config.name}.</Link> The source code is available on{" "}
-        <Link href="/">Github</Link>
+        Built by <Link href={config.ui.github.author}>vorhdam</Link> at{" "}
+        <Link href={config.ui.github.organization}>{config.name}.</Link> The
+        source code is available on{" "}
+        <Link href={config.ui.github.repository}>Github</Link>
       </span>
     </footer>
   );

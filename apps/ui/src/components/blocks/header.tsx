@@ -57,7 +57,7 @@ export function Header() {
           <NavigationMenuItem>
             <NavigationMenuLink
               className={navigationMenuTriggerStyle()}
-              render={<Link href="/">Github</Link>}
+              render={<Link href={config.ui.github.repository}>Github</Link>}
             />
           </NavigationMenuItem>
         </NavigationMenuList>
