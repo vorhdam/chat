@@ -13,56 +13,80 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+
+    env:
+      TARGET_REPO_URL: https://x-access-token:${{ secrets.UI_REPO_PAT }}@github.com/vorhdam/ui.git
+      TARGET_DIR: ui_repo
+
     steps:
-      - name: Checkout Private Monorepo
+      - name: Checkout source monorepo
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
           persist-credentials: false
 
-      - name: Setup Git Identity
+      - name: Verify PAT is present
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Clone UI Repository
-        env:
-          PAT: ${{ secrets.UI_REPO_PAT }}
-        run: |
-          if [ -z "$PAT" ]; then
+          if [ -z "${{ secrets.UI_REPO_PAT }}" ]; then
             echo "Error: UI_REPO_PAT secret is empty or missing!"
             exit 1
           fi
 
-          git clone https://x-access-token:${PAT}@github.com/vorhdam/ui.git ui_repo
-
-      - name: Update Files and Folders
+      - name: Clone or initialize target repo
+        shell: bash
         run: |
-          find ui_repo -mindepth 1 -not -name '.git' -exec rm -rf {} +
+          set -euo pipefail
+
+          rm -rf "$TARGET_DIR"
+
+          git clone "$TARGET_REPO_URL" "$TARGET_DIR" || {
+            mkdir -p "$TARGET_DIR"
+            git init "$TARGET_DIR"
+            git -C "$TARGET_DIR" remote add origin "$TARGET_REPO_URL"
+          }
+
+          git -C "$TARGET_DIR" config user.name "github-actions[bot]"
+          git -C "$TARGET_DIR" config user.email "github-actions[bot]@users.noreply.github.com"
+          git -C "$TARGET_DIR" remote set-url origin "$TARGET_REPO_URL"
+
+          if git -C "$TARGET_DIR" rev-parse --verify HEAD >/dev/null 2>&1; then
+            git -C "$TARGET_DIR" checkout main || git -C "$TARGET_DIR" checkout -B main
+          else
+            git -C "$TARGET_DIR" checkout -B main
+          fi
+
+      - name: Update target repo contents
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          find "$TARGET_DIR" -mindepth 1 -maxdepth 1 ! -name ".git" -exec rm -rf {} +
 
           if [ -d ".github/ui" ]; then
-            cp -r .github/ui/. ui_repo/
+            cp -R .github/ui/. "$TARGET_DIR"/
           fi
 
-          mkdir -p ui_repo/apps
+          mkdir -p "$TARGET_DIR/apps" "$TARGET_DIR/packages"
 
-          cp -r apps/ui ui_repo/apps/
-          cp -r packages/color ui_repo/packages/
-          cp -r packages/flags ui_repo/packages/
-          cp -r packages/theme ui_repo/packages/
+          cp -R apps/ui "$TARGET_DIR/apps/" 2>/dev/null || true
+          cp -R packages/color "$TARGET_DIR/packages/" 2>/dev/null || true
+          cp -R packages/flags "$TARGET_DIR/packages/" 2>/dev/null || true
+          cp -R packages/theme "$TARGET_DIR/packages/" 2>/dev/null || true
 
-      - name: Commit and Push to UI Repository
-        env:
-          PAT: ${{ secrets.UI_REPO_PAT }}
+      - name: Commit and push to UI repository
+        shell: bash
         run: |
-          cd ui_repo
+          set -euo pipefail
 
-          git remote set-url origin https://x-access-token:${PAT}@github.com/vorhdam/ui.git
+          cd "$TARGET_DIR"
+
           git add -A
 
-          if git diff-index --quiet HEAD; then
+          if git diff --cached --quiet; then
             echo "No changes to sync."
-          else
-            git commit -m "Synced latest code from private monorepo [skip ci]"
-            git push origin main --force
+            exit 0
           fi
+
+          git commit -m "Synced latest code from private monorepo [skip ci]"
+
+          git push origin HEAD:main --force-with-lease
