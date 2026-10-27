@@ -8,7 +8,7 @@ on:
     paths:
       - "apps/**"
       - "packages/**"
-      - ".ui/**"
+      - ".github/ui/**"
 
 jobs:
   sync:
@@ -36,27 +36,15 @@ jobs:
 
           git clone https://x-access-token:${PAT}@github.com/vorhdam/ui.git ui_repo
 
-      - name: Update Apps and Packages Folders
+      - name: Update Files and Folders
         run: |
-          cp -r ui_repo/.git /tmp/ui_git_backup
+          find ui_repo -mindepth 1 -not -name '.git' -exec rm -rf {} +
 
-          rm -rf ui_repo/*
-
-          mkdir -p ui_repo/.git
-          cp -r /tmp/ui_git_backup/. ui_repo/.git/
-
-          cd ui_repo
-          rm -rf .git
-          git init
-          git remote add origin https://github.com/vorhdam/ui.git
-          cd ..
-
-          if [ -d ".ui" ]; then
-            cp -r .ui/. ui_repo/
+          if [ -d ".github/ui" ]; then
+            cp -r .github/ui/. ui_repo/
           fi
 
           mkdir -p ui_repo/apps
-          mkdir -p ui_repo/packages
 
           cp -r apps/ui ui_repo/apps/
           cp -r packages/color ui_repo/packages/
@@ -69,12 +57,12 @@ jobs:
         run: |
           cd ui_repo
 
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
           git remote set-url origin https://x-access-token:${PAT}@github.com/vorhdam/ui.git
           git add -A
 
-          git commit -m "Synced latest code from private monorepo [skip ci]"
-
-          git push origin main --force
+          if git diff-index --quiet HEAD; then
+            echo "No changes to sync."
+          else
+            git commit -m "Synced latest code from private monorepo [skip ci]"
+            git push origin main --force
+          fi
