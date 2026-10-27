@@ -31,7 +31,8 @@ const ColorContext = React.createContext<ColorContextType>({
  */
 function useColor<T extends string = string>() {
   const context = React.useContext(ColorContext);
-  if (!context) throw new Error("useColor must be used within ColorProvider.");
+  if (!context)
+    throw new Error("useColor() must be used within a ColorProvider.");
   return context as unknown as ColorContextType<T>;
 }
 

@@ -15,7 +15,9 @@ const OnboardingContext = React.createContext<OnboardingContextType | null>(
 export function useOnboarding() {
   const context = React.useContext(OnboardingContext);
   if (!context)
-    throw new Error("useOnboarding must be used within OnboardingProvider.");
+    throw new Error(
+      "useOnboarding() must be used within an OnboardingProvider.",
+    );
   return context;
 }
 

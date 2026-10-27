@@ -13,7 +13,7 @@ const VerifyContext = React.createContext<VerifyContextType | null>(null);
 export function useVerify() {
   const context = React.useContext(VerifyContext);
   if (!context)
-    throw new Error("useVerify must be used within VerifyProvider.");
+    throw new Error("useVerify() must be used within a VerifyProvider.");
   return context;
 }
 
