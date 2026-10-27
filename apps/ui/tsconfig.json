@@ -8,6 +8,8 @@
     ],
     "paths": {
       "@/*": ["./src/*"],
+      "@/registry": ["./registry.json"],
+      "@/packages": ["./packages.json"],
       "@repo/color": ["../../packages/color/src/index.tsx"],
       "@repo/theme": ["../../packages/theme/src/index.tsx"]
     }
