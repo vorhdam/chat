@@ -38,12 +38,12 @@ jobs:
           fi
 
           mkdir -p ui_repo/apps
+          mkdir -p ui_repo/packages
 
           cp -r apps/ui ui_repo/apps/
           cp -r packages/color ui_repo/packages/
           cp -r packages/flags ui_repo/packages/
           cp -r packages/theme ui_repo/packages/
-
       - name: Commit and Push to UI Repository
         run: |
           cd ui_repo
