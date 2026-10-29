@@ -4,6 +4,21 @@
   "homepage": "https://ui.nordaun.com",
   "items": [
     {
+      "name": "audio",
+      "title": "Audio",
+      "description": "An audio playback with extendable control modules already included such as volume and speed.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dropdown-menu", "slider"],
+      "files": [
+        {
+          "path": "src/components/ui/audio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "flag",
       "title": "Flag",
       "description": "A simple flag display which renders a vector image of the selected country's flag by its country code.",
@@ -116,6 +131,25 @@
           "background-color": "var(--ring)"
         }
       }
+    },
+    {
+      "name": "video",
+      "title": "Video",
+      "description": "A video playback with extendable control modules already included such as volume, speed and fullscreen.",
+      "author": "vorhdam <https://github.com/vorhdam>",
+      "type": "registry:block",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "dropdown-menu", "slider"],
+      "files": [
+        {
+          "path": "src/components/ui/video.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }

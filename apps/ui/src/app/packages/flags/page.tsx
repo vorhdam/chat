@@ -1,7 +1,29 @@
 import { CodeBlock } from "@/components/blocks/code";
 import { Flag } from "@/components/ui/flag";
 import registry from "@/packages";
+import config from "@repo/config";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const component = registry.items.find((i) => i.name === "flags");
+  if (!component) return { title: "404" };
+
+  return {
+    title: component.title,
+    description: component.description,
+    authors: [{ name: "vorhdam", url: "https://github.com/vorhdam" }],
+    publisher: config.name,
+    keywords: ["shadcn", "base ui", "react", "component"],
+    openGraph: {
+      title: component.title,
+      description: component.description,
+      url: `${config.ui.baseURL}/packages/${component.name}`,
+      siteName: config.ui.name,
+      images: [{ url: `${config.ui.baseURL}/og.png` }],
+    },
+  };
+}
 
 export default async function FlagsPage() {
   const component = registry.items.find((i) => i.name === "flags");
