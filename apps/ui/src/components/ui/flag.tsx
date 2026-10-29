@@ -108,7 +108,7 @@ function Flag({ code, viewBox, ...props }: FlagProps) {
         await loadFlag(url!);
         if (!cancelled) rerender();
       } catch (error) {
-        console.error(error);
+        console.error("Flag: Rendering failed:", error);
       }
     }
 

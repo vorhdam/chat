@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 
@@ -22,16 +22,11 @@ export function ProviderComponent({ children }: { children: React.ReactNode }) {
 // START_HOOK
 import { useTheme } from "@nordaun/theme";
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { theme, themes, setTheme } = useTheme();
 console.log("Current theme:", theme);
 console.log("All avialable themes:", themes);
 setTheme("system");
 // END_HOOK
 
-export const keywords = [
-  "nordaun",
-  "react",
-  "package",
-  "theme",
-  "provider"
-];
+export const keywords = ["nordaun", "react", "package", "theme", "provider"];

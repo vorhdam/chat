@@ -1,7 +1,5 @@
 "use client";
 
-// Only God knows how this works, but it does.
-
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -105,6 +103,7 @@ function tokenize(code: string) {
       final.push(token);
       continue;
     }
+
     const seg = token.value;
     const matches: Array<{
       start: number;
@@ -181,20 +180,20 @@ function tokenize(code: string) {
         }
       }
       if (skip) continue;
-      if (m.start > pos) {
+      if (m.start > pos)
         subTokens.push({
           type: "plain",
           value: seg.slice(pos, m.start),
           start: pos,
         });
-      }
+
       subTokens.push({ type: m.type, value: m.value, start: m.start });
       for (let k = m.start; k < m.end; k++) used[k] = true;
       pos = m.end;
     }
-    if (pos < seg.length) {
+
+    if (pos < seg.length)
       subTokens.push({ type: "plain", value: seg.slice(pos), start: pos });
-    }
 
     final.push(...subTokens);
   }
@@ -205,6 +204,7 @@ function tokenize(code: string) {
 function isJsxTextLine(line: string): boolean {
   const trimmed = line.trim();
   if (!trimmed) return false;
+
   if (/[<>{};=()[\]"'`]/.test(trimmed)) return false;
   if (/[,;]$/.test(trimmed)) return false;
   if (
@@ -217,21 +217,23 @@ function isJsxTextLine(line: string): boolean {
   return /^[A-Za-z0-9\s©®™°….,!?@#%*&$+\-/\\]+$/.test(trimmed);
 }
 
-function renderLine(line: string, lineIdx: number) {
-  if (isJsxTextLine(line)) {
+function renderLine(line: string, lineIndex: number) {
+  if (isJsxTextLine(line))
     return (
-      <span key={lineIdx} className={tokenClasses.jsxText}>
+      <span key={lineIndex} className={tokenClasses.jsxText}>
         {line}
       </span>
     );
-  }
 
   const tokens = tokenize(line);
   return (
-    <span key={lineIdx}>
-      {tokens.map((tok, i) => (
-        <span key={i} className={tokenClasses[tok.type] || tokenClasses.plain}>
-          {tok.value}
+    <span key={lineIndex}>
+      {tokens.map((token, index) => (
+        <span
+          key={index}
+          className={tokenClasses[token.type] || tokenClasses.plain}
+        >
+          {token.value}
         </span>
       ))}
     </span>
@@ -269,14 +271,14 @@ export function CodeBlock({
         <pre className="m-0 font-mono text-sm leading-6">
           <table className="w-full border-collapse">
             <tbody>
-              {lines.map((line, idx) => (
-                <tr key={idx}>
+              {lines.map((line, index) => (
+                <tr key={index}>
                   {showLineNumbers && (
                     <td className="w-10 pr-6 text-right text-xs text-muted-foreground/70 select-none">
-                      {idx + 1}
+                      {index + 1}
                     </td>
                   )}
-                  <td>{renderLine(line || " ", idx)}</td>
+                  <td>{renderLine(line || " ", index)}</td>
                 </tr>
               ))}
             </tbody>

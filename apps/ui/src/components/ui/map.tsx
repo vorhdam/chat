@@ -668,7 +668,7 @@ function MapControlLocate({ className, onLocate }: MapControlLocateProps) {
         setLoading(false);
       },
       (err) => {
-        console.error("Geolocation error:", err);
+        console.error("Map: Geolocation failed:", err);
         setLoading(false);
       },
     );

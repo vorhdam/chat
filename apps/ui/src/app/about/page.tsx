@@ -12,8 +12,8 @@ export default function AboutPage() {
     <div className="flex flex-col w-full max-w-2xl typeset">
       <h1>About</h1>
       <p className="text-muted-foreground">
-        Discover how we design and build our components, as well as what's on
-        the horizon for our library.
+        Discover how we design and build our components, as well as what&apos;s
+        on the horizon for our library.
       </p>
       <h2>Our approach</h2>
       <p>
@@ -31,13 +31,13 @@ export default function AboutPage() {
       </p>
       <h2>Consistency</h2>
       <p>
-        We're huge fans of the default design language pioneered by shadcn,
+        We&apos;re huge fans of the default design language pioneered by shadcn,
         largely because of its clarity and user-centric approach. We
         deliberately align our visual design with this ecosystem so that custom
-        presets and existing styles translate seamlessly. By leveraging shadcn's
-        foundational primitives, color scales, and design tokens, our library
-        integrates effortlessly into your existing projects without unexpected
-        style conflicts.
+        presets and existing styles translate seamlessly. By leveraging
+        shadcn&apos;s foundational primitives, color scales, and design tokens,
+        our library integrates effortlessly into your existing projects without
+        unexpected style conflicts.
       </p>
       <h2>Why do we make this?</h2>
       <p>

@@ -51,7 +51,7 @@ async function checkLimit(
       ...(!allowed && { limitedBy }),
     } as RateLimitResult;
   } catch (err) {
-    console.error(`Ratelimit: Redis error for key "${key}"`, err);
+    console.error(`Ratelimit: Redis error for key "${key}":`, err);
     return {
       allowed: true,
       remaining: limit,

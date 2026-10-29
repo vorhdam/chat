@@ -5,7 +5,7 @@ export default function NotFound() {
     <div className="typeset antialiased text-foreground bg-background min-h-dvh overflow-hidden flex flex-row items-center justify-center text-center gap-4">
       <h1 className="text-foreground">404</h1>
       <Separator orientation="vertical" className="h-10 my-auto" />
-      <span>Sorry, we couldn't find what you are looking for.</span>
+      <span>Sorry, we couldn&apos;t find what you are looking for.</span>
     </div>
   );
 }

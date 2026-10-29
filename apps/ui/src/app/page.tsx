@@ -1,10 +1,10 @@
+import { cn } from "cn";
 import { Metadata } from "next";
 import { Playfair_Display, Satisfy } from "next/font/google";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
 import config from "@repo/config";
-import { cn } from "cn";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair-serif",

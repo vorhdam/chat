@@ -79,14 +79,6 @@ const DefaultAudioContext: AudioContext = {
   setCurrentTime: () => {},
 };
 
-if (typeof window !== "undefined") {
-  const _error = console.error.bind(console);
-  console.error = (...args) => {
-    if (typeof args[0] === "string" && args[0].includes("script")) return;
-    _error(...args);
-  };
-}
-
 const WaveformCache = new WeakMap<
   HTMLAudioElement,
   { ctx: globalThis.AudioContext; analyser: AnalyserNode }

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import * as React from "react";
 
@@ -22,16 +22,11 @@ export function ProviderComponent({ children }: { children: React.ReactNode }) {
 // START_HOOK
 import { useColor } from "@nordaun/color";
 
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const { color, colors, setColor } = useColor();
 console.log("Current color:", color);
 console.log("All avialable colors:", colors);
 setColor("red");
 // END_HOOK
 
-export const keywords = [
-  "nordaun",
-  "react",
-  "package",
-  "color",
-  "provider"
-];
+export const keywords = ["nordaun", "react", "package", "color", "provider"];

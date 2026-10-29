@@ -17,13 +17,13 @@ export default async function RateLimited() {
       <Separator orientation="vertical" className="h-10 my-auto" />
       {limitedBy === "user" ? (
         <span>
-          You've been trying to access our service way too often. Try again
+          You&apos;ve been trying to access our service way too often. Try again
           later.
         </span>
       ) : (
         <span>
-          We're expriencing an unexpected amount of traffic. We'll be back
-          shortly.
+          We&apos;re expriencing an unexpected amount of traffic. We&apos;ll be
+          back shortly.
         </span>
       )}
     </div>

@@ -42,7 +42,7 @@ export default async function FlagsPage() {
         <h2 className="text-xl font-semibold">Usage</h2>
         <h3 className="text-muted-foreground">
           Replace <span className="bg-muted rounded-sm px-1">countryCode</span>{" "}
-          with your country's ID and visit the following address:
+          with your country&apos;s ID and visit the following address:
         </h3>
         <CodeBlock directory={`Browser`} code={code} />
         <h3 className="text-muted-foreground">

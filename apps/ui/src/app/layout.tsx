@@ -1,3 +1,4 @@
+import { cn } from "cn";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { cookies } from "next/headers";
@@ -7,7 +8,6 @@ import { Footer } from "@/components/blocks/footer";
 import { Header } from "@/components/blocks/header";
 import Providers from "@/components/providers";
 import config from "@repo/config";
-import { cn } from "cn";
 
 import "@/app/globals.css";
 import Loading from "@/app/loading";

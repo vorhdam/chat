@@ -70,6 +70,6 @@ export async function sendEmail({
   try {
     await sesClient.send(command);
   } catch (error) {
-    console.error("Failed to send email via SESv2:", error);
+    console.error("Email: Failed to send email:", error);
   }
 }

@@ -105,7 +105,7 @@ function VideoProvider({
     videoRef.current.muted = muted;
     videoRef.current.playbackRate = playbackRate;
     videoRef.current.loop = loop;
-  }, []);
+  }, [loop, muted, playbackRate, volume]);
 
   React.useEffect(() => {
     const handleFullscreenChange = () => {
@@ -623,7 +623,7 @@ function VideoControlFullscreen({
         await document.exitFullscreen();
       }
     } catch (err) {
-      console.error("Fullscreen toggle failed:", err);
+      console.error("Video: Fullscreen toggle failed:", err);
     }
   };
 

@@ -2,7 +2,6 @@
 
 These are the most important things that I should do:
 
-1. Cleanup backend.
-2. Merge nordaun/ui into this repository and cleanup frontend.
-3. Add Signin with Google.
-4. Add token based 2FA.
+1. Find copyright free assets for UI.
+2. Add Signin with Google.
+3. Add token based 2FA.

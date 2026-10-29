@@ -9,9 +9,8 @@ export function Dependencies({
   dependencies: string[];
   registryDependencies: string[];
 }) {
-  if (dependencies?.length === 0 && registryDependencies?.length === 0) {
+  if (dependencies?.length === 0 && registryDependencies?.length === 0)
     return <p className="text-muted-foreground">No dependencies</p>;
-  }
 
   return (
     <div className="flex flex-wrap gap-1.5">
